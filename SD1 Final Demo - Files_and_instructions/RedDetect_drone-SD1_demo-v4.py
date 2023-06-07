@@ -4,7 +4,14 @@ import numpy as np
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge
 import sys
-sys.path.insert(0, '/home/pi/Python_files/SocketPrograms')
+import os
+
+#make sure client.py file is in the same directory as where this program is ran:
+current_directory = os.getcwd()
+sys.path.insert(0, current_directory)
+
+#here, importing client.py, which should be in
+#the same directory as where this program was ran from (as mentioned above):
 import client as connect
 
 rospy.init_node('red_object_detection')
