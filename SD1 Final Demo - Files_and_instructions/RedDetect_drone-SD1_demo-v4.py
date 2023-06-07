@@ -6,12 +6,11 @@ from cv_bridge import CvBridge
 import sys
 import os
 
-#make sure client.py file is in the same directory as where this program is ran:
+# Make sure drone_client.py file is in the same directory as where this program is run:
 current_directory = os.getcwd()
 sys.path.insert(0, current_directory)
 
-#here, importing client.py, which should be in
-#the same directory as where this program was ran from (as mentioned above):
+# Here, importing drone_client.py, which should be in the same directory as where this program was run from (as mentioned above):
 import drone_client as connect
 
 rospy.init_node('red_object_detection')
@@ -25,12 +24,12 @@ def detect_red(cv_image):
     hsv = cv2.cvtColor(cv_image, cv2.COLOR_BGR2HSV)
 
     # Define the range of red color in HSV (red has 2 ranges) --> format is (hue, saturation, value (brightness))
-    #lower range: 0-10 for hue for color red
+    # lower range: 0-10 for hue for color red
     lower_red = (0, 100, 20)
     upper_red = (10, 255, 255)
     mask1 = cv2.inRange(hsv, lower_red, upper_red)
 
-    #upper range: 170-180 for hue for color red
+    # upper range: 170-180 for hue for color red
     lower_red = (160, 100, 20)
     upper_red = (179, 255, 255)
     mask2 = cv2.inRange(hsv, lower_red, upper_red)
@@ -40,7 +39,8 @@ def detect_red(cv_image):
 
     return mask
 
-def draw_bounding_boxes(cv_image, mask, min_area=1000, max_area=10000): #min and max area determine size of detected objects to draw bounding boxes around
+#min and max area determine size of detected objects to draw bounding boxes around
+def draw_bounding_boxes(cv_image, mask, min_area=1000, max_area=10000):
     # Find contours in the mask
     global USED
     contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
@@ -56,12 +56,12 @@ def draw_bounding_boxes(cv_image, mask, min_area=1000, max_area=10000): #min and
             x, y, w, h = cv2.boundingRect(contour)
             if USED < 1:
                 USED = USED + 1
+                print("Sending message to car...")
                 connect.send_message(1)
             # Draw the bounding box on the original image
             cv2.rectangle(cv_image, (x, y), (x + w, y + h), (0, 255, 0), 2)
 
     return cv_image
-
 
 def image_callback(data):
     # Convert the ROS image message to an OpenCV image
