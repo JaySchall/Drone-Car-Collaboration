@@ -7,6 +7,7 @@ CLIENT_SOCKET = socket(AF_INET, SOCK_STREAM)    # Client Socket Creation
 # QUIT Protocol
 def close_socket():
     CLIENT_SOCKET.close()
+    print("Socket closed.")
 
 ''' 
 Send a message to the car using following protocol:
@@ -18,11 +19,22 @@ Send a message to the car using following protocol:
 4 = Turn car right to avoid obstruction to left
 '''
 def message_car(var):
-    CLIENT_SOCKET.send(var.encode())
+    print("Sending message:", var)
+    try:
+        CLIENT_SOCKET.send(var.encode())
+        print("Message sent successfully!")
+    except Exception as e:
+        print("Error sending message:", str(e))
 
-CLIENT_SOCKET.connect((SERVER_NAME, SERVER_PORT))       # Establish connection when drone begins
+try:
+    CLIENT_SOCKET.connect((SERVER_NAME, SERVER_PORT))       # Establish connection when drone begins
+    print("Connected to server:", SERVER_NAME, "on port:", SERVER_PORT)
+except Exception as e:
+    print("Error connecting to server:", str(e))
 
-
-
-    
+# Debug messages to indicate the connection status
+if CLIENT_SOCKET.fileno() != -1:
+    print("Socket connection is active.")
+else:
+    print("Socket connection is closed.")
 
