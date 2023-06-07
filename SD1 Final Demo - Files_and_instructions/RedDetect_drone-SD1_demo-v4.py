@@ -12,7 +12,7 @@ sys.path.insert(0, current_directory)
 
 #here, importing client.py, which should be in
 #the same directory as where this program was ran from (as mentioned above):
-import client as connect
+import drone_client as connect
 
 rospy.init_node('red_object_detection')
 bridge = CvBridge()
