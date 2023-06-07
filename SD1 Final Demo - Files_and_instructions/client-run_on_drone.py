@@ -1,6 +1,6 @@
 from socket import *
 
-SERVER_NAME = "192.198.1.133"                     # Server IP (User defiend)
+SERVER_NAME = "192.198.11.133"                  # Server IP (User-defined)
 SERVER_PORT = 10600                             # Server Port (Predefined)
 CLIENT_SOCKET = socket(AF_INET, SOCK_STREAM)    # Client Socket Creation
 
