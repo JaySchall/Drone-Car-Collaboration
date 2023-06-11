@@ -5,19 +5,37 @@ from sensor_msgs.msg import Image
 from cv_bridge import CvBridge
 import sys
 import os
+import drone_client as connect
+
+'''
+# When importing drone_client.py, 
+# make sure it is in the same directory as where 
+# this program was run from.
+'''
 
 # Make sure drone_client.py file is in the same directory as where this program is run:
 current_directory = os.getcwd()
 sys.path.insert(0, current_directory)
+print("Current working directory (where this program was ran from):", current_directory)
 
-# Here, importing drone_client.py, which should be in the same directory as where this program was run from (as mentioned above):
-import drone_client as connect
+print("Trying to establish connection with car server...")
+connect.establish_socket_connection()
 
-rospy.init_node('red_object_detection')
-bridge = CvBridge()
-message_sent = False
+try:
+    rospy.init_node('red_object_detection')
+    print("ROS node 'red_object_detection' initialized.")
+except rospy.ROSInitException as e:
+    print("Failed to initialize ROS node:", str(e))
+    exit(1)  # Exit the program with a non-zero exit status to indicate failure
+
+
+bridge = CvBridge()     # Create an instance of the CvBridge class to convert between ROS Image messages and OpenCV images
+message_sent = False    # Flag to keep track of whether a message has been sent to the car or not
+
+
 # Create a publisher to publish the video feed to a ROS topic
 image_pub = rospy.Publisher('red_object_detection/image_raw', Image, queue_size=10)
+print("ROS publisher created for 'red_object_detection/image_raw' topic.")
 
 def detect_red(cv_image):
     # Convert the image to HSV color space
