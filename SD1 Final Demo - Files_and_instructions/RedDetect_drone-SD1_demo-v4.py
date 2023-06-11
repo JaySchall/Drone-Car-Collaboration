@@ -57,7 +57,7 @@ def draw_bounding_boxes(cv_image, mask, min_area=1000, max_area=10000):
             if USED < 1:
                 USED = USED + 1
                 print("Sending message to car...")
-                connect.send_message(1)
+                connect.message_car(1)
             # Draw the bounding box on the original image
             cv2.rectangle(cv_image, (x, y), (x + w, y + h), (0, 255, 0), 2)
 
