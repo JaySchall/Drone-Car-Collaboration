@@ -15,7 +15,7 @@ import drone_client as connect
 
 rospy.init_node('red_object_detection')
 bridge = CvBridge()
-USED = 0
+message_sent = False
 # Create a publisher to publish the video feed to a ROS topic
 image_pub = rospy.Publisher('red_object_detection/image_raw', Image, queue_size=10)
 
@@ -39,10 +39,10 @@ def detect_red(cv_image):
 
     return mask
 
-#min and max area determine size of detected objects to draw bounding boxes around
+# min and max area determine size of detected objects to draw bounding boxes around
 def draw_bounding_boxes(cv_image, mask, min_area=1000, max_area=10000):
     # Find contours in the mask
-    global USED
+    global message_sent
     contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
     # Iterate through the contours
@@ -54,8 +54,8 @@ def draw_bounding_boxes(cv_image, mask, min_area=1000, max_area=10000):
         if min_area < area < max_area:
             # Calculate the bounding box of the contour
             x, y, w, h = cv2.boundingRect(contour)
-            if USED < 1:
-                USED = USED + 1
+            if not message_sent:
+                message_sent = True
                 print("Sending message to car...")
                 connect.message_car(1)
             # Draw the bounding box on the original image
