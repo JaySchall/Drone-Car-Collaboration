@@ -21,7 +21,7 @@ Send a message to the car using following protocol:
 def message_car(var):
     print("Sending message:", var)
     try:
-        CLIENT_SOCKET.send(var.encode())
+        CLIENT_SOCKET.send(str(var).encode()) # Convert var to string and then encode it (encode expects a string that it will byte encode)
         print("Message sent successfully!")
     except Exception as e:
         print("Error sending message:", str(e))
