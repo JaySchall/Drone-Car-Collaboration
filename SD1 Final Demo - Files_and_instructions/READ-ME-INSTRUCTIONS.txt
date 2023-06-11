@@ -7,9 +7,8 @@ program which should be in the correct path (which is set as the same directory 
 	a.MAKE SURE TO USE PYTHON 3 VERSION AND ABOVE
 		i.SO RUN: python3 name_of_program.py on car and drone, respectively.
 
-#Current problem:
-"import drone_client as connect", in the RedDetect.py file, then later on theres a line of code that says connect.send_message(...), however send_message() is not defined in drone_client.py
-
+#Current status:
+demo is working! Need to add some loop functionality now.
 
 #Special note:
 
