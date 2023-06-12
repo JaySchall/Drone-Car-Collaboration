@@ -70,7 +70,7 @@ def detect_red(cv_image):
 
 # min and max area determine size of detected objects to draw bounding boxes around
 def draw_bounding_boxes(cv_image, mask, min_area=1000, max_area=10000):
-    
+    global RED_OBJ_FOUND
     # Find contours in the mask
     contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
@@ -92,6 +92,7 @@ def draw_bounding_boxes(cv_image, mask, min_area=1000, max_area=10000):
     return cv_image
 
 def image_callback(data):
+    global RED_OBJ_FOUND
     bridge = CvBridge()  # Create an instance of the CvBridge class to convert between ROS Image messages and OpenCV images
 
     try:
