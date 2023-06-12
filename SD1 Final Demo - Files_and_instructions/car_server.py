@@ -63,7 +63,7 @@ def main():
             px.forward(SPEED)
             with CONNECTION_SOCKET:
                 while True:
-                    PACKET = CONNECTION_SOCKET.recv(1024).decode()   # Receives command
+                    PACKET = CONNECTION_SOCKET.recv(1).decode()   # Receives command (buffer size set to 1 byte --> recv(1))
                     print("Received packet [0=stop,1=cont_drive,2=red_speed,3=L, 4=R,5=clear]:", int(PACKET))
                     if int(PACKET) == STOP:
                         obstruction()                              # Make a call to stop car
