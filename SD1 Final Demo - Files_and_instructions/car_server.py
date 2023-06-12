@@ -4,8 +4,8 @@ import time
 
 SERVER_NAME = "192.168.11.133"                              # Server IP (car)
 SERVER_PORT = 10600                                         # Server Port(Predefined)
-SPEED = 0                                                   # Global speed variable
-DEFAULT_SPEED = 0                                           # Default cruising speed
+SPEED = 3                                                   # Global speed variable
+DEFAULT_SPEED = 1                                           # Default cruising speed
 STOP = 0
 NORMAL_DRIVE = 1
 REDUCE_SPEED = 2
