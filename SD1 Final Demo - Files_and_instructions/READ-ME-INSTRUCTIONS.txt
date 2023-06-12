@@ -8,7 +8,7 @@ program which should be in the correct path (which is set as the same directory 
 		i.SO RUN: python3 name_of_program.py on car and drone, respectively.
 
 #Current status:
-demo is working! Need to add some loop functionality now.
+demo is working! Loop functionality added! ready for SD2 Demo on June 12th, 2023
 
 #Special note:
 
