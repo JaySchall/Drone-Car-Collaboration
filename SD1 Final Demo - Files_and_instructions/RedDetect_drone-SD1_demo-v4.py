@@ -8,7 +8,12 @@ import os
 import drone_client as connect
 
 #global variables:
-message_sent = False  # Flag to keep track of whether a message has been sent to the car or not
+MESSAGE_SENT = False  # Flag to keep track of whether a message has been sent to the car or not
+SEND_STOP = 0
+SEND_NORMAL_DRIVE = 1
+SEND_REDUCE_SPEED = 2
+SEND_TURN_LEFT = 3
+SEND_TURN_RIGHT = 4
 #
 
 # When importing drone_client.py,
@@ -39,11 +44,11 @@ image_pub = rospy.Publisher('red_object_detection/image_raw', Image, queue_size=
 print("ROS publisher created for 'red_object_detection/image_raw' topic.")
 
 def send_message_to_car():
-    global message_sent  # Declare message_sent as global to modify the global variable
-    if not message_sent:
-        message_sent = True
+    global MESSAGE_SENT # Declare message_sent as global to modify the global variable
+    if not MESSAGE_SENT:
+        MESSAGE_SENT = True
         print("Sending message to car...")
-        connect.message_car(1)
+        connect.message_car(SEND_STOP)
 
 def detect_red(cv_image):
     # Convert the image to HSV color space
@@ -81,7 +86,9 @@ def draw_bounding_boxes(cv_image, mask, min_area=1000, max_area=10000):
             x, y, w, h = cv2.boundingRect(contour)
             # Draw the bounding box on the original image
             cv2.rectangle(cv_image, (x, y), (x + w, y + h), (0, 255, 0), 2)
-            send_message_to_car()  # Send message to the car
+            # Now Send message to the car
+            send_message_to_car()  
+            
     return cv_image
 
 def image_callback(data):

@@ -6,18 +6,23 @@ SERVER_NAME = "192.168.11.133"                              # Server IP (car)
 SERVER_PORT = 10600                                         # Server Port(Predefined)
 SPEED = 0                                                   # Global speed variable
 DEFAULT_SPEED = 0                                           # Default cruising speed
+STOP = 0
+NORMAL_DRIVE = 1
+REDUCE_SPEED = 2
+TURN_LEFT = 3
+TURN_RIGHT = 4
 px = Picarx()
 
 def warning(var):
     global SPEED
-    if var == 2:
+    if var == REDUCE_SPEED:
         if SPEED != 0:                                      # Slow car down by half
             SPEED = SPEED / 2
             print("Slowing down car. New speed:", SPEED)
             px.forward(SPEED)
-    elif var == 3:
+    elif var == TURN_LEFT:
         raise NotImplementedError("Left turn not implemented yet")  # Turn car left
-    elif var == 4:
+    elif var == TURN_RIGHT:
         raise NotImplementedError("Right turn not implemented yet")  # Turn car right
     
 def obstruction():
@@ -51,9 +56,9 @@ def main():
                 while True:
                     PACKET = CONNECTION_SOCKET.recv(1024).decode()   # Receives command
                     print("Received packet:", PACKET)
-                    if not PACKET:
+                    if int(PACKET) == STOP:
                         obstruction()                              # Make a call to stop car
-                    elif int(PACKET) == 1:
+                    elif int(PACKET) == NORMAL_DRIVE:
                         continueDriving()                          # Go back to normal
                     else:
                         warning(int(PACKET))                       # Adjust speed or direction
