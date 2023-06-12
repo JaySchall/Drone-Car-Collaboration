@@ -27,7 +27,7 @@ def warning(var):
     
 def obstruction():
     global SPEED
-    SPEED = 0
+    SPEED = STOP
     print("Car stopped due to obstruction")
     px.forward(SPEED)                                       # Stop car
 
@@ -45,13 +45,16 @@ def main():
     SERVER_SOCKET.listen(1)                                    # Maximum number of queued connections
 
     print('Car now listening on ' + SERVER_NAME + ':' + str(SERVER_PORT))
-
+   
+    
+    
     while True:
         try:
             print("Waiting for incoming client connections...")
             CONNECTION_SOCKET, addr = SERVER_SOCKET.accept()     # TCP Connection Created
             print("Connection established with:", addr)
-
+            print(f'Car now driving at {SPEED}...') 
+            px.forward(SPEED)
             with CONNECTION_SOCKET:
                 while True:
                     PACKET = CONNECTION_SOCKET.recv(1024).decode()   # Receives command
