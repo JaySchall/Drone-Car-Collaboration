@@ -19,7 +19,7 @@ sys.path.insert(0, current_directory)
 print("Current working directory (where this program was ran from):", current_directory)
 
 print("Trying to establish connection with car server...")
-if connect.establish_socket_connection() == False
+if connect.establish_socket_connection() == False:
     print("Exiting program...")
     exit(1)
 
