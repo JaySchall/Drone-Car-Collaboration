@@ -7,11 +7,13 @@ import sys
 import os
 import drone_client as connect
 
-'''
-# When importing drone_client.py, 
-# make sure it is in the same directory as where 
+#global variables:
+message_sent = False  # Flag to keep track of whether a message has been sent to the car or not
+#
+
+# When importing drone_client.py,
+# make sure it is in the same directory as where
 # this program was run from.
-'''
 
 # Make sure drone_client.py file is in the same directory as where this program is run:
 current_directory = os.getcwd()
@@ -31,13 +33,17 @@ except rospy.ROSInitException as e:
     exit(1)  # Exit the program with a non-zero exit status to indicate failure
 
 
-bridge = CvBridge()     # Create an instance of the CvBridge class to convert between ROS Image messages and OpenCV images
-message_sent = False    # Flag to keep track of whether a message has been sent to the car or not
-
 
 # Create a publisher to publish the video feed to a ROS topic
 image_pub = rospy.Publisher('red_object_detection/image_raw', Image, queue_size=10)
 print("ROS publisher created for 'red_object_detection/image_raw' topic.")
+
+def send_message_to_car():
+    global message_sent  # Declare message_sent as global to modify the global variable
+    if not message_sent:
+        message_sent = True
+        print("Sending message to car...")
+        connect.message_car(1)
 
 def detect_red(cv_image):
     # Convert the image to HSV color space
@@ -62,7 +68,6 @@ def detect_red(cv_image):
 # min and max area determine size of detected objects to draw bounding boxes around
 def draw_bounding_boxes(cv_image, mask, min_area=1000, max_area=10000):
     # Find contours in the mask
-    global message_sent
     contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
     # Iterate through the contours
@@ -74,32 +79,42 @@ def draw_bounding_boxes(cv_image, mask, min_area=1000, max_area=10000):
         if min_area < area < max_area:
             # Calculate the bounding box of the contour
             x, y, w, h = cv2.boundingRect(contour)
-            if not message_sent:
-                message_sent = True
-                print("Sending message to car...")
-                connect.message_car(1)
             # Draw the bounding box on the original image
             cv2.rectangle(cv_image, (x, y), (x + w, y + h), (0, 255, 0), 2)
-
+            send_message_to_car()  # Send message to the car
     return cv_image
 
 def image_callback(data):
-    # Convert the ROS image message to an OpenCV image
-    cv_image = bridge.imgmsg_to_cv2(data, 'bgr8')
+    bridge = CvBridge()  # Create an instance of the CvBridge class to convert between ROS Image messages and OpenCV images
 
-    # Detect the red objects in the image
-    mask = detect_red(cv_image)
+    try:
+        # Convert the ROS image message to an OpenCV image
+        cv_image = bridge.imgmsg_to_cv2(data, 'bgr8')
 
-    # Draw bounding boxes around the detected red objects
-    cv_image_with_bboxes = draw_bounding_boxes(cv_image, mask)
+        # Detect the red objects in the image
+        mask = detect_red(cv_image)
 
-    # Convert the OpenCV image back to a ROS image message
-    img_msg = bridge.cv2_to_imgmsg(cv_image_with_bboxes, encoding="bgr8")
+        # Draw bounding boxes around the detected red objects
+        cv_image_with_bboxes = draw_bounding_boxes(cv_image, mask)
 
-    # Publish the ROS image message to the topic
-    image_pub.publish(img_msg)
+        # Convert the OpenCV image back to a ROS image message
+        img_msg = bridge.cv2_to_imgmsg(cv_image_with_bboxes, encoding="bgr8")
 
-# Create a subscriber to receive video frames from the camera
-image_sub = rospy.Subscriber('main_camera/image_raw_throttled', Image, image_callback)
+        # Publish the ROS image message to the topic
+        image_pub.publish(img_msg)
 
-rospy.spin()
+    except Exception as e:
+        print("Error in image_callback:", str(e))
+
+def start_image_processing():
+    try:
+        # Create a subscriber to receive video frames from the camera
+        image_sub = rospy.Subscriber('main_camera/image_raw_throttled', Image, image_callback)
+
+        rospy.spin()
+
+    except rospy.ROSException as e:
+        print("ROSException in start_image_processing:", str(e))
+
+if __name__ == "__main__":
+    start_image_processing()

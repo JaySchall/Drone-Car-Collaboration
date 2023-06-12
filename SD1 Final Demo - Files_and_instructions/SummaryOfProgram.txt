@@ -1,24 +1,32 @@
 
 
-1. `RedDetect.py`:
-   - The code appears to be well-structured and follows the standard import statements.
-   - The global variable `message_sent` is used to track whether a message has been sent to the car. It starts as `False` and is set to `True` once a message is sent. This ensures that the message is sent only once when a red object is detected.
-   - The main functionality of detecting red objects, drawing bounding boxes, and publishing the result to a ROS topic seems to be implemented correctly.
+In RedDetect.py:
+- The code appears to be importing the required modules and packages correctly.
+- There is a comment explaining the import of the drone_client.py file and its location requirement.
+- The code initializes a ROS node named 'red_object_detection' and handles potential exceptions during initialization.
+- It creates a CvBridge object for converting between ROS Image messages and OpenCV images.
+- It creates a publisher to publish the video feed to a ROS topic.
+- The detect_red() function converts the image to HSV color space and applies a mask to detect red objects.
+- The draw_bounding_boxes() function finds contours in the mask and draws bounding boxes around the detected red objects.
+- The image_callback() function converts the ROS image message to an OpenCV image, performs object detection, and publishes the annotated image to the topic.
+- It creates a subscriber to receive video frames from the camera.
+- The program enters the ROS spin loop to process callbacks.
 
-2. `drone_client.py`:
-   - The code establishes a socket connection with a predefined server IP and port.
-   - The `message_car` function sends messages to the car based on a predefined protocol.
-   - The connection status and socket closing functionality are included.
-   - Overall, the code looks fine and seems to serve the purpose of communicating with the car.
+In drone_client.py:
+- The code correctly imports the required module and initializes a socket for TCP communication.
+- There is a function named message_car() that sends a message to the car based on a provided variable.
+- There is a function named close_socket() to close the client socket.
+- There is a function named establish_socket_connection() that attempts to establish a socket connection with the server.
 
-3. `car_server.py`:
-   - The code creates a server socket to listen for client connections.
-   - It enters a continuous loop to handle incoming connections and receive command packets from clients.
-   - There are functions like `warning`, `obstruction`, and `continueDriving` to handle different commands received.
-   - The code seems to handle exceptions during client connection and printing error messages appropriately.
-   - The usage of the `Picarx` class from the `picarx` module suggests that it controls the car's movement.
-   - The main function is responsible for setting up the server socket, accepting client connections, and processing commands.
+In car_server.py:
+- The code imports the required modules correctly.
+- There are global variables defined for the server IP, server port, speed, and default speed.
+- There is a Picarx object named px for controlling the car.
+- There are functions defined for handling different commands received from the client, such as warning(), obstruction(), and continueDriving().
+- The main() function sets up a server socket, listens for client connections, and handles received commands accordingly.
 
-In terms of issues, errors, or inconsistencies, here are some observations:
-- It's important to make sure that the necessary dependencies and modules (`rospy`, `cv2`, `numpy`, `sensor_msgs`, `cv_bridge`, `socket`, `picarx`) are properly installed and available in the environment where these scripts will be executed.
-- Make sure that all the required files (`drone_client.py`, `picarx.py`) are present in the same directory as the respective scripts or adjust the paths accordingly.
+Comparing the three files:
+- RedDetect.py is a ROS node that performs red object detection and publishes the annotated video feed to a ROS topic.
+- drone_client.py is a client-side script that establishes a socket connection with a server.
+- car_server.py is a server-side script that listens for client connections, receives commands, and controls a car based on the received commands.
+
