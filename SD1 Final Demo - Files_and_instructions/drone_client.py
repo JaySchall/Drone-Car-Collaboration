@@ -14,7 +14,11 @@ Send a message to the car using the following protocol:
 2 = Slow down due to possible obstruction
 3 = Turn car left to avoid obstruction to the right
 4 = Turn car right to avoid obstruction to the left
+5 = All clear (no perceived threats or recovery actions necessary; no changes)
 '''
+def wait_timer(seconds):
+    print(f"Waiting for {seconds} seconds...")
+    time.sleep(seconds)
 
 def message_car(var):
     print("Sending message:", var)

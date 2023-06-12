@@ -7,10 +7,11 @@ SERVER_PORT = 10600                                         # Server Port(Predef
 SPEED = 3                                                   # Global speed variable
 DEFAULT_SPEED = 1                                           # Default cruising speed
 STOP = 0
-NORMAL_DRIVE = 1
+CONT_DRIVE = 1
 REDUCE_SPEED = 2
 TURN_LEFT = 3
 TURN_RIGHT = 4
+ALL_CLEAR = 5
 px = Picarx()
 
 def warning(var):
@@ -24,12 +25,17 @@ def warning(var):
         raise NotImplementedError("Left turn not implemented yet")  # Turn car left
     elif var == TURN_RIGHT:
         raise NotImplementedError("Right turn not implemented yet")  # Turn car right
+
+def wait_timer(seconds):
+    print(f"Waiting for {seconds} seconds...")
+    time.sleep(seconds)
     
 def obstruction():
     global SPEED
     SPEED = STOP
     print("Car stopped due to obstruction")
-    px.forward(SPEED)                                       # Stop car
+    px.forward(SPEED)  # Stop car
+
 
 def continueDriving():
     global SPEED
@@ -58,11 +64,13 @@ def main():
             with CONNECTION_SOCKET:
                 while True:
                     PACKET = CONNECTION_SOCKET.recv(1024).decode()   # Receives command
-                    print("Received packet:", PACKET)
+                    print("Received packet [0=stop,1=cont_drive,2=red_speed,3=L, 4=R,5=clear]:", int(PACKET))
                     if int(PACKET) == STOP:
                         obstruction()                              # Make a call to stop car
-                    elif int(PACKET) == NORMAL_DRIVE:
-                        continueDriving()                          # Go back to normal
+                    elif int(PACKET) == ALL_CLEAR:
+                        continue                                   # No actions necessary
+                    elif int(PACKET) == CONT_DRIVE:
+                        continueDriving()                          # continue to normal driving
                     else:
                         warning(int(PACKET))                       # Adjust speed or direction
         except Exception as e:

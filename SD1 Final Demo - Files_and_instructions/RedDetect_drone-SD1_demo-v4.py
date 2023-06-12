@@ -9,10 +9,12 @@ import drone_client as connect
 
 #global variables:
 SEND_STOP = 0
-SEND_NORMAL_DRIVE = 1
+SEND_CONT_DRIVE = 1
 SEND_REDUCE_SPEED = 2
 SEND_TURN_LEFT = 3
 SEND_TURN_RIGHT = 4
+SEND_ALL_CLEAR = 5
+RED_OBJ_FOUND = False
 #
 
 # When importing drone_client.py,
@@ -43,7 +45,7 @@ image_pub = rospy.Publisher('red_object_detection/image_raw', Image, queue_size=
 print("ROS publisher created for 'red_object_detection/image_raw' topic.")
 
 def send_message_to_car(command):
-        print(f"Sending message {command} to car [0=stop,1=drive_normal,2=reduce_speed,3=turn L, 4=turn R]")
+        print(f"Sending message {command} to car [0=stop,1=cont_drive,2=red_speed,3=L, 4=R,5=clear]")
         connect.message_car(command)
 
 def detect_red(cv_image):
@@ -68,6 +70,7 @@ def detect_red(cv_image):
 
 # min and max area determine size of detected objects to draw bounding boxes around
 def draw_bounding_boxes(cv_image, mask, min_area=1000, max_area=10000):
+    
     # Find contours in the mask
     contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
@@ -83,10 +86,9 @@ def draw_bounding_boxes(cv_image, mask, min_area=1000, max_area=10000):
             x, y, w, h = cv2.boundingRect(contour)
             # Draw the bounding box on the original image
             cv2.rectangle(cv_image, (x, y), (x + w, y + h), (0, 255, 0), 2)
-            # Now Send message to the car
-            send_message_to_car(SEND_STOP)  
-        else: #otherwise, tell car to proceed (drive) as normal
-            send_message_to_car(SEND_NORMAL_DRIVE)
+            RED_OBJ_FOUND = True
+        else:
+            RED_OBJ_FOUND = False
     return cv_image
 
 def image_callback(data):
@@ -101,7 +103,13 @@ def image_callback(data):
 
         # Draw bounding boxes around the detected red objects
         cv_image_with_bboxes = draw_bounding_boxes(cv_image, mask)
-
+        # Now Send message to the car if object detected
+        if RED_OBJ_FOUND:
+            send_message_to_car(SEND_STOP)
+            connect.wait_timer(5) #wait for some time before processing and sending more commands
+            send_message_to_car(SEND_CONT_DRIVE) #now tell car to continue driving
+        else:
+            send_message_to_car(SEND_ALL_CLEAR)
         # Convert the OpenCV image back to a ROS image message
         img_msg = bridge.cv2_to_imgmsg(cv_image_with_bboxes, encoding="bgr8")
 
