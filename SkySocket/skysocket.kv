@@ -4,7 +4,7 @@
 #:set TERMINAL_COLOR [0, 0, 1, 1]
 #:set GREEN [0, 1, 0.5, 1]
 #:set PADDING dp(5)
-#:set VIDEO_IP "http://192.168.1.84:8080"
+#:set VIDEO_IP "http://192.168.11.1:8080/stream?topic=/main_camera/image_raw"
 #:set TAB_BG_COLOR [0.85, 0.85, 0.85, 1]
 #:set TAB_CLICK_COLOR [0.74, 0.74, 0.74, 1]
 #:set BLACK [0, 0, 0, 1]
@@ -12,6 +12,7 @@
 #:set VIDEO_WIDTH dp(640)
 #:set VIDEO_HEIGHT dp(360)
 #:set BULLSHIT dp(150)
+
 #:import ssh ssh
 
 <HeaderLabel@Label>:
@@ -156,16 +157,19 @@
                                     text: 'Connect'
                                     size_hint: .8, .8
                                     pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                                    on_release: ssh.car_init()
                                 Button:
                                     id: car_standby
                                     text: "Standby"
                                     size_hint: .8, .8
                                     pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                                    on_release: ssh.car_begin()
                                 Button:
                                     id: car_restart
                                     text: "Restart"
                                     size_hint: .8, .8
                                     pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                                    on_release: ssh.stop()
                             BoxLayout:
                                 orientation: 'vertical'
                                 size_hint: 0.6, 1
@@ -212,16 +216,19 @@
                                     text: 'Connect'
                                     size_hint: .8, .8
                                     pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                                    on_release: ssh.drone_init()
                                 Button:
                                     id: car_standby
                                     text: "Standby"
                                     size_hint: .8, .8
                                     pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                                    on_release: ssh.drone_begin()
                                 Button:
                                     id: car_restart
                                     text: "Restart"
                                     size_hint: .8, .8
                                     pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                                    on_release: ssh.stop()
                             BoxLayout:
                                 orientation: 'vertical'
                                 size_hint: 0.6, 1
@@ -295,7 +302,7 @@
                         padding_y: dp(100)
                         size_hint: 0.8, 0.2
                         pos_hint: {'center_x': 0.5, 'center_y': 0.5}
-                        on_release: pass
+                        on_release: ssh.SHITTY_BUTTON()
                         background_color: GREEN
 
         SkyTabbedPannel:
