@@ -52,27 +52,37 @@ def main():
 
     print('Car now listening on ' + SERVER_NAME + ':' + str(SERVER_PORT))
    
+    connection_established = False  # Flag to track if a connection is established
+    timer_duration = 10  # Number of seconds to wait for a connection
+    timer_start = time.time()  # Start the timer
     
-    
-    while True:
+    while not connection_established and (time.time() - timer_start) < timer_duration:
         try:
             print("Waiting for incoming client connections...")
             CONNECTION_SOCKET, addr = SERVER_SOCKET.accept()     # TCP Connection Created
             print("Connection established with:", addr)
             print(f'Car now driving at {SPEED}...') 
             px.forward(SPEED)
-            with CONNECTION_SOCKET:
-                while True:
-                    PACKET = CONNECTION_SOCKET.recv(1).decode()   # Receives command (buffer size set to 1 byte --> recv(1))
-                    print("Received packet [0=stop,1=cont_drive,2=red_speed,3=L, 4=R,5=clear]:", int(PACKET))
-                    if int(PACKET) == STOP:
-                        obstruction()                              # Make a call to stop car
-                    elif int(PACKET) == ALL_CLEAR:
-                        continue                                   # No actions necessary
-                    elif int(PACKET) == CONT_DRIVE:
-                        continueDriving()                          # continue to normal driving
-                    else:
-                        warning(int(PACKET))                       # Adjust speed or direction
+            connection_established = True
+        except Exception as e:
+            print("Error occurred during client connection:", str(e))
+    
+    if not connection_established:
+        print("No incoming connections. Exiting the program.")
+        return
+    
+    while True:
+        try:
+            PACKET = CONNECTION_SOCKET.recv(1).decode()   # Receives command (buffer size set to 1 byte --> recv(1))
+            print("Received packet [0=stop,1=cont_drive,2=red_speed,3=L, 4=R,5=clear]:", int(PACKET))
+            if int(PACKET) == STOP:
+                obstruction()                              # Make a call to stop car
+            elif int(PACKET) == ALL_CLEAR:
+                continue                                   # No actions necessary
+            elif int(PACKET) == CONT_DRIVE:
+                continueDriving()                          # continue to normal driving
+            else:
+                warning(int(PACKET))                       # Adjust speed or direction
         except Exception as e:
             print("Error occurred during client connection:", str(e))
 
