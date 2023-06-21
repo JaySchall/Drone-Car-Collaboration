@@ -1,0 +1,4 @@
+*.pyc
+/SkySocket/.vs/
+*.opendb
+/SkySocket/python-3.11.3-embed-amd64/
