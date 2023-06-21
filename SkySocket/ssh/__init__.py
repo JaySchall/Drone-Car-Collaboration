@@ -70,7 +70,7 @@ class SSH():
     
     def start_experiment(self, dir_path, file_path):
         self.file = file_path
-        self.con.run(f'python3 {dir_path}/{file_path}')
+        self.con.run(f'python3 {dir_path}/{file_path} &')
 
     def end(self):
         self.con.run(f'killall {self.file}')
