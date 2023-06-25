@@ -14,13 +14,23 @@ from kivy.core.window import Window
 from kivy.modules import inspector
 
 from widgets.tab import SkyTabbedPannel
+from interfaces.simulation import SkySimulationTab
+from widgets.form.entry import SkyTextField
+from res.constants import SkyVariables
+from mixins.ssh.car import carConnection
+from mixins.ssh.drone import droneConnection
 
 class MainWindow(BoxLayout):
-    pass
+    settings = SkyVariables()
+    drone = droneConnection(settings.drone_username,
+                            settings.drone_ip,
+                            settings.drone_password)
+    car = carConnection(settings.car_username,
+                        settings.car_ip,
+                        settings.car_passowrd)
 
 
 class SkySocketApp(App):
-
     def build(self):
         return MainWindow()
     
