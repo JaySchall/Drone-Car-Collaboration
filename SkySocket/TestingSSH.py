@@ -67,6 +67,9 @@ class ssh_connection:
         else:
             self.c = fabric.Connection(host=self.hostname, user=self.username, connect_kwargs={"password": self.password})
 
+import subprocess
+
+
 test_obj = ssh_connection(HOST, NAME, PASS)
 print(test_obj.is_connected())
 test_obj.cmd('ls')
