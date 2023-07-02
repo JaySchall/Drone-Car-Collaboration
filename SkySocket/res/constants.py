@@ -1,4 +1,4 @@
-from kivy.properties import ColorProperty, StringProperty
+from kivy.properties import StringProperty
 from kivy.event import EventDispatcher
 from kivy.metrics import dp
 from kivy.metrics import sp
@@ -6,15 +6,16 @@ from kivy.metrics import sp
 from res.config import SkyConfig
 
 class ColorConstants:
-    white = ColorProperty([1, 1, 1, 1])
-    black = ColorProperty([0, 0, 0, 1])
-    red = ColorProperty([1, 0, 0, 1])
-    blue = ColorProperty([0, 0, 1, 1])
-    green = ColorProperty([0, 1, 0.5, 1])
+    white = [1, 1, 1, 1]
+    black = [0, 0, 0, 1]
+    red = [1, 0.4, 0.4, 1]
+    blue = [0, 0, 1, 1]
+    green = [0, 1, 0.5, 1]
+    orange = [1, 0.75, 0, 1]
     
-    tab_bg_color = ColorProperty([0.85, 0.85, 0.85, 1])
-    tab_bg_clicked_color = ColorProperty([0.74, 0.74, 0.74, 1])
-    form_fg_color = [0.89,0.89,0.89,1]
+    tab_bg_color = [0.85, 0.85, 0.85, 1]
+    tab_bg_clicked_color = [0.74, 0.74, 0.74, 1]
+    form_fg_color = [0.93,0.93,0.93,1]
     form_bg_color = [0.8, 0.8, 0.8, 1]
 
 class StyleConstants:

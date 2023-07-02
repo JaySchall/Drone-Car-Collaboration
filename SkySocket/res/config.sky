@@ -1,7 +1,7 @@
 [DEFAULT]
 drone_username: pi
-drone_ip: 192.168.11.1
-drone_password: raspberry
+drone_ip: 192.168.1.69
+drone_password: RiceBread
 car_username: pi
 car_ip: 192.168.11.133
 car_password: raspberry
@@ -24,8 +24,8 @@ car_file_name: car_server.py
 
 [user.ssh]
 drone_username: pi
-drone_ip: 192.168.11.1
-drone_password: raspberry
+drone_ip: 192.168.1.69
+drone_password: Pass
 car_username: pi
 car_ip: 192.168.11.133
 car_password: raspberry
