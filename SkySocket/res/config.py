@@ -5,11 +5,13 @@ class SkyConfig:
     _config = configparser.ConfigParser()
     
     def __init__(self):
+        print(os.getcwd())
         try:
-            self._config.read(os.path.join('res', 'config.sky'))
+            self._config.read(os.path.join('SkySocket', 'res', 'config.sky'))
             print(self._config.sections())
         except Exception:
             raise ValueError("Config file is missing or was moved.")
+        
         
     def reset_defaults(self):
         for section in self._config:
