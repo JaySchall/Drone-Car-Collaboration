@@ -1,4 +1,3 @@
-from res.config import SkyConfig
 from mixins.ssh import sshConnection
 
 class carConnection(sshConnection):

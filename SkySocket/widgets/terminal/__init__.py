@@ -14,7 +14,7 @@ Builder.load_string("""
             rgba: self.bg_color
         Rectangle:
             size: self.size
-            pos: self.pos  
+            pos: self.pos
 """)
 
 class SkyTerminal(Label):

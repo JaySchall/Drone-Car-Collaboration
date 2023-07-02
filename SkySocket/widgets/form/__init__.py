@@ -1,7 +1,6 @@
 from kivy.properties import StringProperty, ObjectProperty, BooleanProperty
 
 class SkyForm:
-    uid = StringProperty()
     def __init__(self):
         self._fields = {}
 
@@ -9,7 +8,7 @@ class SkyForm:
         if field.parent_form:
             return
         field.parent_form = self
-        self._fields[field.uid] = field
+        self._fields[field.sid] = field
 
     def get_item(self, id):
         return self._fields[id]
@@ -17,17 +16,19 @@ class SkyForm:
     def get_value(self, id):
         return self._fields[id].get_value()
     
+    def get_values(self):
+        return {i.sid:i.get_value() for i in self._fields.values()}
+    
     def set_value(self, id, value):
-        self._fields[id] = value
+        self._fields[id].set_value(value)
     
     def validate(self):
         for fields, values in self._fields:
             values.validate()
 
 class SkyFormFieldMixin:
-    uid = StringProperty()
+    sid = StringProperty()
     label = StringProperty()
-    value_property = StringProperty()
     parent_form = ObjectProperty()
     is_disabled = BooleanProperty()
     validators = []
@@ -38,4 +39,4 @@ class SkyFormFieldMixin:
 
     def validate(self):
         for validator in self.validators:
-            return validator.validate(self.parent_form, self.uid, self.value_property)
+            return validator.validate(self.parent_form, self.sid, self.value_property)

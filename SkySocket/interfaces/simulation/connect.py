@@ -8,8 +8,6 @@ from kivy.properties import StringProperty, ObjectProperty
 from kivy.clock import Clock
 
 
-
-
 Builder.load_string("""
 #: import SkyVerticalLayout widgets.layouts.SkyVerticalLayout
 <SimulationButton>:
@@ -42,32 +40,37 @@ Builder.load_string("""
             text: 'Connect'
             on_release: root.on_connect()
         SimulationButton:
-            text: 'Standby'
-            on_release: root.on_standby()
+            text: 'Ping'
+            on_release: root.on_ping()
         SimulationButton:
-            text: 'restart'
+            text: 'Restart'
             on_release: root.on_restart()
     SkyVerticalLayout:
         size_hint: 0.6, 1
         StatusLabel:
             text: 'Connected'
         StatusResult:
+            id: connectlabel
             text: root.connected_label
         StatusLabel:
-            text: 'Active'
+            text: 'Online'
         StatusResult:
+            id: statuslabel
             text: root.active_label
-
-        
 """)
+
+
 class SimulationButton(Button):
     center_pos = StyleConstants.center_pos
+
 
 class StatusLabel(Label):
     black = ColorConstants.black
 
+
 class StatusResult(Label):
     black = ColorConstants.black
+
 
 class SkyConnectForm(SkyHorizontalLayout):
     connected_label = StringProperty("FALSE")
@@ -80,24 +83,32 @@ class SkyConnectForm(SkyHorizontalLayout):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        Clock.schedule_interval(self._update_text, 1)
+        Clock.schedule_once(self._init, 1)
 
-    def _update_text(self, dt):
-        if self.connection.is_connected():
+    def _init(self, *args):
+        self.connection.bind(online=self._update_active)
+        self.connection.bind(connected=self._update_connect)
+
+    def _update_connect(self, *args):
+        if self.connection.connected and self.connected_label == "FALSE":
             self.connected_label = "TRUE"
-            #if self.connection.is_active():
-                #self.active_label = "TRUE"
-            #else:
-                #self.active_label = "FALSE"
-        else:
+        elif not self.connection.connected and self.connected_label == "TRUE":
             self.connected_label = "FALSE"
+
+    def _update_active(self, *args):
+        if self.connection.online and self.active_label == "FALSE":
+            self.active_label = "TRUE"
+        elif not self.connection.online and self.active_label == "TRUE":
             self.active_label = "FALSE"
 
-    def on_standby(self):
-        print('standby')
-    
+    def on_ping(self):
+        print("pinging")
+        self.connection.on_ping()
+
     def on_connect(self):
-        print('connect')
-    
+        print("connecting")
+        self.connection.reconnect()
+
     def on_restart(self):
-        print('restart')
+        print('restarting')
+        self.connection.cmd("sudo shutdown -r now")

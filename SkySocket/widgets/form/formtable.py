@@ -1,25 +1,19 @@
 from kivy.lang.builder import Builder
 from kivy.metrics import dp
-from kivy.properties import (StringProperty, NumericProperty,
-                             BooleanProperty, ObjectProperty)
+from kivy.properties import (NumericProperty, BooleanProperty, ObjectProperty)
 
-from kivy.uix.textinput import TextInput
-from kivy.uix.checkbox import CheckBox
-from kivy.uix.slider import Slider
+
 from kivy.uix.label import Label
 from kivy.uix.boxlayout import BoxLayout
 
 from widgets.layouts import SkyVerticalLayout
 from res.constants import ColorConstants
-from widgets.form import SkyFormFieldMixin, SkyForm
-from widgets.form.validator import (SkyPathValidator,SkyNetworkValidator, 
-                                    SkyRequiredValidator, SkyNumberValidator)
-
+from widgets.form import SkyForm
 
 
 Builder.load_string("""
 <SkyFormTable>:
-    size_hint: 1, 1
+    size_hint: 1, None
     height: self.minimum_height
     padding: dp(5), dp(5)
     spacing: dp(5)
@@ -39,18 +33,16 @@ class SkyFormTable(SkyVerticalLayout):
     field_width = NumericProperty(dp(200))
     label_width = NumericProperty(dp(100))
     fill_width = BooleanProperty(False)
-    label_kwargs = {}
-    form_field_kwargs = {}
 
     def add_fields(self, fields):
         for item in fields:
             self.add_field(item)
     
     def add_field(self, field):
-        #self.form.add_field(field)
+        self.form.add_field(field)
         row = BoxLayout(
             orientation='horizontal',
-            size_hint = (1, 1),
+            size_hint = (1, None),
             height=self.row_height
         )
         row.add_widget(SkyFormLabel(text=field.label))

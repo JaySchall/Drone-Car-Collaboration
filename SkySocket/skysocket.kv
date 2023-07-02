@@ -1,64 +1,15 @@
 #:kivy 2.2.0
-#:set HEIGHT dp(12)
-#:set VIDEO_COLOR [1, 0, 0, 1]
-#:set TERMINAL_COLOR [0, 0, 1, 1]
-#:set GREEN [0, 1, 0.5, 1]
-#:set PADDING dp(5)
-#:set VIDEO_IP "http://192.168.1.84:8080"
-#:set TAB_BG_COLOR [0.85, 0.85, 0.85, 1]
-#:set TAB_CLICK_COLOR [0.74, 0.74, 0.74, 1]
-#:set BLACK [0, 0, 0, 1]
 #:set WHITE [1, 1, 1, 1]
-#:set VIDEO_WIDTH dp(640)
-#:set VIDEO_HEIGHT dp(360)
-#:set SETTINGS_WIDTH dp(150)
-
-<HeaderLabel@Label>:
-    size_hint: None, None
-    size: self.texture_size
-    color: BLACK
-
-<HeaderLayout@BoxLayout>:
-    orientation: 'horizontal'
-    size_hint: 1, None
-    height: self.minimum_height
-    padding: PADDING*2, PADDING
-    spacing: PADDING*2
-    canvas.before:
-        Color:
-            rgba: [0, 1, 0, 1]
-        Rectangle:
-            size: self.size
-            pos: self.pos
-    HeaderLabel:
-        id: drone_label
-        text: 'Drone Status:'
-    HeaderLabel:
-        id: drone_status
-        text: 'CONNECTED'
-    Label:
-        size_hint: None, None
-        size: PADDING*2, 0
-    HeaderLabel:
-        id: battery_label
-        text: 'Battery:'
-    HeaderLabel:
-        id: battery_status
-        text: '56%'
-    Label:
-    HeaderLabel:
-        id: car_label
-        text: 'Car Status'
-    HeaderLabel:
-        id: car_status
-        text: 'CONNECTING'
 
 <MainWindow>:
     orientation: 'vertical'
-    HeaderLayout:
+    SkyStatusBar:
+        drone_connection: root.drone
+        car_connection: root.car
+        start_status: simulationtab
     Label:
         size_hint: 1, None
-        height: dp(20)
+        height: dp(10)
         canvas.before:
             Color:
                 rgba: WHITE
@@ -66,8 +17,12 @@
                 size: self.size
                 pos: self.pos
     TabbedPanel:
+        id: tabpanel
         pos_hint: {'center_x': 0.5, 'center_y': 0.5}
         do_default_tab: False
+        strip_border: [0,0,0,0]
+        tab_height: dp(30)
+        tab_width: dp(150)
         canvas.before:
             Color:
                 rgba: WHITE
@@ -75,270 +30,13 @@
                 size: self.size
                 pos: self.pos
         SkySimulationTab:
+            id: simulationtab
             link: root.settings.video_source
             drone_connection: root.drone
             car_connection: root.car
-
-        SkyTabbedPannel:
-            text: 'Testing'
-            BoxLayout:
-                orientation: 'horizontal'
-                canvas.before:
-                    Color:
-                        rgba: TAB_BG_COLOR
-                    Rectangle:
-                        size: self.size
-                        pos: self.pos
-                Label:
-                    id: terminal_placeholder
-                    size_hint: 1, 1
-                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
-                    padding: dp(40), dp(40)
-                    canvas.before:
-                        Color:
-                            rgba: TERMINAL_COLOR
-                        Rectangle:
-                            size: self.size
-                            pos: self.pos
-                BoxLayout:
-                    orientation: 'vertical'
-                    padding: PADDING, PADDING
-                    spacing: PADDING
-                    size_hint_min_x: dp(350)
-                    size_hint_max_x: dp(550)
-                    
-                    BoxLayout:
-                        orientation: 'vertical'
-                        size_hint: 1, 0.6
-                        padding: PADDING, PADDING
-                        spacing: PADDING
-                        canvas.before:
-                            Color:
-                                rgba: [0.8 , 0.8, 0.8, 1]
-                            Rectangle:
-                                size: self.size
-                                pos: self.pos
-                        BoxLayout:
-                            orientation: 'vertical'
-                            size_hint: 1, 1
-                            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
-                            padding: PADDING, PADDING
-                            spacing: PADDING
-                            canvas.before:
-                                Color:
-                                    rgba: [0.89, 0.89, 0.89, 1]
-                                Rectangle:
-                                    size: self.size
-                                    pos: self.pos
-                            SkyCheckBoxField:
-                                label_text: 'Verbose'
-                            SkyCheckBoxField:
-                                label_text: "Drone as server"
-                            SkyTextField:
-                                label_text: "Port"
-                                hint: "Drone..."
-                                input_width: dp(75)
-                                padding: dp(0), PADDING*2
-                            SkyCheckBoxField:
-                                label_text: "Logfile"
-                            BoxLayout:
-                                orientation: 'horizontal'
-                                padding: dp(0), PADDING*3
-                                spacing: PADDING*3
-                                Label:
-                                    id: spacer
-                                    text: " "
-                                Button:
-                                    id: browse
-                                    text: "Browse"
-                                    size_hint: None, None
-                                    size: dp(85), dp(25)
-                                    pos_hint: {"center_x": 0.5, "center_y": 0.5}
-                            Button:
-                                text: "Run Drone Test"
-                                size_hint: None, None
-                                size: dp(200), dp(30)
-                                pos_hint:  {"center_x": 0.5, "center_y": 0.5}
-                    
-                        BoxLayout:
-                            orientation: 'vertical'
-                            size_hint: 1, 1
-                            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
-                            padding: PADDING, PADDING
-                            spacing: PADDING
-                            canvas.before:
-                                Color:
-                                    rgba: [0.89, 0.89, 0.89, 1]
-                                Rectangle:
-                                    size: self.size
-                                    pos: self.pos
-                            SkyCheckBoxField:
-                                #padding: dp(0), PADDING*3
-                                label_text: 'Verbose'
-                            SkyCheckBoxField:
-                                #padding: dp(0), PADDING*3
-                                label_text: "Car as server"
-                            SkyTextField:
-                                label_text: "Port"
-                                hint: "Car..."
-                                input_width: dp(75)
-                                padding: dp(0), PADDING*2
-                            SkyCheckBoxField:
-                                #padding: dp(0), PADDING*3
-                                label_text: "Logfile"
-                            BoxLayout:
-                                orientation: 'horizontal'
-                                padding: dp(0), PADDING*3
-                                spacing: PADDING*3
-                                Label:
-                                    id: spacer
-                                    text: " "
-                                Button:
-                                    id: browse
-                                    text: "Browse"
-                                    size_hint: None, None
-                                    size: dp(85), dp(25)
-                                    pos_hint: {"center_x": 0.5, "center_y": 0.5}
-                            Button:
-                                text: "Run Car Test"
-                                size_hint: None, None
-                                size: dp(200), dp(30)
-                                pos_hint:  {"center_x": 0.5, "center_y": 0.5}
-
-                    BoxLayout:
-                        orientation: 'vertical'
-                        size_hint: 1, 0.3
-                        padding: PADDING, PADDING
-                        spacing: PADDING
-                        canvas.before:
-                            Color:
-                                rgba: [0.8 , 0.8, 0.8, 1]
-                            Rectangle:
-                                size: self.size
-                                pos: self.pos
-                        BoxLayout:
-                            orientation: 'vertical'
-                            size_hint: 1, 1
-                            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
-                            padding: PADDING, PADDING
-                            spacing: PADDING
-                            canvas.before:
-                                Color:
-                                    rgba: [0.89, 0.89, 0.89, 1]
-                                Rectangle:
-                                    size: self.size
-                                    pos: self.pos
-                            SkyTextField:
-                                padding: dp(0), PADDING*3
-                                label_text: "User"
-                                hint: "username..."
-                                width: dp(100)
-                            SkyTextField:
-                                padding: dp(0), PADDING*3
-                                label_text: "IP"
-                                hint: "IP..."
-                                width: dp(100)
-                            SkyTextField:
-                                padding: dp(0), PADDING*3
-                                label_text: "Password"
-                                hint: "password..."
-                                width: dp(100)
-                            BoxLayout:
-                                orientation: 'horizontal'
-                                padding: dp(0), PADDING*3
-                                spacing: PADDING*3
-                                Button:
-                                    text: "Drone Default"
-                                    size_hint: None, None
-                                    size: dp(100), dp(30)
-                                    pos_hint: {'x': 0, 'center_y': 0.5}
-                                Label:
-                                    id: spacer
-                                    text: " "   
-                                Button:
-                                    id: connect
-                                    text: 'CONNECT'
-                                    size_hint: None, None
-                                    size: dp(150), dp(45)
-                                    pos_hint: {"right": 1, "center_y": 0.5}
+            
+        SkyTestingTab:
+            drone_connection: root.drone
+            car_connection: root.car
                 
-                
-        SkyTabbedPannel:
-            text: 'Settings'
-            BoxLayout:
-                padding: PADDING, PADDING
-                canvas.before:
-                    Color:
-                        rgba: TAB_BG_COLOR
-                    Rectangle:
-                        size: self.size
-                        pos: self.pos
-                BoxLayout:
-                    orientation: 'vertical'
-                    size_hint: None, None
-                    height: self.minimum_height
-                    width: dp(350)
-                    padding: PADDING, PADDING
-                    spacing: PADDING
-                    pos_hint: {"top": 1, "left": 0}
-                    canvas.before:
-                        Color:
-                            rgba: [0.8 , 0.8, 0.8, 1]
-                        Rectangle:
-                            size: self.size
-                            pos: self.pos
-                    BoxLayout:
-                        orientation: 'vertical'
-                        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
-                        padding: PADDING, PADDING
-                        spacing: PADDING
-                        size_hint: 1, None
-                        height: self.minimum_height
-                        canvas.before:
-                            Color:
-                                rgba: [0.89, 0.89, 0.89, 1]
-                            Rectangle:
-                                size: self.size
-                                pos: self.pos
-                        SkyTextField:
-                            label_text: "Drone User"
-                            hint: "username..."
-                        SkyTextField:
-                            label_text: "Drone IP"
-                            hint: "IP..."
-                        SkyTextField:
-                            label_text: "Drone Password"
-                            hint: "password..."
-                        SkyTextField:
-                            label_text: "Car User"
-                            hint: "username..."
-                        SkyTextField:
-                            label_text: "Car IP"
-                            hint: "IP..."
-                        SkyTextField:
-                            label_text: "Car Password"
-                            hint: "password..."
-                        SkyTextField:
-                            label_text: "Video Source"
-                            hint: "video topic..."
-                        SkyTextField:
-                            label_text: "Offloading Default"
-                            hint: "Percentage..."
-                        SkyTextField:
-                            label_text: "Log Directory"
-                            hint: "C:\..."
-                        SkyTextField:
-                            label_text: "Results Directory"
-                            hint: "C:\..."
-                        SkyTextField:
-                            label_text: "Drone File Directory"
-                            hint: "/home/pi/..."
-                        SkyTextField:
-                            label_text: "Drone File Name"
-                            hint: "file.py..."
-                        SkyTextField:
-                            label_text: "Car File Directory"
-                            hint: "/home/pi/..."
-                        SkyTextField:
-                            label_text: "Car File Name"
-                            hint: "file.py..."
+        SkySettingsTab:
