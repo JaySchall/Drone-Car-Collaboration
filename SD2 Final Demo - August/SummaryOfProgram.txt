@@ -16,7 +16,7 @@ Certainly! Here's a summary of what each script does:
    - It also contains a close_socket() function to close the socket connection.
    - It imports the Picarx library, which suggests that it may be used to control the car's movements.
 
-3. car_server.py:
+3. car_command_server.py:
    - This script acts as the server-side program running on the car.
    - It listens for incoming connections from the RedDetect program.
    - It establishes a socket connection with the RedDetect program.

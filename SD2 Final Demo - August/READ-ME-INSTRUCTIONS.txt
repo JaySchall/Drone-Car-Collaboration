@@ -1,4 +1,4 @@
-1.Run the car_server.py file on the car first
+1.Run the car_command_server.py file on the car first
 
 2.Then, run RedDetect_drone-SD2_demo-v4.py on the drone, which will call the drone_client.py 
 program which should be in the correct path (which is set as the same directory where red detect program is called).
