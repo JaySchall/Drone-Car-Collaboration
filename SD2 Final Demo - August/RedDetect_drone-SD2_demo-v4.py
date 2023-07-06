@@ -15,11 +15,7 @@ SEND_TURN_LEFT = 3
 SEND_TURN_RIGHT = 4
 SEND_ALL_CLEAR = 5
 RED_OBJ_FOUND = False
-#
 
-# When importing drone_client.py,
-# make sure it is in the same directory as where
-# this program was run from.
 
 # Make sure drone_client.py file is in the same directory as where this program is run:
 current_directory = os.getcwd()
