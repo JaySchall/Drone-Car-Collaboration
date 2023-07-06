@@ -3,7 +3,8 @@ import time
 
 SERVER_NAME = "192.168.11.133"  # Server IP (User-defined)
 SERVER_PORT = 10600             # Server Port (Predefined)
-CLIENT_SOCKET = socket(AF_INET, SOCK_DGRAM)  # Client Socket Creation (for second arguemnt: SOCK_DGRAM=UDP, SOCK_STREAM=TCP)
+CLIENT_SOCKET = socket(AF_INET, SOCK_STREAM)  # Client Socket Creation 
+# Client Socket Creation (for second arguemnt: SOCK_DGRAM=UDP, SOCK_STREAM=TCP)
 
 
 
