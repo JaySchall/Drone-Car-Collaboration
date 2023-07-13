@@ -14,6 +14,11 @@ SEND_REDUCE_SPEED = 2
 SEND_TURN_LEFT = 3
 SEND_TURN_RIGHT = 4
 SEND_ALL_CLEAR = 5
+TRIANGLE = 0
+SQUARE = 0
+HEXAGON = 0
+CIRCLE = 0
+STAR = 0
 RED_OBJ_FOUND = False
 
 
@@ -63,7 +68,38 @@ def detect_red(cv_image):
     mask = mask1 + mask2
 
     return mask
+def determine_shape(num_sides):
+    global TRIANGLE, SQUARE, HEXAGON, CIRCLE, STAR
 
+    label = "???"
+    if num_sides == 3:
+        if TRIANGLE > 1:
+            label = "TRIANGLE"
+            #print("SQUARE")
+        TRIANGLE+=1
+    elif num_sides == 4:
+        if SQUARE > 1:
+            label = "SQUARE"
+            #print("SQUARE")
+        SQUARE+=1
+    elif num_sides == 6:
+        if HEXAGON > 1:
+            label = "HEXAGON"
+            #print("HEXAGON")
+        HEXAGON+=1
+    elif num_sides == 8:
+        if CIRCLE > 1:
+            label = "CIRCLE"
+            #print("CIRCLE")
+        CIRCLE+=1
+    elif num_sides == 10:
+        if STAR > 1:
+            label = "STAR"
+            #print("STAR")
+        STAR+=1
+    else:
+        TRIANGLE, SQUARE, HEXAGON, CIRCLE, STAR = 0, 0, 0, 0, 0
+    return label
 # min and max area determine size of detected objects to draw bounding boxes around
 def draw_bounding_boxes(cv_image, mask, min_area=1000, max_area=10000):
     global RED_OBJ_FOUND
@@ -78,11 +114,17 @@ def draw_bounding_boxes(cv_image, mask, min_area=1000, max_area=10000):
         # Filter contours based on the minimum and maximum area -> if we enter this if-statement, 
         # then a red object is considered detected
         if min_area < area < max_area:
+            epsilon = 0.02 * cv2.arcLength(contour, True)
+            approx = cv2.approxPolyDP(contour, epsilon, True)
+            num_sides = len(approx)
             # Calculate the bounding box of the contour
             x, y, w, h = cv2.boundingRect(contour)
             # Draw the bounding box on the original image
             cv2.rectangle(cv_image, (x, y), (x + w, y + h), (0, 255, 0), 2)
+            shape_label = determine_shape(num_sides)
+            cv2.putText(cv_image, shape_label, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
             RED_OBJ_FOUND = True
+            print(num_sides)
         else:
             RED_OBJ_FOUND = False
     return cv_image
