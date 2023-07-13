@@ -1,3 +1,9 @@
+CURRENT ISSUES: 
+*FIX THE "for contour in contours" loop
+*fix the timer in the the red detect program ran on drone.
+*add a timer to the car command server (to ignore packets after it receives a stop command).
+
+
 1.Run the car_command_server.py file on the car first
 
 2.Then, run RedDetect_drone-SD2_demo-v4.py on the drone, which will call the drone_client.py 
