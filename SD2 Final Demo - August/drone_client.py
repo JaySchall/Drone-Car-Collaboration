@@ -1,12 +1,21 @@
+import logging
 from socket import *
 import time
 
 SERVER_NAME = "192.168.11.133"  # Server IP (User-defined)
 SERVER_PORT = 10600             # Server Port (Predefined)
 CLIENT_SOCKET = socket(AF_INET, SOCK_STREAM)  # Client Socket Creation 
-# Client Socket Creation (for second arguemnt: SOCK_DGRAM=UDP, SOCK_STREAM=TCP)
+# Client Socket Creation (for second argument: SOCK_DGRAM=UDP, SOCK_STREAM=TCP)
 
-
+# Configure logging to write to a log file and console
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    handlers=[
+        logging.FileHandler("log_file.txt"),
+        logging.StreamHandler()
+    ]
+)
 
 ''' 
 Send a message to the car using the following protocol:
@@ -19,34 +28,33 @@ Send a message to the car using the following protocol:
 5 = All clear (no perceived threats or recovery actions necessary; no changes)
 '''
 def wait_timer(seconds):
-    print(f"Waiting for {seconds} seconds...")
+    logging.info(f"Waiting for {seconds} seconds...")
     time.sleep(seconds)
 
 def message_car(var):
-    print("Sending message:", var)
+    logging.info("Sending message: %s", var)
     try:
         CLIENT_SOCKET.send(str(var).encode())  # Convert var to string and then encode it
-        print("Message sent successfully!")
+        logging.info("Message sent successfully!")
     except Exception as e:
-        print("Error sending message:", str(e))
+        logging.error("Error sending message: %s", str(e))
         
 # QUIT Protocol
 def close_socket():
     CLIENT_SOCKET.close()
-    print("Socket closed.")
+    logging.info("Socket closed.")
 
 def establish_socket_connection():
     try:
         CLIENT_SOCKET.connect((SERVER_NAME, SERVER_PORT))  # Establish connection when the program begins
-        print("Connected to server:", SERVER_NAME, "on port:", SERVER_PORT)
+        logging.info("Connected to server: %s on port: %s", SERVER_NAME, SERVER_PORT)
     except ConnectionRefusedError as e:
-        print("Error connecting to server:", str(e))
+        logging.error("Error connecting to server: %s", str(e))
         close_socket()
     # Debug messages to indicate the connection status
     if CLIENT_SOCKET.fileno() != -1:
-        print(f"Socket connection is active (socket file descriptor = {CLIENT_SOCKET.fileno()}).")
+        logging.info("Socket connection is active (socket file descriptor = %s).", CLIENT_SOCKET.fileno())
         return True
     else:
-        print(f"Socket connection is closed (socket file descriptor = {CLIENT_SOCKET.fileno()}).")
+        logging.info("Socket connection is closed (socket file descriptor = %s).", CLIENT_SOCKET.fileno())
         return False
-
