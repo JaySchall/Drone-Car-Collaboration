@@ -12,7 +12,7 @@ logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s",
     handlers=[
-        logging.FileHandler("log_file.txt"),
+        logging.FileHandler("red_object_detection_log.txt"),
         logging.StreamHandler()
     ]
 )
