@@ -67,6 +67,9 @@ def detect_red(cv_image):
 # min and max area determine size of detected objects to draw bounding boxes around
 def draw_bounding_boxes(cv_image, mask, min_area=1000, max_area=10000):
     global RED_OBJ_FOUND
+
+    #initialize red object found variable to false before we enter the contour loop
+    RED_OBJ_FOUND = False 
     # Find contours in the mask
     contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
@@ -83,8 +86,7 @@ def draw_bounding_boxes(cv_image, mask, min_area=1000, max_area=10000):
             # Draw the bounding box on the original image
             cv2.rectangle(cv_image, (x, y), (x + w, y + h), (0, 255, 0), 2)
             RED_OBJ_FOUND = True
-        else:
-            RED_OBJ_FOUND = False
+
     return cv_image
 
 def image_callback(data):
@@ -103,8 +105,6 @@ def image_callback(data):
         # Now Send message to the car if object detected
         if RED_OBJ_FOUND:
             send_message_to_car(SEND_STOP)
-            connect.wait_timer(5) #wait for some time before processing and sending more commands
-            send_message_to_car(SEND_CONT_DRIVE) #now tell car to continue driving
         else:
             send_message_to_car(SEND_ALL_CLEAR)
         # Convert the OpenCV image back to a ROS image message
