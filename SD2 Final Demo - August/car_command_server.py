@@ -1,7 +1,7 @@
+import logging
 from socket import *
 from picarx import Picarx
 import time
-import logging
 
 SERVER_NAME = "192.168.11.133"  # Server IP (car)
 SERVER_PORT = 10600  # Server Port(Predefined)
@@ -97,8 +97,8 @@ def main():
                 else:
                     elapsed_time = time.time() - stop_timer_start
                     time_left = stop_timer_duration - elapsed_time
-                    if elapsed_time < stop_timer_duration:
-                        logging.info("STOP command received; now ignoring drone messages for %s seconds; Time left: %s", stop_timer_duration, round(time_left, 2))
+                    if elapsed_time < stop_timer_duration and round(time_left) != round(time_left - 1):
+                        logging.info("STOP command received; now ignoring drone messages for %s seconds; Time left: %s", stop_timer_duration, round(time_left))
                         continue  # Skip packet processing during the delay period
                     else:
                         stop_command_received = False
