@@ -1,6 +1,7 @@
 from socket import *
 from picarx import Picarx
 import time
+import logging
 
 SERVER_NAME = "192.168.11.133"  # Server IP (car)
 SERVER_PORT = 10600  # Server Port(Predefined)
@@ -14,12 +15,22 @@ TURN_RIGHT = 4  # Turn Right command
 ALL_CLEAR = 5  # No action necessary (essentially a null command)
 px = Picarx()
 
+# Configure logging to write to a log file and console
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    handlers=[
+        logging.FileHandler("car_log.txt"),
+        logging.StreamHandler()
+    ]
+)
+
 def warning(var):
     global SPEED
     if var == REDUCE_SPEED:
         if SPEED != 0:  # Slow car down by half
             SPEED = SPEED / 2
-            print("Slowing down car. New speed:", SPEED)
+            logging.info("Slowing down car. New speed: %s", SPEED)
             px.forward(SPEED)
     elif var == TURN_LEFT:
         raise NotImplementedError("Left turn not implemented yet")  # Turn car left
@@ -27,20 +38,20 @@ def warning(var):
         raise NotImplementedError("Right turn not implemented yet")  # Turn car right
 
 def wait_timer(seconds):
-    print(f"Waiting for {seconds} seconds...")
+    logging.info("Waiting for %s seconds...", seconds)
     time.sleep(seconds)
 
 def obstruction():
     global SPEED
     SPEED = STOP
-    print("Car stopped due to obstruction")
+    logging.info("Car stopped due to obstruction")
     px.forward(SPEED)  # Stop car
 
 def continueDriving():
     global SPEED
     global DEFAULT_SPEED
     SPEED = DEFAULT_SPEED  # Restart car after stopping or slowing down
-    print("Continuing driving. Speed set to:", SPEED)
+    logging.info("Continuing driving. Speed set to: %s", SPEED)
     px.forward(SPEED)
 
 def main():
@@ -48,7 +59,7 @@ def main():
     SERVER_SOCKET.bind((SERVER_NAME, SERVER_PORT))
     SERVER_SOCKET.listen(1)  # Maximum number of queued connections
 
-    print('Car now listening on ' + SERVER_NAME + ':' + str(SERVER_PORT))
+    logging.info('Car now listening on %s:%s', SERVER_NAME, SERVER_PORT)
 
     connection_established = False  # Flag to track if a connection is established
     timer_duration = 10  # Number of seconds to wait for a connection
@@ -56,17 +67,17 @@ def main():
 
     while not connection_established and (time.time() - timer_start) < timer_duration:
         try:
-            print("Waiting for incoming client connections...")
+            logging.info("Waiting for incoming client connections...")
             CONNECTION_SOCKET, addr = SERVER_SOCKET.accept()  # TCP Connection Created
-            print("Connection established with:", addr)
-            print(f'Car now driving at {SPEED}...')
+            logging.info("Connection established with: %s", addr)
+            logging.info('Car now driving at %s...', SPEED)
             px.forward(SPEED)
             connection_established = True
         except Exception as e:
-            print("Error occurred during client connection:", str(e))
+            logging.error("Error occurred during client connection: %s", str(e))
 
     if not connection_established:
-        print("No incoming connections. Exiting the program.")
+        logging.info("No incoming connections. Exiting the program.")
         return
 
     stop_command_received = False
@@ -76,8 +87,7 @@ def main():
     while True:
         try:
             PACKET = CONNECTION_SOCKET.recv(1).decode()  # Receives command (buffer size set to 1 byte --> recv(1))
-            print("Received packet [0=stop,1=cont_drive,2=red_speed,3=L, 4=R,5=clear]:", int(PACKET))
-
+            
             if int(PACKET) == STOP:
                 if not stop_command_received:
                     stop_command_received = True
@@ -86,20 +96,25 @@ def main():
                     continue  # Skip packet processing for now
                 else:
                     elapsed_time = time.time() - stop_timer_start
+                    time_left = stop_timer_duration - elapsed_time
                     if elapsed_time < stop_timer_duration:
+                        logging.info("STOP command received; now ignoring drone messages for %s seconds; Time left: %s", stop_timer_duration, round(time_left, 2))
                         continue  # Skip packet processing during the delay period
                     else:
                         stop_command_received = False
                         stop_timer_start = None
                         continueDriving() # Continue to normal driving
-            if int(PACKET) == ALL_CLEAR:
+            elif int(PACKET) == ALL_CLEAR:
                 continue  # No actions necessary
             elif int(PACKET) == CONT_DRIVE:
                 continueDriving()  # Continue to normal driving
             else:
                 warning(int(PACKET))  # Adjust speed or direction
+        
+            logging.info("Received packet [0=stop,1=cont_drive,2=red_speed,3=L, 4=R,5=clear]: %s", int(PACKET))
+
         except Exception as e:
-            print("Error occurred during client connection:", str(e))
+            logging.error("Error occurred during client connection: %s", str(e))
 
 if __name__ == "__main__":
     main()

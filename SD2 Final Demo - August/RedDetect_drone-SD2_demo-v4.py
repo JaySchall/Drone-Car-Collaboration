@@ -6,6 +6,7 @@ from cv_bridge import CvBridge
 import sys
 import os
 import drone_client as connect
+import logging
 
 #global variables:
 SEND_STOP = 0
@@ -16,33 +17,40 @@ SEND_TURN_RIGHT = 4
 SEND_ALL_CLEAR = 5
 RED_OBJ_FOUND = False
 
+# Configure logging to write to a log file and console
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    handlers=[
+        logging.FileHandler("red_object_detection_log.txt"),
+        logging.StreamHandler()
+    ]
+)
 
 # Make sure drone_client.py file is in the same directory as where this program is run:
 current_directory = os.getcwd()
 sys.path.insert(0, current_directory)
-print("Current working directory (where this program was ran from):", current_directory)
+logging.info("Current working directory (where this program was ran from): %s", current_directory)
 
-print("Trying to establish connection with car server...")
+logging.info("Trying to establish connection with car server...")
 if connect.establish_socket_connection() == False:
-    print("Exiting program...")
+    logging.info("Exiting program...")
     exit(1)
 
 try:
     rospy.init_node('red_object_detection')
-    print("ROS node 'red_object_detection' initialized.")
+    logging.info("ROS node 'red_object_detection' initialized.")
 except rospy.ROSInitException as e:
-    print("Failed to initialize ROS node:", str(e))
+    logging.error("Failed to initialize ROS node: %s", str(e))
     exit(1)  # Exit the program with a non-zero exit status to indicate failure
-
-
 
 # Create a publisher to publish the video feed to a ROS topic
 image_pub = rospy.Publisher('red_object_detection/image_raw', Image, queue_size=10)
-print("ROS publisher created for 'red_object_detection/image_raw' topic.")
+logging.info("ROS publisher created for 'red_object_detection/image_raw' topic.")
 
 def send_message_to_car(command):
-        print(f"Sending message {command} to car [0=stop,1=cont_drive,2=red_speed,3=L, 4=R,5=clear]")
-        connect.message_car(command)
+    logging.info("Sending message %s to car [0=stop,1=cont_drive,2=red_speed,3=L, 4=R,5=clear]", command)
+    connect.message_car(command)
 
 def detect_red(cv_image):
     # Convert the image to HSV color space
@@ -114,7 +122,7 @@ def image_callback(data):
         image_pub.publish(img_msg)
 
     except Exception as e:
-        print("Error in image_callback:", str(e))
+        logging.error("Error in image_callback: %s", str(e))
 
 def start_image_processing():
     try:
@@ -124,7 +132,7 @@ def start_image_processing():
         rospy.spin()
 
     except rospy.ROSException as e:
-        print("ROSException in start_image_processing:", str(e))
+        logging.error("ROSException in start_image_processing: %s", str(e))
 
 if __name__ == "__main__":
     start_image_processing()
