@@ -19,7 +19,6 @@ SQUARE = 0
 HEXAGON = 0
 CIRCLE = 0
 STAR = 0
-RED_OBJ_FOUND = False
 
 
 # Make sure drone_client.py file is in the same directory as where this program is run:
@@ -102,7 +101,7 @@ def determine_shape(num_sides):
     return label
 # min and max area determine size of detected objects to draw bounding boxes around
 def draw_bounding_boxes(cv_image, mask, min_area=1000, max_area=10000):
-    global RED_OBJ_FOUND
+    red_found = False
     # Find contours in the mask
     contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
@@ -123,14 +122,12 @@ def draw_bounding_boxes(cv_image, mask, min_area=1000, max_area=10000):
             cv2.rectangle(cv_image, (x, y), (x + w, y + h), (0, 255, 0), 2)
             shape_label = determine_shape(num_sides)
             cv2.putText(cv_image, shape_label, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
-            RED_OBJ_FOUND = True
+            red_found = True
             print(num_sides)
-        else:
-            RED_OBJ_FOUND = False
-    return cv_image
+
+    return cv_image, red_found
 
 def image_callback(data):
-    global RED_OBJ_FOUND
     bridge = CvBridge()  # Create an instance of the CvBridge class to convert between ROS Image messages and OpenCV images
 
     try:
@@ -141,14 +138,13 @@ def image_callback(data):
         mask = detect_red(cv_image)
 
         # Draw bounding boxes around the detected red objects
-        cv_image_with_bboxes = draw_bounding_boxes(cv_image, mask)
+        cv_image_with_bboxes, red_found = draw_bounding_boxes(cv_image, mask)
         # Now Send message to the car if object detected
-        if RED_OBJ_FOUND:
+        if red_found:
             send_message_to_car(SEND_STOP)
-            connect.wait_timer(5) #wait for some time before processing and sending more commands
-            send_message_to_car(SEND_CONT_DRIVE) #now tell car to continue driving
+            
         else:
-            send_message_to_car(SEND_ALL_CLEAR)
+            send_message_to_car(SEND_CONT_DRIVE)
         # Convert the OpenCV image back to a ROS image message
         img_msg = bridge.cv2_to_imgmsg(cv_image_with_bboxes, encoding="bgr8")
 

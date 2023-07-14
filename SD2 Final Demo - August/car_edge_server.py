@@ -77,8 +77,6 @@ def main():
             print("Received packet [0=stop,1=cont_drive,2=red_speed,3=L, 4=R,5=clear]:", int(PACKET))
             if int(PACKET) == STOP:
                 obstruction()                              # Make a call to stop car
-            elif int(PACKET) == ALL_CLEAR:
-                continue                                   # No actions necessary
             elif int(PACKET) == CONT_DRIVE:
                 continueDriving()                          # continue to normal driving
             else:
