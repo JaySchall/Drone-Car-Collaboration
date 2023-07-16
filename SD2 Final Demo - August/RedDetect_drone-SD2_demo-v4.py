@@ -65,19 +65,27 @@ def detect_red(cv_image):
 def draw_bounding_boxes(cv_image, mask, min_area=1000, max_area=10000):
     global RED_OBJ_FOUND
 
-    RED_OBJ_FOUND = False
+    RED_OBJ_FOUND = False  # Initialize RED_OBJ_FOUND flag to False
 
     contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    # Find contours in the mask image using RETR_EXTERNAL mode and CHAIN_APPROX_SIMPLE method
 
     for contour in contours:
-        area = cv2.contourArea(contour)
+        area = cv2.contourArea(contour)  # Calculate the area of the contour
 
-        if min_area < area < max_area:
-            x, y, w, h = cv2.boundingRect(contour)
+        # Check if the contour area is within the specified range
+        if min_area < area < max_area: 
+            # Calculate the bounding rectangle coordinates
+            x, y, w, h = cv2.boundingRect(contour) 
+            # Draw a green rectangle on the original image using the bounding rectangle coordinates
             cv2.rectangle(cv_image, (x, y), (x + w, y + h), (0, 255, 0), 2)
-            RED_OBJ_FOUND = True
+            
+            # Set RED_OBJ_FOUND flag to True if at least one contour meets the criteria
+            RED_OBJ_FOUND = True  
 
-    return cv_image
+    return cv_image  # Return the modified image with bounding boxes
+
+
 
 def image_callback(data):
     global RED_OBJ_FOUND

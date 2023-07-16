@@ -85,25 +85,24 @@ def main():
     stop_timer_duration = 5  # Number of seconds to drop packets after receiving a stop command
 
     while True:
+        
+        if stop_command_received:
+            elapsed_time = time.time() - stop_timer_start
+            time_left = stop_timer_duration - elapsed_time
+            if elapsed_time < stop_timer_duration and round(time_left) != round(time_left - 1):
+                logging.info("STOP command received; now ignoring drone messages for %s seconds; Time left: %s", stop_timer_duration, round(time_left))
+                continue  # Skip packet processing during the delay period
+            else:
+                stop_command_received = False
+                stop_timer_start = None
+                continueDriving() # Continue to normal driving
         try:
             PACKET = CONNECTION_SOCKET.recv(1).decode()  # Receives command (buffer size set to 1 byte --> recv(1))
             
             if int(PACKET) == STOP:
-                if not stop_command_received:
-                    stop_command_received = True
-                    stop_timer_start = time.time()
-                    obstruction()  # Make a call to stop car
-                    continue  # Skip packet processing for now
-                else:
-                    elapsed_time = time.time() - stop_timer_start
-                    time_left = stop_timer_duration - elapsed_time
-                    if elapsed_time < stop_timer_duration and round(time_left) != round(time_left - 1):
-                        logging.info("STOP command received; now ignoring drone messages for %s seconds; Time left: %s", stop_timer_duration, round(time_left))
-                        continue  # Skip packet processing during the delay period
-                    else:
-                        stop_command_received = False
-                        stop_timer_start = None
-                        continueDriving() # Continue to normal driving
+                stop_command_received = True
+                stop_timer_start = time.time()
+                obstruction()  # Make a call to stop car
             elif int(PACKET) == ALL_CLEAR:
                 continue  # No actions necessary
             elif int(PACKET) == CONT_DRIVE:
