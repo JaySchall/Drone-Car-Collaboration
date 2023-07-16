@@ -1,7 +1,5 @@
 CURRENT ISSUES: 
-*FIX THE "for contour in contours" loop
-*fix the timer in the the red detect program ran on drone.
-*add a timer to the car command server (to ignore packets after it receives a stop command).
+*fix timer in the car command server (to ignore packets after it receives a stop command).
 
 
 1.Run the car_command_server.py file on the car first
