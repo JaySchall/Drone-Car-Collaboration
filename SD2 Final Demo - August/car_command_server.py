@@ -83,6 +83,7 @@ def main():
     stop_command_received = False
     stop_timer_start = None
     stop_timer_duration = 5  # Number of seconds to drop packets after receiving a stop command
+    stop_timer_frequency = 1  # Number of seconds between log messages
 
     while True:
         
@@ -90,7 +91,8 @@ def main():
             elapsed_time = time.time() - stop_timer_start
             time_left = stop_timer_duration - elapsed_time
             if elapsed_time < stop_timer_duration and round(time_left) != round(time_left - 1):
-                logging.info("STOP command received; now ignoring drone messages for %s seconds; Time left: %s", stop_timer_duration, round(time_left))
+                if round(time_left) % stop_timer_frequency == 0:
+                    logging.info("STOP command received; now ignoring drone messages for %s seconds; Time left: %s", stop_timer_duration, round(time_left))
                 continue  # Skip packet processing during the delay period
             else:
                 stop_command_received = False
