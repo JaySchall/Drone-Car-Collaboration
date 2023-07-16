@@ -82,13 +82,11 @@ def main():
 
     while True:
         
-        # If the stop_command_received loop if-statment entered, 
-            # the subsequent packet reception will be received but not processed
         if stop_command_received:
             elapsed_time = time.time() - stop_timer_start
             time_left = stop_timer_duration - elapsed_time
             if elapsed_time < stop_timer_duration:
-                logging.info("STOP command received; now ignoring drone messages for %s seconds; Time left: %s", stop_timer_duration, time_left)
+                logging.info("STOP command received; now stopping and ignoring drone messages for %s seconds; Time left: %s", stop_timer_duration, time_left)
             else:
                 stop_command_received = False
                 stop_timer_start = None
@@ -96,23 +94,31 @@ def main():
         try:
             PACKET = CONNECTION_SOCKET.recv(1).decode()  # Receives command (buffer size set to 1 byte --> recv(1))
             
-            if int(PACKET) == STOP:
-                stop_command_received = True
-                stop_timer_start = time.time()
-                obstruction()  # Make a call to stop car
-            elif int(PACKET) == ALL_CLEAR:
-                continue  # No actions necessary
-            elif int(PACKET) == CONT_DRIVE:
-                continueDriving()  # Continue to normal driving
-            else:
-                warning(int(PACKET))  # Adjust speed or direction
-            
-            #Message Logging:
+            # The subsequent packet reception will be received but not processed UNLESS it is another STOP command
             if stop_command_received:
-                logging.info("Received AND IGNORED packet [0=stop,1=cont_drive,2=red_speed,3=L, 4=R,5=clear]: %s", int(PACKET))
-            else:
-                logging.info("Received packet [0=stop,1=cont_drive,2=red_speed,3=L, 4=R,5=clear]: %s", int(PACKET))
+                # if another STOP packet was received, then restart the timer and command car to stop again for safety
+                if int(PACKET) == STOP:
+                    stop_command_received = True
+                    stop_timer_start = time.time()
+                    obstruction()  # Make a call to stop car
+                    logging.info("Received and PROCESSING packet [0=stop,1=cont_drive,2=red_speed,3=L, 4=R,5=clear]: %s", int(PACKET))
 
+                else:
+                    logging.info("Received AND IGNORED packet [0=stop,1=cont_drive,2=red_speed,3=L, 4=R,5=clear]: %s", int(PACKET))
+                    continue #Continue to start of while loop and do not process the PACKET
+            else:
+                #else process PACKET:
+                logging.info("Received and PROCESSING packet [0=stop,1=cont_drive,2=red_speed,3=L, 4=R,5=clear]: %s", int(PACKET))
+                if int(PACKET) == STOP:
+                    stop_command_received = True
+                    stop_timer_start = time.time()
+                    obstruction()  # Make a call to stop car
+                elif int(PACKET) == ALL_CLEAR:
+                    continue  # No actions necessary
+                elif int(PACKET) == CONT_DRIVE:
+                    continueDriving()  # Continue to normal driving
+                else:
+                    warning(int(PACKET))  # Adjust speed or direction
 
         except Exception as e:
             logging.error("Error occurred during client connection: %s", str(e))
