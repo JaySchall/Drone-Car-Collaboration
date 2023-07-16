@@ -1,6 +1,10 @@
 CURRENT ISSUES: 
-*fix timer in the car command server (to ignore packets after it receives a stop command).
+*everything works perfectly!
+*need to do some refactoring to make code neater
+*red detect works perfect. Now only need to integrate edge detection.
+*perhaps improve log output (like the timer, etc.), but so far it is very good and good enough!
 
+#logging outputs to the console and appended to log files for both drone and car programs on the respective device where the program is ran.
 
 1.Run the car_command_server.py file on the car first
 
