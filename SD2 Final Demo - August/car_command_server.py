@@ -37,10 +37,6 @@ def warning(var):
     elif var == TURN_RIGHT:
         raise NotImplementedError("Right turn not implemented yet")  # Turn car right
 
-def wait_timer(seconds):
-    logging.info("Waiting for %s seconds...", seconds)
-    time.sleep(seconds)
-
 def obstruction():
     global SPEED
     SPEED = STOP
