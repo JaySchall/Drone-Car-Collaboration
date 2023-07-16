@@ -79,17 +79,16 @@ def main():
     stop_command_received = False
     stop_timer_start = None
     stop_timer_duration = 5  # Number of seconds to drop packets after receiving a stop command
-    stop_timer_frequency = 1  # Number of seconds between log messages
 
     while True:
         
+        # If the stop_command_received loop if-statment entered, 
+            # the subsequent packet reception will be received but not processed
         if stop_command_received:
             elapsed_time = time.time() - stop_timer_start
             time_left = stop_timer_duration - elapsed_time
-            if elapsed_time < stop_timer_duration and round(time_left) != round(time_left - 1):
-                if round(time_left) % stop_timer_frequency == 0:
-                    logging.info("STOP command received; now ignoring drone messages for %s seconds; Time left: %s", stop_timer_duration, round(time_left))
-                continue  # Skip packet processing during the delay period
+            if elapsed_time < stop_timer_duration:
+                logging.info("STOP command received; now ignoring drone messages for %s seconds; Time left: %s", stop_timer_duration, time_left)
             else:
                 stop_command_received = False
                 stop_timer_start = None
@@ -107,8 +106,13 @@ def main():
                 continueDriving()  # Continue to normal driving
             else:
                 warning(int(PACKET))  # Adjust speed or direction
-        
-            logging.info("Received packet [0=stop,1=cont_drive,2=red_speed,3=L, 4=R,5=clear]: %s", int(PACKET))
+            
+            #Message Logging:
+            if stop_command_received:
+                logging.info("Received AND IGNORED packet [0=stop,1=cont_drive,2=red_speed,3=L, 4=R,5=clear]: %s", int(PACKET))
+            else:
+                logging.info("Received packet [0=stop,1=cont_drive,2=red_speed,3=L, 4=R,5=clear]: %s", int(PACKET))
+
 
         except Exception as e:
             logging.error("Error occurred during client connection: %s", str(e))
