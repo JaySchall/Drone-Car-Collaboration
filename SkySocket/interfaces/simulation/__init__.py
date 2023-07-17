@@ -25,6 +25,7 @@ Builder.load_string("""
             spacing: root.def_padding
             size_hint_min_x: root.video_width + root.large_padding
             SkyVideoPlayer:
+                source: root.link
                 video_width: root.video_width
                 video_height: root.video_height
             Label:
@@ -60,7 +61,7 @@ Builder.load_string("""
                 padding_y: dp(100)
                 size_hint: 0.8, 0.2
                 pos_hint: root.center_pos
-                on_release: on_start(simulation_settings.form.get_values())
+                on_release: root.on_start(simulation_settings.form.get_values())
                 background_color: root.green
                 font_size: self.height/2
                 bold: True
@@ -72,6 +73,7 @@ class SkySimulationTab(SkyTabbedPannel):
     car_connection = ObjectProperty()
     link = StringProperty()
     settings = ObjectProperty()
+    video_source = StringProperty()
 
     start_lock = Lock()
     start_thread = None
@@ -129,22 +131,24 @@ class SkySimulationTab(SkyTabbedPannel):
             return
         
         while SESSION_NAME not in self.car_connection.open_sessions:
-            self.car_connection.create_task(SESSION_NAME, f'python3 {self.settings.get_value("car_file_directory")}/{self.settings.get_value("car_file_name")}')
+            self.car_connection.create_task(SESSION_NAME, f'python3 {self.settings.get_path("car_file_directory")}{self.settings.get_path("car_file_name")}')
         
         if not self.drone_connection.connected:
             self.should_run = False
             self._do_start_button()
-            print("Car not connected")
+            print("Drone not connected")
             return
         
         while SESSION_NAME not in self.drone_connection.open_sessions:
-            self.drone_connection.create_task(SESSION_NAME, f'python3{self.settings.get_value("drone_file_directory")}/{self.settings.get_value("drone_file_name")}')
+            self.drone_connection.create_task(SESSION_NAME, f'python3 {self.settings.get_path("drone_file_directory")}{self.settings.get_path("drone_file_name")}')
         
         # self._data_collect()
 
         self._do_stop_button()
         while self.should_run:
-            if SESSION_NAME not in self.car_connection.get_tmux_sessions() or SESSION_NAME not in self.drone_connection.get_tmux_sessions():
+            print("Car: ", self.car_connection.get_tmux_sessions())
+            print("Drone:", self.drone_connection.get_tmux_sessions())
+            if SESSION_NAME not in str(self.car_connection.get_tmux_sessions()) or SESSION_NAME not in str(self.drone_connection.get_tmux_sessions()):
                 self._dissable_button()
                 self.should_run = False
                 break

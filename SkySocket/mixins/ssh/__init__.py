@@ -57,7 +57,7 @@ class sshConnection(EventDispatcher):
         self.c.run(f"tmux new -d -s {sname} '{cmd}'", warn=True)
 
     def get_tmux_sessions(self):
-        return self.c.run(f"tmux ls")
+        return self.c.run(f"tmux ls", warn=True)
 
     def is_connected(self):
         return self.c.is_connected
