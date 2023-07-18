@@ -144,11 +144,6 @@ def draw_bounding_boxes(cv_image, mask, min_area=1000, max_area=10000):
 
     return cv_image  # Return the modified image with bounding boxes
 
-def detect_edges(cv_image, low_threshold=50, high_threshold=150):
-    gray = cv2.cvtColor(cv_image, cv2.COLOR_BGR2GRAY)
-    edges = cv2.Canny(gray, low_threshold, high_threshold)
-    return edges
-
 def image_callback(data):
     global RED_OBJ_FOUND
     bridge = CvBridge()
@@ -159,8 +154,6 @@ def image_callback(data):
         mask = detect_red(cv_image)
 
         cv_image_with_bboxes = draw_bounding_boxes(cv_image, mask)
-
-        edges = detect_edges(cv_image)
 
         if RED_OBJ_FOUND:
             send_message_to_car(SEND_STOP)
