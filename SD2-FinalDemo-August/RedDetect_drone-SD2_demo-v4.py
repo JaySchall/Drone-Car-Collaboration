@@ -15,6 +15,12 @@ SEND_REDUCE_SPEED = 2
 SEND_TURN_LEFT = 3
 SEND_TURN_RIGHT = 4
 SEND_ALL_CLEAR = 5
+SHAPE_APPEARANCE_THRESHOLD = 1
+NUM_TRIANGLES = 0
+NUM_SQUARES = 0
+NUM_HEXAGONS = 0
+NUM_CIRCLES = 0
+NUM_STARS = 0
 RED_OBJ_FOUND = False
 
 # Configure logging to write to a log file and console
@@ -62,6 +68,48 @@ def detect_red(cv_image):
 
     return mask
 
+def determine_shape(num_sides):
+    """
+    Determines the shape label based on the number of sides of the object.
+    Updates the respective shape count global variables.
+    The num_sides passed into this function must at least be equal to one of the shapes defined below,
+    and that shape should have occurred at least more than once in order to obtain a shape label.
+    Otherwise, reset counter for all shapes to 0 since num_sides was not equal to one of the defined shapes.
+    """
+
+    global NUM_TRIANGLES, NUM_SQUARES, NUM_HEXAGONS, NUM_CIRCLES, NUM_STARS, SHAPE_APPEARANCE_THRESHOLD
+
+    label = "???"
+
+    if num_sides == 3:
+        if NUM_TRIANGLES > SHAPE_APPEARANCE_THRESHOLD:
+            label = "TRIANGLE"
+        NUM_TRIANGLES += 1
+    elif num_sides == 4:
+        if NUM_SQUARES > SHAPE_APPEARANCE_THRESHOLD:
+            label = "SQUARE"
+        NUM_SQUARES += 1
+    elif num_sides == 6:
+        if NUM_HEXAGONS > SHAPE_APPEARANCE_THRESHOLD:
+            label = "HEXAGON"
+        NUM_HEXAGONS += 1
+    elif num_sides == 8:
+        if NUM_CIRCLES > SHAPE_APPEARANCE_THRESHOLD:
+            label = "CIRCLE"
+        NUM_CIRCLES += 1
+    elif num_sides == 10:
+        if NUM_STARS > SHAPE_APPEARANCE_THRESHOLD:
+            label = "STAR"
+        NUM_STARS += 1
+    else:
+        NUM_TRIANGLES = 0
+        NUM_SQUARES = 0
+        NUM_HEXAGONS = 0
+        NUM_CIRCLES = 0
+        NUM_STARS = 0
+
+    return label
+
 def draw_bounding_boxes(cv_image, mask, min_area=1000, max_area=10000):
     global RED_OBJ_FOUND
 
@@ -82,10 +130,24 @@ def draw_bounding_boxes(cv_image, mask, min_area=1000, max_area=10000):
             
             # Set RED_OBJ_FOUND flag to True if at least one contour meets the criteria
             RED_OBJ_FOUND = True  
+            
+            # Approximate the contour to determine the number of sides
+            epsilon = 0.02 * cv2.arcLength(contour, True)
+            approx = cv2.approxPolyDP(contour, epsilon, True)
+            num_sides = len(approx)
+            
+            # Determine the shape label for the red object
+            shape_label = determine_shape(num_sides)
+            
+            # Add the shape label to the image
+            cv2.putText(cv_image, shape_label, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
 
     return cv_image  # Return the modified image with bounding boxes
 
-
+def detect_edges(cv_image, low_threshold=50, high_threshold=150):
+    gray = cv2.cvtColor(cv_image, cv2.COLOR_BGR2GRAY)
+    edges = cv2.Canny(gray, low_threshold, high_threshold)
+    return edges
 
 def image_callback(data):
     global RED_OBJ_FOUND
@@ -97,6 +159,8 @@ def image_callback(data):
         mask = detect_red(cv_image)
 
         cv_image_with_bboxes = draw_bounding_boxes(cv_image, mask)
+
+        edges = detect_edges(cv_image)
 
         if RED_OBJ_FOUND:
             send_message_to_car(SEND_STOP)
