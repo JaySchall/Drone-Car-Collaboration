@@ -5,3 +5,4 @@
 .vs/Drone-Car-Collaboration/v17/.wsuo
 .vs/VSWorkspaceState.json
 .vs/slnx.sqlite
+*.sqlite
