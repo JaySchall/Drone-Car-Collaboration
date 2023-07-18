@@ -21,6 +21,7 @@ NUM_SQUARES = 0
 NUM_HEXAGONS = 0
 NUM_CIRCLES = 0
 NUM_STARS = 0
+RED_OBJ_FOUND = False
 
 # Configure logging to write to a log file and console
 logging.basicConfig(
@@ -75,6 +76,9 @@ def determine_shape(num_sides):
     and that shape should have occurred at least more than once in order to obtain a shape label.
     Otherwise, reset counter for all shapes to 0 since num_sides was not equal to one of the defined shapes.
     """
+
+    global NUM_TRIANGLES, NUM_SQUARES, NUM_HEXAGONS, NUM_CIRCLES, NUM_STARS, SHAPE_APPEARANCE_THRESHOLD
+
     label = "???"
 
     if num_sides == 3:
@@ -98,19 +102,19 @@ def determine_shape(num_sides):
             label = "STAR"
         NUM_STARS += 1
     else:
-        reset_shape_counts()
+        NUM_TRIANGLES = 0
+        NUM_SQUARES = 0
+        NUM_HEXAGONS = 0
+        NUM_CIRCLES = 0
+        NUM_STARS = 0
 
     return label
 
-def reset_shape_counts():
-    global NUM_TRIANGLES, NUM_SQUARES, NUM_HEXAGONS, NUM_CIRCLES, NUM_STARS
-    NUM_TRIANGLES = 0
-    NUM_SQUARES = 0
-    NUM_HEXAGONS = 0
-    NUM_CIRCLES = 0
-    NUM_STARS = 0
+def draw_bounding_boxes(cv_image, mask, min_area=1000, max_area=10000):
+    global RED_OBJ_FOUND
 
-def draw_bounding_boxes(cv_image, mask, min_area=1000, max_area=10000, red_obj_found=False):
+    RED_OBJ_FOUND = False  # Initialize RED_OBJ_FOUND flag to False
+
     contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     # Find contours in the mask image using RETR_EXTERNAL mode and CHAIN_APPROX_SIMPLE method
 
@@ -124,8 +128,8 @@ def draw_bounding_boxes(cv_image, mask, min_area=1000, max_area=10000, red_obj_f
             # Draw a green rectangle on the original image using the bounding rectangle coordinates
             cv2.rectangle(cv_image, (x, y), (x + w, y + h), (0, 255, 0), 2)
             
-            # Set red_obj_found flag to True if at least one contour meets the criteria
-            red_obj_found = True  
+            # Set RED_OBJ_FOUND flag to True if at least one contour meets the criteria
+            RED_OBJ_FOUND = True  
             
             # Approximate the contour to determine the number of sides
             epsilon = 0.02 * cv2.arcLength(contour, True)
@@ -138,9 +142,10 @@ def draw_bounding_boxes(cv_image, mask, min_area=1000, max_area=10000, red_obj_f
             # Add the shape label to the image
             cv2.putText(cv_image, shape_label, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
 
-    return cv_image, red_obj_found  # Return the modified image with bounding boxes and the updated red_obj_found flag
+    return cv_image  # Return the modified image with bounding boxes
 
-def image_callback(data, red_obj_found):
+def image_callback(data):
+    global RED_OBJ_FOUND
     bridge = CvBridge()
 
     try:
@@ -148,9 +153,9 @@ def image_callback(data, red_obj_found):
 
         mask = detect_red(cv_image)
 
-        cv_image_with_bboxes, red_obj_found = draw_bounding_boxes(cv_image, mask, red_obj_found=red_obj_found)
+        cv_image_with_bboxes = draw_bounding_boxes(cv_image, mask)
 
-        if red_obj_found:
+        if RED_OBJ_FOUND:
             send_message_to_car(SEND_STOP)
         else:
             send_message_to_car(SEND_ALL_CLEAR)
@@ -162,9 +167,9 @@ def image_callback(data, red_obj_found):
     except Exception as e:
         logging.error("Error in image_callback: %s", str(e))
 
-def start_image_processing(red_obj_found):
+def start_image_processing():
     try:
-        image_sub = rospy.Subscriber('main_camera/image_raw_throttled', Image, image_callback, red_obj_found=red_obj_found)
+        image_sub = rospy.Subscriber('main_camera/image_raw_throttled', Image, image_callback)
         rospy.spin()
 
     except rospy.ROSException as e:
@@ -181,9 +186,7 @@ def main():
     image_pub = rospy.Publisher('red_object_detection/image_raw', Image, queue_size=10)
     logging.info("ROS publisher created for 'red_object_detection/image_raw' topic.")
 
-    red_obj_found = False  # Initialize the red_obj_found flag to False
-
-    start_image_processing(red_obj_found)
+    start_image_processing()
 
 if __name__ == "__main__":
     main()
