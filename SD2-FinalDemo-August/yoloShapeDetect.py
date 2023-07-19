@@ -1,0 +1,78 @@
+import cv2
+import numpy as np
+from darknet import *
+
+# darknet helper function to run detection on image
+def darknet_helper(img, width, height):
+  darknet_image = make_image(width, height, 3)
+  img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+  img_resized = cv2.resize(img_rgb, (width, height),
+                              interpolation=cv2.INTER_LINEAR)
+
+  # get image ratios to convert bounding boxes to proper size
+  img_height, img_width, _ = img.shape
+  width_ratio = img_width/width
+  height_ratio = img_height/height
+
+  # run model on darknet style image to get detections
+  copy_image_from_bytes(darknet_image, img_resized.tobytes())
+  detections = detect_image(network, class_names, darknet_image)
+  free_image(darknet_image)
+  return detections, width_ratio, height_ratio
+
+# URL of the video stream
+# load in our YOLOv4 architecture network
+network, class_names, class_colors = load_network("yolov4-tiny-custom.cfg", "obj.data", "yolov4-tiny-custom_last.weights")
+width = network_width(network)
+height = network_height(network)
+video_url = "http://192.168.11.1:8080/stream?topic=/main_camera/image_raw" #http://192.168.11.1:8080/stream?topic=/main_camera/image_raw
+net = cv2.dnn.readNetFromDarknet('yolov4-tiny-custom.cfg', 'yolov4-tiny-custom_last.weights')
+# Create a VideoCapture object
+cap = cv2.VideoCapture(video_url)
+
+# Check if the video capture object was successfully initialized
+if not cap.isOpened():
+    print("Failed to open the video stream.")
+    exit()
+out = cv2.VideoWriter('outpy.avi',cv2.VideoWriter_fourcc('M','J','P','G'), 10, (320,240))
+# Read and display video frames until the user presses 'q'
+while True:
+    # Read the next frame from the video stream
+    ret, frame = cap.read()
+    #blob = cv2.dnn.blobFromImage(frame, 1 / 255.0, (416, 416), swapRB=True, crop=False)
+    #net.setInput(blob)
+    #layer_names = net.getLayerNames()
+    #output_layers = [layer_names[i[0][0] - 1] for i in net.getUnconnectedOutLayers()]
+    #outputs = net.forward(output_layers)
+    # If the frame was not successfully read, then we have reached the end of the stream
+    if not ret:
+        break
+    
+    #darknet?
+    detections, width_ratio, height_ratio = darknet_helper(frame, width, height)
+    for label, confidence, bbox in detections:
+        left, top, right, bottom = bbox2points(bbox)
+        left, top, right, bottom = int(left * width_ratio), int(top * height_ratio), int(right * width_ratio), int(bottom * height_ratio)
+        cv2.rectangle(frame, (left, top), (right, bottom), class_colors[label], 2)
+        cv2.putText(frame, "{} [{:.2f}]".format(label, float(confidence)),
+                    (left, top - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.5,
+                    class_colors[label], 2)
+
+    new_width = 3 * frame.shape[1]  # Double the original width
+    new_height = 3 * frame.shape[0] # Double the original height
+
+# Resize the image
+    expanded_image = cv2.resize(frame, (new_width, new_height))
+    
+    # Display the frame
+    #cv2.imshow("Video Stream", frame)
+    cv2.imshow("Edge Server", expanded_image)
+    out.write(frame)
+    # Wait for the 'q' key to be pressed to exit the loop
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+
+# Release the video capture object and close any open windows
+cap.release()
+out.release()
+cv2.destroyAllWindows()
