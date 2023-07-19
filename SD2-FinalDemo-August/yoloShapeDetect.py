@@ -47,8 +47,10 @@ while True:
     # If the frame was not successfully read, then we have reached the end of the stream
     if not ret:
         break
-    
-    #darknet?
+
+    #obj_detected set false here
+
+    #darknet detection and display
     detections, width_ratio, height_ratio = darknet_helper(frame, width, height)
     for label, confidence, bbox in detections:
         left, top, right, bottom = bbox2points(bbox)
@@ -57,7 +59,13 @@ while True:
         cv2.putText(frame, "{} [{:.2f}]".format(label, float(confidence)),
                     (left, top - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.5,
                     class_colors[label], 2)
+        #set obj_detected to true
+        
 
+    #if obj_detected true, send stop to car
+    #else, send continue
+
+    #increase size of frame displayed
     new_width = 3 * frame.shape[1]  # Double the original width
     new_height = 3 * frame.shape[0] # Double the original height
 
