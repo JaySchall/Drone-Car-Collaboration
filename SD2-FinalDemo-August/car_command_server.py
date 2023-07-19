@@ -15,7 +15,7 @@ TURN_RIGHT = 4  # Turn Right command
 ALL_CLEAR = 5  # No action necessary (essentially a null command)
 px = Picarx()
 
-# Configure logging to write to a log file and console
+# Configure logging to write to a log file and console - open in write mode so file is first cleared (contents deleted)
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s",
