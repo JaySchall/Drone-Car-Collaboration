@@ -123,14 +123,15 @@ def draw_bounding_boxes(cv_image, mask, min_area=1000, max_area=10000):
 
         # Check if the contour area is within the specified range
         if min_area < area < max_area: 
-            # Calculate the bounding rectangle coordinates
-            x, y, w, h = cv2.boundingRect(contour) 
-            # Draw a green rectangle on the original image using the bounding rectangle coordinates
-            cv2.rectangle(cv_image, (x, y), (x + w, y + h), (0, 255, 0), 2)
-            
             # Set RED_OBJ_FOUND flag to True if at least one contour meets the criteria
             RED_OBJ_FOUND = True  
-            
+
+            # Calculate the bounding rectangle coordinates
+            x, y, w, h = cv2.boundingRect(contour) 
+
+            # Draw a green rectangle on the original image using the bounding rectangle coordinates
+            cv2.rectangle(cv_image, (x, y), (x + w, y + h), (0, 255, 0), 2)
+
             # Approximate the contour to determine the number of sides
             epsilon = 0.02 * cv2.arcLength(contour, True)
             approx = cv2.approxPolyDP(contour, epsilon, True)
