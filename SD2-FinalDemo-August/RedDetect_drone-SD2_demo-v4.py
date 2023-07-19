@@ -174,7 +174,7 @@ def image_callback(data):
 
 def start_image_processing():
     try:
-        image_sub = rospy.Subscriber('main_camera/image_raw_throttled', Image, image_callback)
+        image_sub = rospy.Subscriber('main_camera/image_raw', Image, image_callback)
         rospy.spin()
 
     except rospy.ROSException as e:
