@@ -20,7 +20,7 @@ logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s",
     handlers=[
-        logging.FileHandler("car_log.txt"),
+        logging.FileHandler("car_log.txt", mode="w"),
         logging.StreamHandler()
     ]
 )

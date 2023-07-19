@@ -10,6 +10,10 @@ CLIENT_SOCKET = socket(AF_INET, SOCK_STREAM)  # Client Socket Creation
 # Create a logger instance
 logger = logging.getLogger(__name__)
 
+# Clear log file before reopening in append mode
+with open("red_object_detection_log.txt", "w"):
+    pass
+
 # Configure logging to write to a log file and console
 logger.setLevel(logging.INFO)
 formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
