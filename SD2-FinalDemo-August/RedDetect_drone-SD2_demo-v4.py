@@ -132,7 +132,10 @@ def draw_bounding_boxes(cv_image, mask, min_area=1000, max_area=10000):
             # Draw a green rectangle on the original image using the bounding rectangle coordinates
             cv2.rectangle(cv_image, (x, y), (x + w, y + h), (0, 255, 0), 2)
 
-            # Approximate the contour to determine the number of sides
+            # Approximate the contour to determine the number of sides using the Ramer-Douglas-Peucker algorithm;
+            # the larger the Epsilon value,
+            # the less accurate the number of points connecting the arc will be,
+            # since the number of points that make up the arc will be more reduced - less line granularity (resolution)):
             epsilon = 0.02 * cv2.arcLength(contour, True)
             approx = cv2.approxPolyDP(contour, epsilon, True)
             num_sides = len(approx)
