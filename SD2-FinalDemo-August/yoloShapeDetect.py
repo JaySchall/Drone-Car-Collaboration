@@ -1,6 +1,38 @@
 import cv2
 import numpy as np
 from darknet import *
+import logging
+import car_edge_server as connect #make sure car_edge_server.py file is in the same directory as where this program is run
+
+# Configure logging to write to a log file and console
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    handlers=[
+        logging.FileHandler("yoloShapeDetect_log.txt"),
+        logging.StreamHandler()
+    ]
+)
+
+#########
+#car command server connection code and definitions begin here:
+#########
+
+def connect_to_car_command_server():
+    logging.info("Trying to establish connection with car command server...")
+    if not connect.establish_socket_connection():
+        logging.info("Failed to establish connection with the car command server.")
+        return False
+    return True
+
+def send_message_to_car(command):
+    logging.info("Sending message %s to car [0=stop, 1=cont_drive, 2=red_speed, 3=L, 4=R, 5=clear]", command)
+    connect.message_car(command)
+
+
+#########
+#yolov4 code and definitions begin here:
+#########
 
 # darknet helper function to run detection on image
 def darknet_helper(img, width, height):
