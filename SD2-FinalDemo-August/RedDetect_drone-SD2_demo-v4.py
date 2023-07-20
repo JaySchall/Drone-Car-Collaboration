@@ -5,8 +5,8 @@ from sensor_msgs.msg import Image
 from cv_bridge import CvBridge
 import sys
 import os
-import drone_client as connect
 import logging
+import drone_client as connect #make sure drone_client.py file is in the same directory as where this program is run
 
 # Global variables:
 SEND_STOP = 0
