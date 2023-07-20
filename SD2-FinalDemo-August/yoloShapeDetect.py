@@ -4,6 +4,14 @@ from darknet import *
 import logging
 import car_edge_server as connect
 
+# Global variables
+SEND_STOP = 0  # Stop command
+SEND_CONT_DRIVE = 1  # Continue driving command
+SEND_REDUCE_SPEED = 2  # Reduce speed command
+SEND_TURN_LEFT = 3  # Turn left command
+SEND_TURN_RIGHT = 4  # Turn right command
+SEND_ALL_CLEAR = 5  # All clear command
+
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s",
@@ -12,14 +20,6 @@ logging.basicConfig(
         logging.StreamHandler()
     ]
 )
-
-# Global variables
-SEND_STOP = 0  # Stop command
-SEND_CONT_DRIVE = 1  # Continue driving command
-SEND_REDUCE_SPEED = 2  # Reduce speed command
-SEND_TURN_LEFT = 3  # Turn left command
-SEND_TURN_RIGHT = 4  # Turn right command
-SEND_ALL_CLEAR = 5  # All clear command
 
 def connect_to_car_command_server():
     logging.info("Trying to establish connection with car command server...")
@@ -111,8 +111,8 @@ def main():
             send_message_to_car(SEND_ALL_CLEAR)  # Continue driving
 
         # Increase size of frame displayed
-        new_width = 3 * frame.shape[1]  # Double the original width
-        new_height = 3 * frame.shape[0]  # Double the original height
+        new_width = 3 * frame.shape[1]  # Triple the original width
+        new_height = 3 * frame.shape[0]  # Triple the original height
 
         # Resize the image
         expanded_image = cv2.resize(frame, (new_width, new_height))

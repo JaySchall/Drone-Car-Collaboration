@@ -4,7 +4,7 @@ from socket import *
 import time
 
 SERVER_NAME = "192.168.11.133"  # Server IP (User-defined)
-SERVER_PORT = 10600             # Server Port (Predefined)
+SERVER_PORT = 10601             # Server Port (Predefined)
 CLIENT_SOCKET = socket(AF_INET, SOCK_STREAM)  # Client Socket Creation 
 # Client Socket Creation (for second argument: SOCK_DGRAM=UDP, SOCK_STREAM=TCP)
 
@@ -12,13 +12,13 @@ CLIENT_SOCKET = socket(AF_INET, SOCK_STREAM)  # Client Socket Creation
 logger = logging.getLogger(__name__)
 
 # Clear log file before reopening in append mode
-with open("red_object_detection_log.txt", "w"):
+with open("yoloShapeDetect_log.txt", "w"):
     pass
 
 # Configure logging to write to a log file and console
 logger.setLevel(logging.INFO)
 formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
-file_handler = logging.FileHandler("red_object_detection_log.txt")
+file_handler = logging.FileHandler("yoloShapeDetect_log.txt")
 file_handler.setFormatter(formatter)
 stream_handler = logging.StreamHandler()
 stream_handler.setFormatter(formatter)
@@ -35,9 +35,6 @@ Send a message to the car using the following protocol:
 4 = Turn car right to avoid obstruction to the left
 5 = All clear (no perceived threats or recovery actions necessary; no changes)
 '''
-def wait_timer(seconds):
-    logger.info(f"Waiting for {seconds} seconds...")
-    time.sleep(seconds)
 
 def message_car(var):
     logger.info("Sending message: %s", var)

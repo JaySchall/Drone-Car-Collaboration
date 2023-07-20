@@ -34,9 +34,6 @@ Send a message to the car using the following protocol:
 4 = Turn car right to avoid obstruction to the left
 5 = All clear (no perceived threats or recovery actions necessary; no changes)
 '''
-def wait_timer(seconds):
-    logger.info(f"Waiting for {seconds} seconds...")
-    time.sleep(seconds)
 
 def message_car(var):
     logger.info("Sending message: %s", var)
