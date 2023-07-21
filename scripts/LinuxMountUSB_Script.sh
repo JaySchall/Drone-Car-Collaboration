@@ -17,7 +17,7 @@ if [ -z "$DEVICE_NAME" ]; then
   exit 1
 fi
 # Step 5: Mount the USB drive
-sudo mount -o umask=000 "/dev/$DEVICE_NAME"1 "$MOUNT_POINT"
+sudo mount -o umask=000 "/dev/$DEVICE_NAME" "$MOUNT_POINT"
 if [ $? -ne 0 ]; then
   echo "Failed to mount the USB drive."
   exit 1
