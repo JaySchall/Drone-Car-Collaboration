@@ -61,7 +61,6 @@ def main():
     network, class_names, class_colors = load_network("yolov4-tiny-custom.cfg", "obj.data", "yolov4-tiny-custom_last.weights")
     width = network_width(network)
     height = network_height(network)
-    net = cv2.dnn.readNetFromDarknet('yolov4-tiny-custom.cfg', 'yolov4-tiny-custom_last.weights') #this line of code may be unnecessary
     
     # URL of the video stream
     video_url = "http://192.168.11.1:8080/stream?topic=/main_camera/image_raw"  # Replace with the appropriate video URL
@@ -72,9 +71,6 @@ def main():
     if not cap.isOpened():
         logging.error("Failed to open the video stream.")
         return
-
-    # Open video stream window so we can see the image processing output of this program
-    out = cv2.VideoWriter('outpy.avi',cv2.VideoWriter_fourcc('M','J','P','G'), 10, (320,240))
 
     # Initialize object detected variable to false
     obj_detected = False
