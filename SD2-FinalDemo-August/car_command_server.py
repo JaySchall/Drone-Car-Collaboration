@@ -2,9 +2,11 @@ import logging
 from socket import *
 from picarx import Picarx
 import time
+import threading
 
+# Global variables
 SERVER_NAME = "192.168.11.133"  # Server IP (car)
-SERVER_PORT = 10600  # Server Port(Predefined)
+SERVER_PORT = 10600  # Server Port (Predefined)
 SPEED = 3  # Global speed variable
 DEFAULT_SPEED = 1  # Default cruising speed
 STOP = 0  # Stop Car command
@@ -15,26 +17,26 @@ TURN_RIGHT = 4  # Turn Right command
 ALL_CLEAR = 5  # No action necessary (essentially a null command)
 px = Picarx()
 
-# Configure logging to write to a log file and console - open in write mode so file is first cleared (contents deleted)
+# Configure logging to write to a log file and console - open in write mode so the file is first cleared (contents deleted)
 logging.basicConfig(
     level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s",
+    format="%(asctime)s - %(levelname)s - Client %(client_addr)s - %(message)s",
     handlers=[
         logging.FileHandler("car_log.txt", mode="w"),
         logging.StreamHandler()
     ]
 )
 
-def warning(var):
+def warning(command, client_addr):
     global SPEED
-    if var == REDUCE_SPEED:
+    if command == REDUCE_SPEED:
         if SPEED != 0:  # Slow car down by half
             SPEED = SPEED / 2
-            logging.info("Slowing down car. New speed: %s", SPEED)
+            logging.info("Client %s: Slowing down car. New speed: %s", client_addr, SPEED)
             px.forward(SPEED)
-    elif var == TURN_LEFT:
+    elif command == TURN_LEFT:
         raise NotImplementedError("Left turn not implemented yet")  # Turn car left
-    elif var == TURN_RIGHT:
+    elif command == TURN_RIGHT:
         raise NotImplementedError("Right turn not implemented yet")  # Turn car right
 
 def obstruction():
@@ -50,78 +52,99 @@ def continueDriving():
     logging.info("Continuing driving. Speed set to: %s", SPEED)
     px.forward(SPEED)
 
-def main():
-    SERVER_SOCKET = socket(AF_INET, SOCK_STREAM)  # Server socket creation
-    SERVER_SOCKET.bind((SERVER_NAME, SERVER_PORT))
-    SERVER_SOCKET.listen(1)  # Maximum number of queued connections
-
-    logging.info('Car now listening on %s:%s', SERVER_NAME, SERVER_PORT)
-
-    connection_established = False  # Flag to track if a connection is established
-    timer_duration = 10  # Number of seconds to wait for a connection
-    timer_start = time.time()  # Start the timer
-
-    while not connection_established and (time.time() - timer_start) < timer_duration:
-        try:
-            logging.info("Waiting for incoming client connections...")
-            CONNECTION_SOCKET, addr = SERVER_SOCKET.accept()  # TCP Connection Created
-            logging.info("Connection established with: %s", addr)
-            logging.info('Car now driving at %s...', SPEED)
-            px.forward(SPEED)
-            connection_established = True
-        except Exception as e:
-            logging.error("Error occurred during client connection: %s", str(e))
-
-    if not connection_established:
-        logging.info("No incoming connections. Exiting the program.")
-        return
+def handle_client_connection(connection_socket, client_addr):
+    global SPEED, DEFAULT_SPEED
 
     stop_command_received = False
     stop_timer_start = None
     stop_timer_duration = 5  # Number of seconds to drop packets after receiving a stop command
 
     while True:
-        
         if stop_command_received:
             elapsed_time = time.time() - stop_timer_start
             time_left = stop_timer_duration - elapsed_time
             if elapsed_time < stop_timer_duration:
-                logging.info("STOP command received; now stopping and ignoring drone messages for %s seconds; Time left: %s", stop_timer_duration, time_left)
+                logging.info("STOP command received from CLIENT: (%s); now stopping and ignoring drone messages for %s seconds; Time left: %s",
+                             client_addr, stop_timer_duration, time_left)
             else:
                 stop_command_received = False
                 stop_timer_start = None
-                continueDriving() # Continue to normal driving
-        try:
-            PACKET = CONNECTION_SOCKET.recv(1).decode()  # Receives command (buffer size set to 1 byte --> recv(1))
-            
-            # The subsequent packet reception will be received but not processed UNLESS it is another STOP command
-            if stop_command_received:
-                # if another STOP packet was received, then restart the timer and command car to stop again for safety
-                if int(PACKET) == STOP:
-                    stop_command_received = True
-                    stop_timer_start = time.time()
-                    obstruction()  # Make a call to stop car
-                    logging.info("Received and PROCESSING packet [0=stop,1=cont_drive,2=red_speed,3=L, 4=R,5=clear]: %s", int(PACKET))
+                continueDriving()  # Continue to normal driving
 
-                else:
-                    logging.info("Received AND IGNORED packet [0=stop,1=cont_drive,2=red_speed,3=L, 4=R,5=clear]: %s", int(PACKET))
-                    continue #Continue to start of while loop and do not process the PACKET
-            else:
-                #else process PACKET:
-                logging.info("Received and PROCESSING packet [0=stop,1=cont_drive,2=red_speed,3=L, 4=R,5=clear]: %s", int(PACKET))
-                if int(PACKET) == STOP:
+        try:
+            packet = connection_socket.recv(1).decode()  # Receives command from a client (buffer size set to 1 byte --> recv(1))
+
+            if stop_command_received:
+                if int(packet) == STOP:
                     stop_command_received = True
                     stop_timer_start = time.time()
-                    obstruction()  # Make a call to stop car
-                elif int(PACKET) == ALL_CLEAR:
+                    obstruction()  # Make a call to stop the car
+                    logging.info("Received and PROCESSING packet from CLIENT: (%s), [0=stop,1=cont_drive,2=red_speed,3=L, 4=R,5=clear]: %s",
+                                 client_addr, int(packet))
+                else:
+                    logging.info("Received AND IGNORED packet from CLIENT: (%s), [0=stop,1=cont_drive,2=red_speed,3=L, 4=R,5=clear]: %s",
+                                 client_addr, int(packet))
+                    continue  # Continue to the start of the while loop and do not process the packet
+            else:
+                logging.info("Received and PROCESSING packet from CLIENT: (%s), [0=stop,1=cont_drive,2=red_speed,3=L, 4=R,5=clear]: %s",
+                             client_addr, int(packet))
+                if int(packet) == STOP:
+                    stop_command_received = True
+                    stop_timer_start = time.time()
+                    obstruction()  # Make a call to stop the car
+                elif int(packet) == ALL_CLEAR:
                     continue  # No actions necessary
-                elif int(PACKET) == CONT_DRIVE:
+                elif int(packet) == CONT_DRIVE:
                     continueDriving()  # Continue to normal driving
                 else:
-                    warning(int(PACKET))  # Adjust speed or direction
+                    warning(int(packet), client_addr)  # Adjust speed or direction
+
+        except Exception as e:
+            logging.error("Error occurred during client (%s) connection: %s", client_addr, str(e))
+            break
+
+    connection_socket.close()
+    logging.info("Connection closed with client (%s)", client_addr)
+
+def main():
+    SERVER_SOCKET = socket(AF_INET, SOCK_STREAM)  # Server socket creation
+    SERVER_SOCKET.bind((SERVER_NAME, SERVER_PORT))
+    SERVER_SOCKET.listen(5)  # Maximum number of queued connections
+
+    logging.info('Car now listening on %s:%s', SERVER_NAME, SERVER_PORT)
+
+    connected_clients = 0  # Counter for connected clients
+    connection_threads = []
+
+    while connected_clients < 2:
+        try:
+            logging.info("Waiting for incoming client connections...")
+            connection_socket, addr = SERVER_SOCKET.accept()  # TCP Connection Created
+            logging.info("Connection established with: %s", addr)
+            logging.info('Car now driving at %s...', SPEED)
+            px.forward(SPEED)
+
+            # Each client thread will run the handle_client_connection thread, 
+            # as this program will spawn a child thread for each client.
+            client_thread = threading.Thread(target=handle_client_connection, args=(connection_socket, addr))
+            client_thread.start()
+            connection_threads.append(client_thread)
+
+            connected_clients += 1  # Increment the counter for each connected client
 
         except Exception as e:
             logging.error("Error occurred during client connection: %s", str(e))
+
+        if connected_clients == 2:
+            break
+
+        time.sleep(1)  # Wait for 1 second before checking for the next client connection
+
+    # Join all client socket connection threads before exiting program so that all threads are terminated first
+    for thread in connection_threads:
+        thread.join()
+
+    SERVER_SOCKET.close()
 
 if __name__ == "__main__":
     main()
