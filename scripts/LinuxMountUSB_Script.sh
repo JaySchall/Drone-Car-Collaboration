@@ -8,17 +8,27 @@ fi
 
 # Step 2: Plug in the USB drive to your Raspberry Pi.
 
-# Step 3: Find the device name assigned to your USB drive
-DEVICE_NAME=$(lsblk | grep "58.6G" | awk '{print $1}')
+# Step 3: Check if the USB drive is already mounted
+if mountpoint -q "$MOUNT_POINT"; then
+  echo "USB drive is already mounted at $MOUNT_POINT."
+  exit 1
+fi
+
+# Step 4: Find the device name assigned to your USB drive
+DEVICE_NAME=$(lsblk -o NAME,SIZE -nr | awk '$2 == "58.6G" {print $1}')
 if [ -z "$DEVICE_NAME" ]; then
   echo "USB drive not found. Please make sure it is connected."
   exit 1
 fi
 
-# Step 4: Mount the USB drive
+# Step 5: Mount the USB drive
 sudo mount -o umask=000 "/dev/$DEVICE_NAME"1 "$MOUNT_POINT"
+if [ $? -ne 0 ]; then
+  echo "Failed to mount the USB drive."
+  exit 1
+fi
 
-# Step 5: Verify that the USB drive is mounted successfully
+# Step 6: Verify that the USB drive is mounted successfully
 echo "USB drive mounted successfully."
 df -h | grep "$MOUNT_POINT"
 
