@@ -4,7 +4,6 @@ from socket import *
 SERVER_NAME = "192.168.11.133"  # Server IP (User-defined)
 SERVER_PORT = 10600             # Server Port (Predefined)
 CLIENT_SOCKET = socket(AF_INET, SOCK_STREAM)  # Client Socket Creation 
-# Client Socket Creation (for second argument: SOCK_DGRAM=UDP, SOCK_STREAM=TCP)
 
 # Create a logger instance
 logger = logging.getLogger(__name__)
@@ -25,7 +24,6 @@ logger.addHandler(stream_handler)
 
 ''' 
 Send a message to the car using the following protocol:
-
 0 = Stop due to obstruction
 1 = Continue to normal driving
 2 = Slow down due to possible obstruction
@@ -33,7 +31,6 @@ Send a message to the car using the following protocol:
 4 = Turn car right to avoid obstruction to the left
 5 = All clear (no perceived threats or recovery actions necessary; no changes)
 '''
-
 def message_car(var):
     logger.info("Sending message: %s", var)
     try:
@@ -41,7 +38,7 @@ def message_car(var):
         logger.info("Message sent successfully!")
     except Exception as e:
         logger.error("Error sending message: %s", str(e))
-        
+
 # QUIT Protocol
 def close_socket():
     CLIENT_SOCKET.close()
@@ -49,7 +46,7 @@ def close_socket():
 
 def establish_socket_connection():
     try:
-        CLIENT_SOCKET.connect((SERVER_NAME, SERVER_PORT))  # Establish connection when the program begins
+        CLIENT_SOCKET.connect((SERVER_NAME, SERVER_PORT))
         logger.info("Connected to server: %s on port: %s", SERVER_NAME, SERVER_PORT)
     except ConnectionRefusedError as e:
         logger.error("Error connecting to server: %s", str(e))
@@ -68,7 +65,12 @@ if __name__ == "__main__":
     import time
     from datetime import datetime
     print("This program is not intended to be run as a main program, but it can be ran as a main program for testing purposes.")
-    while True:
-        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")  # Get current timestamp
-        print(f"Time Stamp: {timestamp} - This program is being ran as the main thread for testing purposes - CTRL + c to exit...")
-        time.sleep(5)
+    
+    # Call the establish_socket_connection function
+    if establish_socket_connection():
+        while True:
+            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")  # Get current timestamp
+            print(f"Time Stamp: {timestamp} - This program is being ran as the main thread for testing purposes - CTRL + c to exit...")
+            time.sleep(5)
+    else:
+        print("Failed to establish socket connection. Exiting...")
