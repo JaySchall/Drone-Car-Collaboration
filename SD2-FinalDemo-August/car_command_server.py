@@ -20,7 +20,7 @@ px = Picarx()
 # Configure logging to write to a log file and console - open in write mode so the file is first cleared (contents deleted)
 logging.basicConfig(
     level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - Client %(client_addr)s - %(message)s",
+    format="%(asctime)s - %(levelname)s - %(message)s",
     handlers=[
         logging.FileHandler("car_log.txt", mode="w"),
         logging.StreamHandler()
