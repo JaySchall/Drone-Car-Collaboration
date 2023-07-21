@@ -17,7 +17,7 @@ with open("red_and_edge_object_detection_log.txt", "w"):
 # Configure logging to write to a log file and console
 logger.setLevel(logging.INFO)
 formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
-file_handler = logging.FileHandler("red_object_detection_log.txt")
+file_handler = logging.FileHandler("red_and_edge_object_detection_log.txt")
 file_handler.setFormatter(formatter)
 stream_handler = logging.StreamHandler()
 stream_handler.setFormatter(formatter)
