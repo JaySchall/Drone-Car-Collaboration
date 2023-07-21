@@ -7,14 +7,18 @@ import threading
 # Global variables
 SERVER_NAME = "192.168.11.133"  # Server IP (car)
 SERVER_PORT = 10600  # Server Port (Predefined)
-SPEED = 3  # Global speed variable
+SPEED = 1  # Global speed variable
 DEFAULT_SPEED = 1  # Default cruising speed
+
+#Car commands
 STOP = 0  # Stop Car command
 CONT_DRIVE = 1  # Continue driving after a Stop Car command
 REDUCE_SPEED = 2  # Reduce speed by some factor command (currently set to 1/2)
 TURN_LEFT = 3  # Turn Left command
 TURN_RIGHT = 4  # Turn Right command
 ALL_CLEAR = 5  # No action necessary (essentially a null command)
+
+#create instance of pi car
 px = Picarx()
 
 # Configure logging to write to a log file and console - open in write mode so the file is first cleared (contents deleted)
