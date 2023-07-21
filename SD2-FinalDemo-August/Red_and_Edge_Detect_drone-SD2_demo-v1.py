@@ -26,7 +26,7 @@ logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s",
     handlers=[
-        logging.FileHandler("red_object_detection_log.txt"),
+        logging.FileHandler("red_and_edge_object_detection_log.txt"),
         logging.StreamHandler()
     ]
 )
@@ -40,8 +40,8 @@ def connect_to_car_command_server():
 
 def initialize_ros_node():
     try:
-        rospy.init_node('red_object_detection')
-        logging.info("ROS node 'red_object_detection' initialized.")
+        rospy.init_node('red_and_edge_object_detection')
+        logging.info("ROS node 'red_and_edge_object_detection' initialized.")
         return True
     except rospy.ROSInitException as e:
         logging.error("Failed to initialize ROS node: %s", str(e))
@@ -186,8 +186,8 @@ def main():
         return
 
     global image_pub
-    image_pub = rospy.Publisher('red_object_detection/image_raw', Image, queue_size=10)
-    logging.info("ROS publisher created for 'red_object_detection/image_raw' topic.")
+    image_pub = rospy.Publisher('red_and_edge_object_detection/image_raw', Image, queue_size=10)
+    logging.info("ROS publisher created for 'red_and_edge_object_detection/image_raw' topic.")
 
     start_image_processing()
 

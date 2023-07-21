@@ -11,7 +11,7 @@ CLIENT_SOCKET = socket(AF_INET, SOCK_STREAM)  # Client Socket Creation
 logger = logging.getLogger(__name__)
 
 # Clear log file before reopening in append mode
-with open("red_object_detection_log.txt", "w"):
+with open("red_and_edge_object_detection_log.txt", "w"):
     pass
 
 # Configure logging to write to a log file and console
