@@ -16,7 +16,7 @@ if [ -z "$DEVICE_NAME" ]; then
 fi
 
 # Step 4: Mount the USB drive
-sudo mount -o umask=000 "$DEVICE_NAME"1 "$MOUNT_POINT"
+sudo mount -o umask=000 "/dev/$DEVICE_NAME"1 "$MOUNT_POINT"
 
 # Step 5: Verify that the USB drive is mounted successfully
 echo "USB drive mounted successfully."
