@@ -9,6 +9,7 @@ SERVER_NAME = "192.168.11.133"  # Server IP (car)
 SERVER_PORT = 10600  # Server Port (Predefined)
 SPEED = 1  # Global speed variable
 DEFAULT_SPEED = 1  # Default cruising speed
+NUM_CLIENTS_ALLOWED = 2 # Max number of clients allowed to connect to server
 
 #Car commands
 STOP = 0  # Stop Car command
@@ -113,20 +114,20 @@ def handle_client_connection(connection_socket, client_addr):
 def main():
     SERVER_SOCKET = socket(AF_INET, SOCK_STREAM)  # Server socket creation
     SERVER_SOCKET.bind((SERVER_NAME, SERVER_PORT))
-    SERVER_SOCKET.listen(5)  # Maximum number of queued connections
+    SERVER_SOCKET.listen(NUM_CLIENTS_ALLOWED)  # Maximum number of queued connections
 
     logging.info('Car now listening on %s:%s', SERVER_NAME, SERVER_PORT)
 
     connected_clients = 0  # Counter for connected clients
-    connection_threads = []
+    connection_threads = [] # Thread IDs stored in this list
+   
 
-    while connected_clients < 2:
+    while connected_clients < NUM_CLIENTS_ALLOWED:
         try:
             logging.info("Waiting for incoming client connections...")
             connection_socket, addr = SERVER_SOCKET.accept()  # TCP Connection Created
             logging.info("Connection established with: %s", addr)
             logging.info('Car now driving at %s...', SPEED)
-            px.forward(SPEED)
 
             # Each client thread will run the handle_client_connection thread, 
             # as this program will spawn a child thread for each client.
@@ -138,8 +139,10 @@ def main():
 
         except Exception as e:
             logging.error("Error occurred during client connection: %s", str(e))
-
-        if connected_clients == 2:
+        
+        # When both clients (drone and edge server) are connected to car command server, car can now begin driving
+        if connected_clients == NUM_CLIENTS_ALLOWED:
+            px.forward(SPEED)
             break
 
         time.sleep(1)  # Wait for 1 second before checking for the next client connection
