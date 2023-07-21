@@ -1,23 +1,19 @@
 from kivy.uix.tabbedpanel import TabbedPanelItem
 from kivy.lang.builder import Builder
 
-CLICKED_COLOR = [0.85, 0.85, 0.85, 1]
-UNCLICKED_COLOR = [0.74, 0.74, 0.74, 1]
+from res.constants import ColorConstants
 
 Builder.load_string("""
 <SkyTabbedPannel>:
-    color: [0, 0, 0, 1]
-    background_disabled_down: ''
-    background_disabled_normal: ''
-    background_down: ''
-    background_normal: ''
+    color: self.black
+    canvas.before:
+        Color:
+            rgba: self.bg_color
+        Rectangle:
+            size: self.size
+            pos: self.pos  
 """)
 
 class SkyTabbedPannel(TabbedPanelItem):
-    
-    def on_state(self, *args):
-        if args[1] == 'normal':
-            self.background_color = UNCLICKED_COLOR
-        else:
-            self.background_color = CLICKED_COLOR
-
+    black = ColorConstants.black
+    bg_color = ColorConstants.form_bg_color
