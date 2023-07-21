@@ -1,7 +1,5 @@
-#Import this file into the yoloShapeDetect.py in order to connect to and send commands to the car
 import logging
 from socket import *
-import time
 
 SERVER_NAME = "192.168.11.133"  # Server IP (User-defined)
 SERVER_PORT = 10600             # Server Port (Predefined)
@@ -63,3 +61,14 @@ def establish_socket_connection():
     else:
         logger.info("Socket connection is closed (socket file descriptor = %s).", CLIENT_SOCKET.fileno())
         return False
+
+
+# For testing purposes only:
+if __name__ == "__main__":
+    import time
+    from datetime import datetime
+    print("This program is not intended to be run as a main program, but it can be ran as a main program for testing purposes.")
+    while True:
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")  # Get current timestamp
+        print(f"Time Stamp: {timestamp} - This program is being ran as the main thread for testing purposes - CTRL + c to exit...")
+        time.sleep(5)
