@@ -5,12 +5,14 @@ from typing import Union
 from re import fullmatch
 import os
 
+from kivy.event import EventDispatcher
+
 class SkyValidator(ABC):
     @abstractmethod
     def validate(self, form, field, value) -> Union[bool, str]:
         pass
 
-class SkyRequiredValidator(SkyValidator):
+class SkyRequiredValidator(SkyValidator, EventDispatcher):
     required = BooleanProperty(False)
 
     def validate(self, form, field, value) -> Union[bool, str]:
@@ -20,7 +22,7 @@ class SkyRequiredValidator(SkyValidator):
             else:
                 return f"{field} is required."
 
-class SkyNetworkValidator(SkyValidator):
+class SkyNetworkValidator(SkyValidator, EventDispatcher):
     port = BooleanProperty(False)
     ip = BooleanProperty(False)
 
@@ -50,7 +52,7 @@ class SkyNetworkValidator(SkyValidator):
                 return f"{value} is not a valid ip address"
         return True
     
-class SkyPathValidator(SkyValidator):
+class SkyPathValidator(SkyValidator, EventDispatcher):
     dir_path = BooleanProperty(False)
     local_path = BooleanProperty(False)
 
@@ -60,7 +62,7 @@ class SkyPathValidator(SkyValidator):
                 return f"{value} was not found."
         return True
     
-class SkyNumberValidator(SkyValidator):
+class SkyNumberValidator(SkyValidator, EventDispatcher):
     integer = BooleanProperty(False)
     gt = NumericProperty(None)
     gte = NumericProperty(None)
