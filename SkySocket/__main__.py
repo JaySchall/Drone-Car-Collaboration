@@ -29,6 +29,7 @@ class MainWindow(BoxLayout):
     car = carConnection(settings.car_ip,
                         settings.car_username,
                         settings.car_passowrd)
+    
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.ids["tabpanel"]._tab_layout.padding = [dp(20), 0, 0, dp(-2)]

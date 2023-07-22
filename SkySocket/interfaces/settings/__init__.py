@@ -1,8 +1,9 @@
 from res.constants import ColorConstants, StyleConstants
 from widgets.tab import SkyTabbedPannel
-from widgets.layouts import SkyVerticalLayout
 from interfaces.settings.settingsform import SettingsForm
 
+from kivy.properties import ObjectProperty
+from kivy.metrics import dp
 from kivy.lang.builder import Builder
 
 Builder.load_string("""
@@ -44,21 +45,39 @@ Builder.load_string("""
                         pos: self.pos
                 SettingsForm:
                     id: setform
-                Button:
-                    size_hint: None, None
-                    size: dp(50), dp(25)
-                    pos_hint: {'center': 0.5, 'center': 0.5}
-                    text: "Apply"
-                    on_release: root.apply(setform.form.get_values())
+                    settings: root.settings
+                StackLayout:
+                    orientation: 'rl-bt'
+                    size_hint: 1, None
+                    height: self.minimum_height
+                    Button:
+                        size_hint: None, None
+                        size: root.button_size
+                        text: "Defaults"
+                        on_release: root.defaults()
+                    Button:
+                        size_hint: None, None
+                        size: root.button_size
+                        text: "Apply"
+                        on_release: root.apply(setform.form.get_values())
+                        
 """)
 
 
 class SkySettingsTab(SkyTabbedPannel):
     def_padding = StyleConstants.def_padding
+    settings = ObjectProperty()
 
     form_bg = ColorConstants.form_bg_color
     form_fg = ColorConstants.form_fg_color
     tab_bg = ColorConstants.tab_bg_color
+    button_size = (dp(75), dp(25))
 
     def apply(self, values):
-        print(values)
+        form = self.ids["setform"].form
+        if form.validate():
+            return
+        self.settings.set_values(values)
+
+    def defaults(self, *args):
+        self.settings.on_default()
