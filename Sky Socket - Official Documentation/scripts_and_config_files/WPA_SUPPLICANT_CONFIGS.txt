@@ -1,0 +1,23 @@
+ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+update_config=1
+country=US
+
+#use this for access point mode:
+network={
+	ssid="clover-3321"
+	psk="cloverwifi"
+	mode=2
+	proto=RSN WPA
+	key_mgmt=WPA-PSK
+	pairwise=CCMP
+	group=CCMPP
+	auth_alg=OPEN
+} 
+
+#use the below for client mode:
+
+network={
+	ssid="Johnson's Residence-5G"
+	psk="UMDXC2018"
+	key_mgmt=WPA-PSK
+}

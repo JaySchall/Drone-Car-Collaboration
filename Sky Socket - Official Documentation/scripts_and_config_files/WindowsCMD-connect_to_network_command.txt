@@ -1,0 +1,1 @@
+netsh wlan connect name="clover-3321" ssid="clover-3321" interface="Wi-Fi 4"

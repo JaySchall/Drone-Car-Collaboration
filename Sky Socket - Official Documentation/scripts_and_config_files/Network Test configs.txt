@@ -1,0 +1,9 @@
+On server (drone):
+
+iperf3 -s -p 5201 -V --logfile iperf3_TCP_Test_server.txt
+
+
+
+On client (car):
+
+iperf3 -V -c 192.168.11.1 -t 30 --logfile iperf3_TCP_Test_client.txt

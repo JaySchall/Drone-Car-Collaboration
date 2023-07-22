@@ -1,0 +1,39 @@
+Get set up:
+- On the drone, install iPerf using the command "sudo apt install iperf3"
+- On a linux machine connected to the same netowrk, run the same command. 
+(if you dont have a linux machine or a way to make a vm connect to the 
+network, there is a windows gui version, though Im not familiar with it at 
+all so send me a message if this is the case)
+- Run "ifconfig" or "ip addr" on the linux machine to find it's ip
+
+Running the TCP test:
+- On the linux machine, run the command "iperf3 -s -p 5201 -V --logfile 
+iperfTest.txt" 
+(I 
+think that should be what I want. If it doesnt work, try removing options 
+1 at a time from last to first. the bare minimum command should be "iperf3 
+-s")
+- Connect to the drone via ssh (hopefully this is set up, lmk if not)
+- Get the drone flying in the air
+- While the drone is flying, run the command "iperf3 -c <computers IP> -t 
+30"
+A connection should be made between the drone and computer for 30 seconds 
+while they test a TCP connection.
+- Rerun this test 3 times (you dont have to restart the linux server every 
+time, you can connect with the drone 3 times in a row)
+To end the server program, use control c
+
+Running the UDP test:
+- On the linux machine, run the command "iperf3 -s -u -p 5201 -V --logfile   
+iperfUDPTest.txt"
+(I
+think that should be what I want. If it doesnt work, try removing options
+1 at a time from last to first. the bare minimum command should be "iperf3
+-s")
+- Connect to the drone via ssh (hopefully this is set up, lmk if not)
+- Get the drone flying in the air
+- While the drone is flying, run the command "iperf3 -c <computers IP> -u 
+-t 30"
+- Rerun this test 3 times
+
+Let me know if some of this doesnt work or if you have any questions!
