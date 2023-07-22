@@ -1,0 +1,742 @@
+iperf 3.9
+Linux raspberrypi 5.15.32-v7l+ #1538 SMP Thu Mar 31 19:39:41 BST 2022 armv7l
+iperf3: error - unable to send control message: Bad file descriptor
+iperf 3.9
+Linux raspberrypi 5.15.32-v7l+ #1538 SMP Thu Mar 31 19:39:41 BST 2022 armv7l
+Time: Tue, 11 Apr 2023 17:04:44 GMT
+Connecting to host 192.168.11.1, port 5201
+      Cookie: nr7jcqzj57yj5ykebvukpqoadahoqqhepuqo
+      TCP MSS: 1448 (default)
+[  6] local 192.168.11.133 port 53576 connected to 192.168.11.1 port 5201
+Starting Test: protocol: TCP, 1 streams, 131072 byte blocks, omitting 0 seconds, 30 second test, tos 0
+[ ID] Interval           Transfer     Bitrate         Retr  Cwnd
+[  6]   0.00-1.00   sec  7.26 MBytes  60.9 Mbits/sec    0    472 KBytes       
+[  6]   1.00-2.00   sec  5.97 MBytes  50.0 Mbits/sec    0    588 KBytes       
+[  6]   2.00-3.00   sec  6.84 MBytes  57.3 Mbits/sec    0    672 KBytes       
+[  6]   3.00-4.00   sec  6.46 MBytes  54.2 Mbits/sec    0    771 KBytes       
+[  6]   4.00-5.00   sec  6.71 MBytes  56.3 Mbits/sec    0    871 KBytes       
+[  6]   5.00-6.00   sec  5.97 MBytes  50.1 Mbits/sec    0    921 KBytes       
+[  6]   6.00-7.00   sec  6.21 MBytes  52.1 Mbits/sec    0   1.01 MBytes       
+[  6]   7.00-8.00   sec  6.90 MBytes  57.9 Mbits/sec    0   1.01 MBytes       
+[  6]   8.00-9.00   sec  6.90 MBytes  57.9 Mbits/sec    0   1.01 MBytes       
+[  6]   9.00-10.00  sec  6.84 MBytes  57.3 Mbits/sec    0   1.01 MBytes       
+[  6]  10.00-11.00  sec  5.65 MBytes  47.4 Mbits/sec    0   1.01 MBytes       
+[  6]  11.00-12.00  sec  7.08 MBytes  59.5 Mbits/sec    0   1.01 MBytes       
+[  6]  12.00-13.00  sec  7.02 MBytes  58.9 Mbits/sec    0   1.01 MBytes       
+[  6]  13.00-14.00  sec  5.65 MBytes  47.4 Mbits/sec    0   1.01 MBytes       
+[  6]  14.00-15.00  sec  7.02 MBytes  58.9 Mbits/sec    0   1.01 MBytes       
+[  6]  15.00-16.00  sec  5.97 MBytes  50.1 Mbits/sec    0   1.01 MBytes       
+[  6]  16.00-17.00  sec  6.58 MBytes  55.2 Mbits/sec    0   1.01 MBytes       
+[  6]  17.00-18.00  sec  7.15 MBytes  60.0 Mbits/sec    0   1.01 MBytes       
+[  6]  18.00-19.00  sec  5.47 MBytes  45.9 Mbits/sec    0   1.01 MBytes       
+[  6]  19.00-20.00  sec  7.02 MBytes  58.9 Mbits/sec    0   1.01 MBytes       
+[  6]  20.00-21.00  sec  6.90 MBytes  57.9 Mbits/sec    0   1.01 MBytes       
+[  6]  21.00-22.00  sec  6.96 MBytes  58.4 Mbits/sec    0   1.01 MBytes       
+[  6]  22.00-23.00  sec  5.78 MBytes  48.5 Mbits/sec    0   1.01 MBytes       
+[  6]  23.00-24.00  sec  6.59 MBytes  55.3 Mbits/sec    0   1.01 MBytes       
+[  6]  24.00-25.00  sec  5.84 MBytes  49.0 Mbits/sec    0   1.01 MBytes       
+[  6]  25.00-26.00  sec  6.77 MBytes  56.8 Mbits/sec    0   1.01 MBytes       
+[  6]  26.00-27.00  sec  6.90 MBytes  57.9 Mbits/sec    0   1.01 MBytes       
+[  6]  27.00-28.00  sec  6.71 MBytes  56.3 Mbits/sec    0   1.01 MBytes       
+[  6]  28.00-29.00  sec  6.65 MBytes  55.8 Mbits/sec    0   1.01 MBytes       
+[  6]  29.00-30.00  sec  6.65 MBytes  55.8 Mbits/sec    0   1.01 MBytes       
+- - - - - - - - - - - - - - - - - - - - - - - - -
+Test Complete. Summary Results:
+[ ID] Interval           Transfer     Bitrate         Retr
+[  6]   0.00-30.00  sec   196 MBytes  54.9 Mbits/sec    0             sender
+[  6]   0.00-30.03  sec   194 MBytes  54.1 Mbits/sec                  receiver
+CPU Utilization: local/sender 1.0% (0.0%u/1.0%s), remote/receiver 6.5% (0.2%u/6.3%s)
+snd_tcp_congestion cubic
+rcv_tcp_congestion cubic
+
+iperf Done.
+iperf 3.9
+Linux raspberrypi 5.15.32-v7l+ #1538 SMP Thu Mar 31 19:39:41 BST 2022 armv7l
+Time: Tue, 11 Apr 2023 17:09:26 GMT
+Connecting to host 192.168.11.1, port 5201
+      Cookie: 5mtvs3k4jsqdhhbo6puwd3tbomgl4actl23x
+      TCP MSS: 1448 (default)
+[  6] local 192.168.11.133 port 53580 connected to 192.168.11.1 port 5201
+Starting Test: protocol: TCP, 1 streams, 131072 byte blocks, omitting 0 seconds, 30 second test, tos 0
+[ ID] Interval           Transfer     Bitrate         Retr  Cwnd
+[  6]   0.00-1.00   sec  6.89 MBytes  57.8 Mbits/sec    0    368 KBytes       
+[  6]   1.00-2.00   sec  5.53 MBytes  46.4 Mbits/sec    0    499 KBytes       
+[  6]   2.00-3.00   sec  7.39 MBytes  62.0 Mbits/sec    0    687 KBytes       
+[  6]   3.00-4.00   sec  7.15 MBytes  59.9 Mbits/sec    0    807 KBytes       
+[  6]   4.00-5.00   sec  6.65 MBytes  55.8 Mbits/sec    0    853 KBytes       
+[  6]   5.00-6.00   sec  6.09 MBytes  51.1 Mbits/sec    0    901 KBytes       
+[  6]   6.00-6.06   sec   954 KBytes   126 Mbits/sec    0    901 KBytes       
+- - - - - - - - - - - - - - - - - - - - - - - - -
+Test Complete. Summary Results:
+[ ID] Interval           Transfer     Bitrate         Retr
+[  6]   0.00-6.06   sec  40.6 MBytes  56.2 Mbits/sec    0             sender
+[  6]   0.00-6.06   sec  0.00 Bytes  0.00 bits/sec                  receiver
+CPU Utilization: local/sender 1.4% (0.0%u/1.4%s), remote/receiver 0.0% (0.0%u/0.0%s)
+snd_tcp_congestion cubic
+iperf3: interrupt - the client has terminated
+iperf 3.9
+Linux raspberrypi 5.15.32-v7l+ #1538 SMP Thu Mar 31 19:39:41 BST 2022 armv7l
+Time: Tue, 11 Apr 2023 17:12:35 GMT
+Connecting to host 192.168.11.1, port 5201
+      Cookie: upbxmyaveq6z4vixrztwrcvkzfswzinxviwf
+      TCP MSS: 1448 (default)
+[  6] local 192.168.11.133 port 53584 connected to 192.168.11.1 port 5201
+Starting Test: protocol: TCP, 1 streams, 131072 byte blocks, omitting 0 seconds, 35 second test, tos 0
+[ ID] Interval           Transfer     Bitrate         Retr  Cwnd
+[  6]   0.00-1.00   sec  6.35 MBytes  53.3 Mbits/sec    0    366 KBytes       
+[  6]   1.00-2.00   sec  6.71 MBytes  56.3 Mbits/sec    0    533 KBytes       
+[  6]   2.00-3.00   sec  6.46 MBytes  54.2 Mbits/sec    0    713 KBytes       
+[  6]   3.00-4.00   sec  6.96 MBytes  58.4 Mbits/sec    0    757 KBytes       
+[  6]   4.00-5.00   sec  6.65 MBytes  55.7 Mbits/sec    0    874 KBytes       
+[  6]   5.00-6.00   sec  7.08 MBytes  59.5 Mbits/sec    0    922 KBytes       
+[  6]   6.00-7.00   sec  6.21 MBytes  52.1 Mbits/sec    0    984 KBytes       
+[  6]   7.00-8.00   sec  6.59 MBytes  55.3 Mbits/sec    0    984 KBytes       
+[  6]   8.00-9.00   sec  6.71 MBytes  56.3 Mbits/sec    0   1.01 MBytes       
+[  6]   9.00-10.00  sec  6.71 MBytes  56.3 Mbits/sec    0   1.01 MBytes       
+[  6]  10.00-11.00  sec  6.71 MBytes  56.3 Mbits/sec    0   1.01 MBytes       
+[  6]  11.00-12.00  sec  7.34 MBytes  61.6 Mbits/sec    0   1.12 MBytes       
+[  6]  12.00-13.00  sec  6.21 MBytes  52.1 Mbits/sec    0   1.12 MBytes       
+[  6]  13.00-14.00  sec  7.49 MBytes  62.9 Mbits/sec    0   1.34 MBytes       
+[  6]  14.00-15.00  sec  6.25 MBytes  52.4 Mbits/sec    0   1.34 MBytes       
+[  6]  15.00-16.00  sec  6.25 MBytes  52.4 Mbits/sec    0   1.34 MBytes       
+[  6]  16.00-17.00  sec  6.25 MBytes  52.4 Mbits/sec    0   1.34 MBytes       
+[  6]  17.00-18.00  sec  7.50 MBytes  62.9 Mbits/sec    0   1.34 MBytes       
+[  6]  18.00-19.00  sec  6.25 MBytes  52.4 Mbits/sec    0   1.34 MBytes       
+[  6]  19.00-20.00  sec  6.25 MBytes  52.4 Mbits/sec    0   1.38 MBytes       
+[  6]  20.00-21.00  sec  7.50 MBytes  62.9 Mbits/sec    0   1.38 MBytes       
+[  6]  21.00-22.00  sec  6.25 MBytes  52.4 Mbits/sec    0   1.38 MBytes       
+[  6]  22.00-23.00  sec  6.25 MBytes  52.4 Mbits/sec    0   1.38 MBytes       
+[  6]  23.00-24.00  sec  7.50 MBytes  62.9 Mbits/sec    0   1.43 MBytes       
+[  6]  24.00-25.00  sec  6.25 MBytes  52.4 Mbits/sec    0   1.43 MBytes       
+[  6]  25.00-26.00  sec  6.25 MBytes  52.5 Mbits/sec    0   1.43 MBytes       
+[  6]  26.00-27.00  sec  6.25 MBytes  52.4 Mbits/sec    0   1.43 MBytes       
+[  6]  27.00-28.00  sec  7.50 MBytes  62.9 Mbits/sec    0   1.43 MBytes       
+[  6]  28.00-29.00  sec  6.25 MBytes  52.4 Mbits/sec    0   1.43 MBytes       
+[  6]  29.00-30.00  sec  6.25 MBytes  52.4 Mbits/sec    0   2.23 MBytes       
+[  6]  30.00-30.21  sec  1.25 MBytes  50.2 Mbits/sec    0   2.23 MBytes       
+- - - - - - - - - - - - - - - - - - - - - - - - -
+Test Complete. Summary Results:
+[ ID] Interval           Transfer     Bitrate         Retr
+[  6]   0.00-30.21  sec   200 MBytes  55.7 Mbits/sec    0             sender
+[  6]   0.00-30.21  sec  0.00 Bytes  0.00 bits/sec                  receiver
+CPU Utilization: local/sender 1.0% (0.0%u/1.0%s), remote/receiver 0.0% (0.0%u/0.0%s)
+snd_tcp_congestion cubic
+iperf3: interrupt - the client has terminated
+iperf 3.9
+Linux raspberrypi 5.15.32-v7l+ #1538 SMP Thu Mar 31 19:39:41 BST 2022 armv7l
+Time: Tue, 11 Apr 2023 17:15:57 GMT
+Connecting to host 192.168.11.1, port 5201
+      Cookie: tjnh2r72gx7buccudsrp3y7lwyt7wo5xrd3o
+      TCP MSS: 1448 (default)
+[  6] local 192.168.11.133 port 53590 connected to 192.168.11.1 port 5201
+Starting Test: protocol: TCP, 1 streams, 131072 byte blocks, omitting 0 seconds, 35 second test, tos 0
+[ ID] Interval           Transfer     Bitrate         Retr  Cwnd
+[  6]   0.00-1.00   sec  7.28 MBytes  61.1 Mbits/sec    0    411 KBytes       
+[  6]   1.00-2.00   sec  5.90 MBytes  49.5 Mbits/sec    0    547 KBytes       
+[  6]   2.00-3.00   sec  7.39 MBytes  62.0 Mbits/sec    0    735 KBytes       
+[  6]   3.00-4.00   sec  5.65 MBytes  47.5 Mbits/sec    0    788 KBytes       
+[  6]   4.00-5.00   sec  6.52 MBytes  54.7 Mbits/sec    0    826 KBytes       
+[  6]   5.00-6.00   sec  6.40 MBytes  53.7 Mbits/sec    0    963 KBytes       
+[  6]   6.00-7.00   sec  6.71 MBytes  56.3 Mbits/sec    0   1017 KBytes       
+[  6]   7.00-8.00   sec  6.84 MBytes  57.3 Mbits/sec    0   1.06 MBytes       
+[  6]   8.00-9.00   sec  7.34 MBytes  61.6 Mbits/sec    0   1.13 MBytes       
+[  6]   9.00-10.00  sec  7.26 MBytes  60.9 Mbits/sec    0   1.13 MBytes       
+[  6]  10.00-11.00  sec  6.17 MBytes  51.7 Mbits/sec    0   1.22 MBytes       
+[  6]  11.00-12.00  sec  7.50 MBytes  62.9 Mbits/sec    0   1.22 MBytes       
+[  6]  12.00-13.00  sec  6.25 MBytes  52.4 Mbits/sec    0   1.22 MBytes       
+[  6]  13.00-14.00  sec  5.00 MBytes  41.9 Mbits/sec    0   1.22 MBytes       
+[  6]  14.00-15.00  sec  7.50 MBytes  62.9 Mbits/sec    0   1.59 MBytes       
+[  6]  15.00-16.00  sec  7.50 MBytes  62.9 Mbits/sec    0   1.59 MBytes       
+[  6]  16.00-17.00  sec  6.25 MBytes  52.4 Mbits/sec    0   1.59 MBytes       
+[  6]  17.00-18.00  sec  6.25 MBytes  52.4 Mbits/sec    0   1.59 MBytes       
+[  6]  18.00-19.00  sec  6.25 MBytes  52.4 Mbits/sec    0   1.59 MBytes       
+[  6]  19.00-20.00  sec  7.50 MBytes  62.9 Mbits/sec    0   1.59 MBytes       
+[  6]  20.00-21.00  sec  6.25 MBytes  52.4 Mbits/sec    0   1.59 MBytes       
+[  6]  21.00-22.00  sec  7.50 MBytes  62.9 Mbits/sec    0   1.59 MBytes       
+[  6]  22.00-23.00  sec  5.00 MBytes  41.9 Mbits/sec    0   1.59 MBytes       
+[  6]  23.00-24.00  sec  7.50 MBytes  62.9 Mbits/sec    0   1.59 MBytes       
+[  6]  24.00-25.00  sec  6.25 MBytes  52.4 Mbits/sec    0   1.59 MBytes       
+[  6]  25.00-26.00  sec  6.25 MBytes  52.4 Mbits/sec    0   1.59 MBytes       
+[  6]  26.00-27.00  sec  6.25 MBytes  52.4 Mbits/sec    0   1.59 MBytes       
+[  6]  27.00-28.00  sec  7.50 MBytes  62.9 Mbits/sec    0   1.59 MBytes       
+[  6]  28.00-29.00  sec  6.25 MBytes  52.4 Mbits/sec    0   1.59 MBytes       
+[  6]  29.00-30.00  sec  6.25 MBytes  52.4 Mbits/sec    0   1.59 MBytes       
+[  6]  30.00-30.21  sec  1.25 MBytes  49.0 Mbits/sec    0   1.59 MBytes       
+- - - - - - - - - - - - - - - - - - - - - - - - -
+Test Complete. Summary Results:
+[ ID] Interval           Transfer     Bitrate         Retr
+[  6]   0.00-30.21  sec   200 MBytes  55.5 Mbits/sec    0             sender
+[  6]   0.00-30.21  sec  0.00 Bytes  0.00 bits/sec                  receiver
+CPU Utilization: local/sender 1.0% (0.0%u/1.0%s), remote/receiver 0.0% (0.0%u/0.0%s)
+snd_tcp_congestion cubic
+iperf3: interrupt - the client has terminated
+iperf 3.9
+Linux raspberrypi 5.15.32-v7l+ #1538 SMP Thu Mar 31 19:39:41 BST 2022 armv7l
+Time: Tue, 11 Apr 2023 21:02:27 GMT
+Connecting to host 192.168.11.1, port 5201
+      Cookie: pvmvzxtsrd6m4l4gw3yzlakaxw4tmghgeksg
+      TCP MSS: 1448 (default)
+[  6] local 192.168.11.133 port 60540 connected to 192.168.11.1 port 5201
+Starting Test: protocol: TCP, 1 streams, 131072 byte blocks, omitting 0 seconds, 35 second test, tos 0
+[ ID] Interval           Transfer     Bitrate         Retr  Cwnd
+[  6]   0.00-1.00   sec  6.32 MBytes  53.0 Mbits/sec    0    370 KBytes       
+[  6]   1.00-2.00   sec  7.15 MBytes  60.0 Mbits/sec    0    563 KBytes       
+[  6]   2.00-3.00   sec  7.27 MBytes  61.0 Mbits/sec    0    660 KBytes       
+[  6]   3.00-4.00   sec  6.65 MBytes  55.8 Mbits/sec    0    773 KBytes       
+[  6]   4.00-5.00   sec  6.96 MBytes  58.4 Mbits/sec    0    837 KBytes       
+[  6]   5.00-6.00   sec  6.90 MBytes  57.9 Mbits/sec    0    881 KBytes       
+[  6]   6.00-7.00   sec  7.02 MBytes  58.9 Mbits/sec    0    881 KBytes       
+[  6]   7.00-8.00   sec  5.90 MBytes  49.5 Mbits/sec    0    881 KBytes       
+[  6]   8.00-9.00   sec  7.02 MBytes  58.9 Mbits/sec    0    926 KBytes       
+[  6]   9.00-10.00  sec  7.39 MBytes  62.0 Mbits/sec    0   1024 KBytes       
+[  6]  10.00-11.00  sec  6.52 MBytes  54.7 Mbits/sec    0   1024 KBytes       
+[  6]  11.00-12.00  sec  6.71 MBytes  56.3 Mbits/sec    0   1.06 MBytes       
+[  6]  12.00-13.00  sec  5.72 MBytes  48.0 Mbits/sec    0   1.06 MBytes       
+[  6]  13.00-14.00  sec  7.08 MBytes  59.4 Mbits/sec    0   1.06 MBytes       
+[  6]  14.00-15.00  sec  5.97 MBytes  50.0 Mbits/sec    0   1.06 MBytes       
+[  6]  15.00-16.00  sec  6.84 MBytes  57.4 Mbits/sec    0   1.06 MBytes       
+[  6]  16.00-17.00  sec  6.96 MBytes  58.4 Mbits/sec    0   1.06 MBytes       
+[  6]  17.00-18.00  sec  7.21 MBytes  60.5 Mbits/sec    0   1.06 MBytes       
+[  6]  18.00-19.00  sec  5.84 MBytes  49.0 Mbits/sec    0   1.06 MBytes       
+[  6]  19.00-20.00  sec  6.90 MBytes  57.9 Mbits/sec    0   1.06 MBytes       
+[  6]  20.00-21.00  sec  5.90 MBytes  49.5 Mbits/sec    0   1.06 MBytes       
+[  6]  21.00-22.00  sec  6.97 MBytes  58.5 Mbits/sec    0   1.06 MBytes       
+[  6]  22.00-23.00  sec  6.89 MBytes  57.8 Mbits/sec    0   1.06 MBytes       
+[  6]  23.00-24.00  sec  6.84 MBytes  57.3 Mbits/sec    0   1.06 MBytes       
+[  6]  24.00-25.00  sec  5.90 MBytes  49.5 Mbits/sec    0   1.06 MBytes       
+[  6]  25.00-26.00  sec  6.77 MBytes  56.8 Mbits/sec    0   1.06 MBytes       
+[  6]  26.00-27.00  sec  6.84 MBytes  57.3 Mbits/sec    0   1.06 MBytes       
+[  6]  27.00-28.00  sec  6.97 MBytes  58.4 Mbits/sec    0   1.06 MBytes       
+[  6]  28.00-29.00  sec  7.08 MBytes  59.3 Mbits/sec    0   1.06 MBytes       
+[  6]  29.00-30.00  sec  5.90 MBytes  49.5 Mbits/sec    0   1.06 MBytes       
+[  6]  30.00-30.20  sec  1.12 MBytes  47.1 Mbits/sec    0   1.06 MBytes       
+- - - - - - - - - - - - - - - - - - - - - - - - -
+Test Complete. Summary Results:
+[ ID] Interval           Transfer     Bitrate         Retr
+[  6]   0.00-30.20  sec   202 MBytes  56.0 Mbits/sec    0             sender
+[  6]   0.00-30.20  sec  0.00 Bytes  0.00 bits/sec                  receiver
+CPU Utilization: local/sender 1.0% (0.0%u/1.0%s), remote/receiver 0.0% (0.0%u/0.0%s)
+snd_tcp_congestion cubic
+iperf3: interrupt - the client has terminated
+iperf 3.9
+Linux raspberrypi 5.15.32-v7l+ #1538 SMP Thu Mar 31 19:39:41 BST 2022 armv7l
+Time: Tue, 11 Apr 2023 21:28:19 GMT
+Connecting to host 192.168.11.1, port 5201
+      Cookie: eqhsoc44a3yy34rrposfn6nzebin2smj3zkj
+      TCP MSS: 1448 (default)
+[  6] local 192.168.11.133 port 41738 connected to 192.168.11.1 port 5201
+Starting Test: protocol: TCP, 1 streams, 131072 byte blocks, omitting 0 seconds, 35 second test, tos 0
+[ ID] Interval           Transfer     Bitrate         Retr  Cwnd
+[  6]   0.00-1.00   sec  4.09 MBytes  34.3 Mbits/sec    1   1.41 KBytes       
+[  6]   1.00-2.00   sec  6.21 MBytes  52.1 Mbits/sec    0    518 KBytes       
+[  6]   2.00-3.00   sec  5.78 MBytes  48.5 Mbits/sec    0    612 KBytes       
+[  6]   3.00-4.00   sec  6.52 MBytes  54.7 Mbits/sec    0    706 KBytes       
+[  6]   4.00-5.00   sec  5.97 MBytes  50.0 Mbits/sec    0    754 KBytes       
+[  6]   5.00-6.00   sec  6.46 MBytes  54.2 Mbits/sec    0    891 KBytes       
+[  6]   6.00-7.00   sec  6.90 MBytes  57.9 Mbits/sec    0    938 KBytes       
+[  6]   7.00-8.00   sec  4.10 MBytes  34.4 Mbits/sec    0    938 KBytes       
+[  6]   8.00-9.00   sec  4.04 MBytes  33.9 Mbits/sec    0    939 KBytes       
+[  6]   9.00-10.00  sec  4.35 MBytes  36.5 Mbits/sec    0    939 KBytes       
+[  6]  10.00-11.00  sec  5.34 MBytes  44.8 Mbits/sec    0    939 KBytes       
+[  6]  11.00-12.00  sec  4.16 MBytes  34.9 Mbits/sec   27    307 KBytes       
+[  6]  12.00-13.00  sec  5.72 MBytes  48.0 Mbits/sec    0    484 KBytes       
+[  6]  13.00-14.00  sec  6.46 MBytes  54.2 Mbits/sec    0    614 KBytes       
+[  6]  14.00-15.00  sec  5.65 MBytes  47.4 Mbits/sec    0    732 KBytes       
+[  6]  15.00-16.00  sec  6.65 MBytes  55.8 Mbits/sec    0    812 KBytes       
+[  6]  16.00-17.00  sec  5.65 MBytes  47.4 Mbits/sec    0    892 KBytes       
+[  6]  17.00-18.00  sec  5.60 MBytes  47.0 Mbits/sec    0    911 KBytes       
+[  6]  18.00-19.00  sec  4.28 MBytes  35.9 Mbits/sec   52    641 KBytes       
+[  6]  19.00-20.00  sec  4.60 MBytes  38.6 Mbits/sec    0    660 KBytes       
+[  6]  20.00-21.00  sec  4.54 MBytes  38.1 Mbits/sec    0    663 KBytes       
+[  6]  21.00-22.00  sec  4.66 MBytes  39.1 Mbits/sec    0    757 KBytes       
+[  6]  22.00-23.00  sec  4.41 MBytes  37.0 Mbits/sec    0    766 KBytes       
+[  6]  23.00-24.00  sec  4.60 MBytes  38.6 Mbits/sec    0    775 KBytes       
+[  6]  24.00-25.00  sec  5.59 MBytes  46.9 Mbits/sec    0    778 KBytes       
+[  6]  25.00-26.00  sec  4.54 MBytes  38.1 Mbits/sec    0    778 KBytes       
+[  6]  26.00-27.00  sec  4.47 MBytes  37.5 Mbits/sec    0    779 KBytes       
+[  6]  27.00-28.00  sec  1.06 MBytes  8.85 Mbits/sec    5    544 KBytes       
+[  6]  28.00-29.00  sec  4.35 MBytes  36.5 Mbits/sec    0    583 KBytes       
+[  6]  29.00-30.00  sec  6.65 MBytes  55.8 Mbits/sec    0    673 KBytes       
+[  6]  30.00-30.12  sec  0.00 Bytes  0.00 bits/sec    0    673 KBytes       
+- - - - - - - - - - - - - - - - - - - - - - - - -
+Test Complete. Summary Results:
+[ ID] Interval           Transfer     Bitrate         Retr
+[  6]   0.00-30.12  sec   153 MBytes  42.7 Mbits/sec   85             sender
+[  6]   0.00-30.12  sec  0.00 Bytes  0.00 bits/sec                  receiver
+CPU Utilization: local/sender 0.6% (0.0%u/0.6%s), remote/receiver 0.0% (0.0%u/0.0%s)
+snd_tcp_congestion cubic
+iperf3: interrupt - the client has terminated
+iperf 3.9
+Linux raspberrypi 5.15.32-v7l+ #1538 SMP Thu Mar 31 19:39:41 BST 2022 armv7l
+Time: Tue, 11 Apr 2023 21:39:09 GMT
+Connecting to host 192.168.11.1, port 5201
+      Cookie: t3x4lceek4d3wvmqkozhlazolsyzi6su3pd6
+      TCP MSS: 1448 (default)
+[  6] local 192.168.11.133 port 41742 connected to 192.168.11.1 port 5201
+Starting Test: protocol: TCP, 1 streams, 131072 byte blocks, omitting 0 seconds, 35 second test, tos 0
+[ ID] Interval           Transfer     Bitrate         Retr  Cwnd
+[  6]   0.00-1.00   sec  2.50 MBytes  21.0 Mbits/sec    0    195 KBytes       
+[  6]   1.00-2.00   sec  5.47 MBytes  45.9 Mbits/sec    0    392 KBytes       
+[  6]   2.00-3.00   sec  5.22 MBytes  43.8 Mbits/sec    0    566 KBytes       
+[  6]   3.00-4.00   sec  5.59 MBytes  46.9 Mbits/sec    0    635 KBytes       
+[  6]   4.00-5.00   sec  4.66 MBytes  39.1 Mbits/sec    0    673 KBytes       
+[  6]   5.00-6.00   sec  4.23 MBytes  35.4 Mbits/sec    0    673 KBytes       
+[  6]   6.00-7.00   sec  2.98 MBytes  25.0 Mbits/sec    0    673 KBytes       
+[  6]   7.00-8.00   sec  3.85 MBytes  32.3 Mbits/sec    0    673 KBytes       
+[  6]   8.00-9.00   sec  4.72 MBytes  39.6 Mbits/sec    0    732 KBytes       
+[  6]   9.00-10.00  sec  4.29 MBytes  36.0 Mbits/sec    0    772 KBytes       
+[  6]  10.00-11.00  sec  3.60 MBytes  30.2 Mbits/sec    0    792 KBytes       
+[  6]  11.00-12.00  sec  3.85 MBytes  32.3 Mbits/sec   12    560 KBytes       
+[  6]  12.00-13.00  sec  2.61 MBytes  21.9 Mbits/sec    0    624 KBytes       
+[  6]  13.00-14.00  sec  3.73 MBytes  31.3 Mbits/sec    0    675 KBytes       
+[  6]  14.00-15.00  sec   891 KBytes  7.29 Mbits/sec   17   80.6 KBytes       
+[  6]  15.00-16.00  sec  0.00 Bytes  0.00 bits/sec   13   80.6 KBytes       
+[  6]  16.00-17.00  sec  0.00 Bytes  0.00 bits/sec   42   72.1 KBytes       
+[  6]  17.00-18.00  sec   891 KBytes  7.30 Mbits/sec    5    161 KBytes       
+[  6]  18.00-19.00  sec  0.00 Bytes  0.00 bits/sec    0    165 KBytes       
+[  6]  19.00-20.00  sec  0.00 Bytes  0.00 bits/sec    0    165 KBytes       
+[  6]  20.00-21.00  sec   827 KBytes  6.78 Mbits/sec    0    198 KBytes       
+[  6]  21.00-22.00  sec   891 KBytes  7.30 Mbits/sec    1   96.2 KBytes       
+[  6]  22.00-23.00  sec   827 KBytes  6.77 Mbits/sec    0    156 KBytes       
+[  6]  23.00-24.00  sec  0.00 Bytes  0.00 bits/sec   10   58.0 KBytes       
+[  6]  24.00-25.00  sec   827 KBytes  6.78 Mbits/sec    2   43.8 KBytes       
+[  6]  25.00-26.00  sec   827 KBytes  6.78 Mbits/sec    3   38.2 KBytes       
+[  6]  26.00-27.00  sec   827 KBytes  6.78 Mbits/sec    0   50.9 KBytes       
+[  6]  27.00-28.00  sec   827 KBytes  6.77 Mbits/sec    0   69.3 KBytes       
+[  6]  28.00-29.00  sec  1.68 MBytes  14.1 Mbits/sec    0   79.2 KBytes       
+[  6]  29.00-29.46  sec  0.00 Bytes  0.00 bits/sec    5   55.1 KBytes       
+- - - - - - - - - - - - - - - - - - - - - - - - -
+Test Complete. Summary Results:
+[ ID] Interval           Transfer     Bitrate         Retr
+[  6]   0.00-29.46  sec  66.4 MBytes  18.9 Mbits/sec  110             sender
+[  6]   0.00-29.46  sec  0.00 Bytes  0.00 bits/sec                  receiver
+CPU Utilization: local/sender 0.3% (0.0%u/0.3%s), remote/receiver 0.0% (0.0%u/0.0%s)
+snd_tcp_congestion cubic
+iperf3: interrupt - the client has terminated
+iperf 3.9
+Linux raspberrypi 5.15.32-v7l+ #1538 SMP Thu Mar 31 19:39:41 BST 2022 armv7l
+Time: Tue, 11 Apr 2023 21:32:38 GMT
+Connecting to host 192.168.11.1, port 5201
+      Cookie: 2trfisptxn5ns2bp7dsggnyhg5rajjzkixp6
+      TCP MSS: 1448 (default)
+[  6] local 192.168.11.133 port 41986 connected to 192.168.11.1 port 5201
+Starting Test: protocol: TCP, 1 streams, 131072 byte blocks, omitting 0 seconds, 35 second test, tos 0
+[ ID] Interval           Transfer     Bitrate         Retr  Cwnd
+[  6]   0.00-1.00   sec  4.42 MBytes  37.1 Mbits/sec    0    253 KBytes       
+[  6]   1.00-2.00   sec  4.41 MBytes  37.0 Mbits/sec    0    421 KBytes       
+[  6]   2.00-3.00   sec  3.67 MBytes  30.8 Mbits/sec    0    556 KBytes       
+[  6]   3.00-4.00   sec  3.85 MBytes  32.3 Mbits/sec    0    621 KBytes       
+[  6]   4.00-5.00   sec  3.60 MBytes  30.2 Mbits/sec    0    621 KBytes       
+[  6]   5.00-6.00   sec  3.79 MBytes  31.8 Mbits/sec    0    677 KBytes       
+[  6]   6.00-7.00   sec  3.48 MBytes  29.2 Mbits/sec    0    793 KBytes       
+[  6]   7.00-8.00   sec  4.85 MBytes  40.7 Mbits/sec    9    667 KBytes       
+[  6]   8.00-9.00   sec  5.34 MBytes  44.8 Mbits/sec    0    744 KBytes       
+[  6]   9.00-10.00  sec  4.10 MBytes  34.4 Mbits/sec    0    798 KBytes       
+[  6]  10.00-11.00  sec  6.28 MBytes  52.7 Mbits/sec    0    843 KBytes       
+[  6]  11.00-12.00  sec  7.52 MBytes  63.1 Mbits/sec    0    897 KBytes       
+[  6]  12.00-13.00  sec  3.17 MBytes  26.6 Mbits/sec    0    938 KBytes       
+[  6]  13.00-14.00  sec  6.65 MBytes  55.8 Mbits/sec    0    945 KBytes       
+[  6]  14.00-15.00  sec  5.65 MBytes  47.4 Mbits/sec    0    952 KBytes       
+[  6]  15.00-16.00  sec  4.35 MBytes  36.5 Mbits/sec    0    954 KBytes       
+[  6]  16.00-17.00  sec  5.78 MBytes  48.5 Mbits/sec    0    954 KBytes       
+[  6]  17.00-18.00  sec  5.65 MBytes  47.4 Mbits/sec    0    954 KBytes       
+[  6]  18.00-19.00  sec  5.47 MBytes  45.9 Mbits/sec    0    963 KBytes       
+[  6]  19.00-20.00  sec  5.34 MBytes  44.8 Mbits/sec    0    976 KBytes       
+[  6]  20.00-21.00  sec  5.34 MBytes  44.8 Mbits/sec    0    976 KBytes       
+[  6]  21.00-22.00  sec  5.34 MBytes  44.8 Mbits/sec   14    683 KBytes       
+[  6]  22.00-23.00  sec  5.22 MBytes  43.8 Mbits/sec   28    518 KBytes       
+[  6]  23.00-24.00  sec  4.23 MBytes  35.4 Mbits/sec    0    561 KBytes       
+[  6]  24.00-25.00  sec  5.47 MBytes  45.9 Mbits/sec    0    585 KBytes       
+[  6]  25.00-26.00  sec  6.52 MBytes  54.7 Mbits/sec    0    605 KBytes       
+[  6]  26.00-27.00  sec  4.23 MBytes  35.4 Mbits/sec    0    608 KBytes       
+[  6]  27.00-28.00  sec  4.35 MBytes  36.5 Mbits/sec    0    615 KBytes       
+[  6]  28.00-29.00  sec  5.59 MBytes  46.9 Mbits/sec    0    617 KBytes       
+[  6]  29.00-30.00  sec  3.36 MBytes  28.1 Mbits/sec    0    618 KBytes       
+[  6]  30.00-30.14  sec  1.18 MBytes  69.9 Mbits/sec    0    618 KBytes       
+- - - - - - - - - - - - - - - - - - - - - - - - -
+Test Complete. Summary Results:
+[ ID] Interval           Transfer     Bitrate         Retr
+[  6]   0.00-30.14  sec   148 MBytes  41.2 Mbits/sec   51             sender
+[  6]   0.00-30.14  sec  0.00 Bytes  0.00 bits/sec                  receiver
+CPU Utilization: local/sender 0.5% (0.0%u/0.5%s), remote/receiver 0.0% (0.0%u/0.0%s)
+snd_tcp_congestion cubic
+iperf3: interrupt - the client has terminated
+iperf 3.9
+Linux raspberrypi 5.15.32-v7l+ #1538 SMP Thu Mar 31 19:39:41 BST 2022 armv7l
+Time: Tue, 11 Apr 2023 21:37:25 GMT
+Connecting to host 192.168.11.1, port 5201
+      Cookie: pekxg3x4he6bnsgzqdf33olwy3wsvghwrsmm
+      TCP MSS: 1448 (default)
+[  6] local 192.168.11.133 port 41992 connected to 192.168.11.1 port 5201
+Starting Test: protocol: TCP, 1 streams, 131072 byte blocks, omitting 0 seconds, 35 second test, tos 0
+[ ID] Interval           Transfer     Bitrate         Retr  Cwnd
+[  6]   0.00-1.00   sec  1.86 MBytes  15.6 Mbits/sec    0    201 KBytes       
+[  6]   1.00-2.00   sec  1.18 MBytes  9.90 Mbits/sec    0    242 KBytes       
+[  6]   2.00-3.00   sec  2.80 MBytes  23.5 Mbits/sec    0    322 KBytes       
+[  6]   3.00-4.00   sec  1.49 MBytes  12.5 Mbits/sec    0    393 KBytes       
+[  6]   4.00-5.00   sec  2.73 MBytes  22.9 Mbits/sec    9    325 KBytes       
+[  6]   5.00-6.00   sec  2.17 MBytes  18.2 Mbits/sec    0    366 KBytes       
+[  6]   6.00-7.00   sec  2.36 MBytes  19.8 Mbits/sec    5    127 KBytes       
+[  6]   7.00-8.00   sec  2.67 MBytes  22.4 Mbits/sec    0    308 KBytes       
+[  6]   8.00-9.00   sec  2.92 MBytes  24.5 Mbits/sec    0    332 KBytes       
+[  6]   9.00-10.00  sec  1.55 MBytes  13.0 Mbits/sec    3   67.9 KBytes       
+[  6]  10.00-11.00  sec  2.61 MBytes  21.9 Mbits/sec    0    262 KBytes       
+[  6]  11.00-12.00  sec  4.47 MBytes  37.5 Mbits/sec    0    279 KBytes       
+[  6]  12.00-13.00  sec  4.47 MBytes  37.5 Mbits/sec    0    287 KBytes       
+[  6]  13.00-14.00  sec  4.91 MBytes  41.2 Mbits/sec    0    288 KBytes       
+[  6]  14.00-15.00  sec  5.65 MBytes  47.4 Mbits/sec    0    291 KBytes       
+[  6]  15.00-16.00  sec  5.34 MBytes  44.8 Mbits/sec    0    304 KBytes       
+[  6]  16.00-17.00  sec  5.84 MBytes  49.0 Mbits/sec    0    318 KBytes       
+[  6]  17.00-18.00  sec  5.59 MBytes  46.9 Mbits/sec    0    329 KBytes       
+[  6]  18.00-19.00  sec  5.28 MBytes  44.3 Mbits/sec    0    341 KBytes       
+[  6]  19.00-20.00  sec  6.03 MBytes  50.6 Mbits/sec    0    376 KBytes       
+[  6]  20.00-21.00  sec  4.41 MBytes  37.0 Mbits/sec    0    427 KBytes       
+[  6]  21.00-22.00  sec  5.10 MBytes  42.7 Mbits/sec    0    508 KBytes       
+[  6]  22.00-23.00  sec  4.47 MBytes  37.5 Mbits/sec    1    143 KBytes       
+[  6]  23.00-24.00  sec  5.41 MBytes  45.3 Mbits/sec    0    492 KBytes       
+[  6]  24.00-25.00  sec  6.21 MBytes  52.1 Mbits/sec    0    543 KBytes       
+[  6]  25.00-26.00  sec  5.72 MBytes  48.0 Mbits/sec    0    574 KBytes       
+[  6]  26.00-27.00  sec  5.22 MBytes  43.8 Mbits/sec    3    413 KBytes       
+[  6]  27.00-28.00  sec  5.41 MBytes  45.4 Mbits/sec    0    441 KBytes       
+[  6]  28.00-29.00  sec  4.97 MBytes  41.7 Mbits/sec    0    478 KBytes       
+[  6]  29.00-29.96  sec  4.97 MBytes  43.7 Mbits/sec    0    494 KBytes       
+- - - - - - - - - - - - - - - - - - - - - - - - -
+Test Complete. Summary Results:
+[ ID] Interval           Transfer     Bitrate         Retr
+[  6]   0.00-29.96  sec   124 MBytes  34.7 Mbits/sec   21             sender
+[  6]   0.00-29.96  sec  0.00 Bytes  0.00 bits/sec                  receiver
+CPU Utilization: local/sender 0.9% (0.0%u/0.9%s), remote/receiver 0.0% (0.0%u/0.0%s)
+snd_tcp_congestion cubic
+iperf3: interrupt - the client has terminated
+iperf 3.9
+Linux raspberrypi 5.15.32-v7l+ #1538 SMP Thu Mar 31 19:39:41 BST 2022 armv7l
+Time: Tue, 11 Apr 2023 21:40:41 GMT
+Connecting to host 192.168.11.1, port 5201
+      Cookie: okxaoygx5psbwknzbsf3ec6yhbne7bb7nyqo
+      TCP MSS: 1448 (default)
+[  6] local 192.168.11.133 port 41996 connected to 192.168.11.1 port 5201
+Starting Test: protocol: TCP, 1 streams, 131072 byte blocks, omitting 0 seconds, 35 second test, tos 0
+[ ID] Interval           Transfer     Bitrate         Retr  Cwnd
+[  6]   0.00-1.00   sec  4.26 MBytes  35.7 Mbits/sec    0    291 KBytes       
+[  6]   1.00-2.00   sec  3.23 MBytes  27.1 Mbits/sec    0    386 KBytes       
+[  6]   2.00-3.00   sec  3.36 MBytes  28.1 Mbits/sec    0    471 KBytes       
+[  6]   3.00-4.00   sec  3.73 MBytes  31.3 Mbits/sec    1    363 KBytes       
+[  6]   4.00-5.00   sec  3.04 MBytes  25.5 Mbits/sec    0    417 KBytes       
+[  6]   5.00-6.00   sec  2.42 MBytes  20.3 Mbits/sec    6    314 KBytes       
+[  6]   6.00-7.00   sec  3.85 MBytes  32.3 Mbits/sec    0    342 KBytes       
+[  6]   7.00-8.00   sec  4.47 MBytes  37.5 Mbits/sec    0    359 KBytes       
+[  6]   8.00-9.00   sec  4.91 MBytes  41.2 Mbits/sec    0    365 KBytes       
+[  6]   9.00-10.00  sec  5.47 MBytes  45.9 Mbits/sec    0    366 KBytes       
+[  6]  10.00-11.00  sec  6.15 MBytes  51.6 Mbits/sec    0    366 KBytes       
+[  6]  11.00-12.00  sec  5.53 MBytes  46.4 Mbits/sec    0    368 KBytes       
+[  6]  12.00-13.00  sec  4.91 MBytes  41.2 Mbits/sec    0    376 KBytes       
+[  6]  13.00-14.00  sec  5.65 MBytes  47.4 Mbits/sec    0    387 KBytes       
+[  6]  14.00-15.00  sec  5.84 MBytes  49.0 Mbits/sec    0    414 KBytes       
+[  6]  15.00-16.00  sec  6.03 MBytes  50.6 Mbits/sec    0    461 KBytes       
+[  6]  16.00-17.00  sec  6.84 MBytes  57.3 Mbits/sec    0    527 KBytes       
+[  6]  17.00-18.00  sec  5.84 MBytes  49.0 Mbits/sec    0    597 KBytes       
+[  6]  18.00-19.00  sec  4.72 MBytes  39.6 Mbits/sec    0    710 KBytes       
+[  6]  19.00-20.00  sec  6.90 MBytes  57.9 Mbits/sec    0    850 KBytes       
+[  6]  20.00-21.00  sec  5.90 MBytes  49.5 Mbits/sec    0    898 KBytes       
+[  6]  21.00-22.00  sec  6.21 MBytes  52.1 Mbits/sec    0   1.13 MBytes       
+[  6]  22.00-23.00  sec  6.25 MBytes  52.4 Mbits/sec    0   1.25 MBytes       
+[  6]  23.00-24.00  sec  6.25 MBytes  52.4 Mbits/sec    0   1.51 MBytes       
+[  6]  24.00-25.00  sec  6.25 MBytes  52.4 Mbits/sec    0   1.95 MBytes       
+[  6]  25.00-26.00  sec  6.25 MBytes  52.4 Mbits/sec    0   1.95 MBytes       
+[  6]  26.00-27.00  sec  6.25 MBytes  52.4 Mbits/sec    0   1.95 MBytes       
+[  6]  27.00-28.00  sec  2.50 MBytes  21.0 Mbits/sec  122    561 KBytes       
+[  6]  28.00-29.00  sec  5.00 MBytes  42.0 Mbits/sec    0   1.37 MBytes       
+[  6]  29.00-29.89  sec  3.75 MBytes  35.3 Mbits/sec    0   1.37 MBytes       
+- - - - - - - - - - - - - - - - - - - - - - - - -
+Test Complete. Summary Results:
+[ ID] Interval           Transfer     Bitrate         Retr
+[  6]   0.00-29.89  sec   152 MBytes  42.6 Mbits/sec  129             sender
+[  6]   0.00-29.89  sec  0.00 Bytes  0.00 bits/sec                  receiver
+CPU Utilization: local/sender 0.7% (0.0%u/0.7%s), remote/receiver 0.0% (0.0%u/0.0%s)
+snd_tcp_congestion cubic
+iperf3: interrupt - the client has terminated
+iperf 3.9
+Linux raspberrypi 5.15.32-v7l+ #1538 SMP Thu Mar 31 19:39:41 BST 2022 armv7l
+Time: Tue, 11 Apr 2023 21:43:11 GMT
+Connecting to host 192.168.11.1, port 5201
+      Cookie: t4iqscc3h2alekyvi643hmwuanmjaseiearh
+      TCP MSS: 1448 (default)
+[  6] local 192.168.11.133 port 42000 connected to 192.168.11.1 port 5201
+Starting Test: protocol: TCP, 1 streams, 131072 byte blocks, omitting 0 seconds, 35 second test, tos 0
+[ ID] Interval           Transfer     Bitrate         Retr  Cwnd
+[  6]   0.00-1.00   sec  2.11 MBytes  17.7 Mbits/sec    0    144 KBytes       
+[  6]   1.00-2.00   sec  2.42 MBytes  20.3 Mbits/sec    0    238 KBytes       
+[  6]   2.00-3.00   sec  1.74 MBytes  14.6 Mbits/sec    0    297 KBytes       
+[  6]   3.00-4.00   sec  1.80 MBytes  15.1 Mbits/sec    0    338 KBytes       
+[  6]   4.00-5.00   sec  1.62 MBytes  13.6 Mbits/sec    6    242 KBytes       
+[  6]   5.00-6.00   sec  2.92 MBytes  24.5 Mbits/sec    0    291 KBytes       
+[  6]   6.00-7.00   sec  5.22 MBytes  43.8 Mbits/sec    0    317 KBytes       
+[  6]   7.00-8.00   sec  5.22 MBytes  43.8 Mbits/sec    0    331 KBytes       
+[  6]   8.00-9.00   sec  3.29 MBytes  27.6 Mbits/sec    0    338 KBytes       
+[  6]   9.00-10.00  sec  1.74 MBytes  14.6 Mbits/sec    0    338 KBytes       
+[  6]  10.00-11.00  sec  1.30 MBytes  10.9 Mbits/sec    0    338 KBytes       
+[  6]  11.00-12.00  sec  1.37 MBytes  11.5 Mbits/sec    0    339 KBytes       
+[  6]  12.00-13.00  sec  2.49 MBytes  20.9 Mbits/sec    0    346 KBytes       
+[  6]  13.00-14.00  sec  4.97 MBytes  41.7 Mbits/sec    0    365 KBytes       
+[  6]  14.00-15.00  sec  4.23 MBytes  35.4 Mbits/sec    0    390 KBytes       
+[  6]  15.00-16.00  sec  4.41 MBytes  37.0 Mbits/sec    0    438 KBytes       
+[  6]  16.00-17.00  sec  5.16 MBytes  43.3 Mbits/sec    0    496 KBytes       
+[  6]  17.00-18.00  sec  4.54 MBytes  38.1 Mbits/sec    0    568 KBytes       
+[  6]  18.00-19.00  sec  4.04 MBytes  33.9 Mbits/sec   30    457 KBytes       
+[  6]  19.00-20.00  sec  3.54 MBytes  29.7 Mbits/sec    0    502 KBytes       
+[  6]  20.00-21.00  sec  4.23 MBytes  35.5 Mbits/sec    0    536 KBytes       
+[  6]  21.00-22.00  sec  3.36 MBytes  28.1 Mbits/sec    0    561 KBytes       
+[  6]  22.00-23.00  sec  2.73 MBytes  22.9 Mbits/sec    0    571 KBytes       
+[  6]  23.00-24.00  sec  2.86 MBytes  24.0 Mbits/sec    0    577 KBytes       
+[  6]  24.00-25.00  sec  3.04 MBytes  25.5 Mbits/sec   17    410 KBytes       
+[  6]  25.00-26.00  sec  4.29 MBytes  36.0 Mbits/sec    0    464 KBytes       
+[  6]  26.00-27.00  sec  2.92 MBytes  24.5 Mbits/sec    0    522 KBytes       
+[  6]  27.00-28.00  sec  2.67 MBytes  22.4 Mbits/sec    0    549 KBytes       
+[  6]  28.00-29.00  sec  3.23 MBytes  27.1 Mbits/sec    0    563 KBytes       
+[  6]  29.00-30.00  sec  4.04 MBytes  33.9 Mbits/sec    0    570 KBytes       
+[  6]  30.00-30.14  sec   636 KBytes  37.7 Mbits/sec    0    570 KBytes       
+- - - - - - - - - - - - - - - - - - - - - - - - -
+Test Complete. Summary Results:
+[ ID] Interval           Transfer     Bitrate         Retr
+[  6]   0.00-30.14  sec  98.1 MBytes  27.3 Mbits/sec   53             sender
+[  6]   0.00-30.14  sec  0.00 Bytes  0.00 bits/sec                  receiver
+CPU Utilization: local/sender 0.5% (0.0%u/0.5%s), remote/receiver 0.0% (0.0%u/0.0%s)
+snd_tcp_congestion cubic
+iperf3: interrupt - the client has terminated
+iperf 3.9
+Linux raspberrypi 5.15.32-v7l+ #1538 SMP Thu Mar 31 19:39:41 BST 2022 armv7l
+Time: Tue, 11 Apr 2023 21:47:51 GMT
+Connecting to host 192.168.11.1, port 5201
+      Cookie: hxlvk4rxcsr6icqj3jihvo4edcgggfkz26et
+      TCP MSS: 1448 (default)
+[  6] local 192.168.11.133 port 42004 connected to 192.168.11.1 port 5201
+Starting Test: protocol: TCP, 1 streams, 131072 byte blocks, omitting 0 seconds, 35 second test, tos 0
+[ ID] Interval           Transfer     Bitrate         Retr  Cwnd
+[  6]   0.00-1.00   sec  3.99 MBytes  33.4 Mbits/sec    0    273 KBytes       
+[  6]   1.00-2.00   sec  1.99 MBytes  16.7 Mbits/sec    0    351 KBytes       
+[  6]   2.00-3.00   sec  3.04 MBytes  25.5 Mbits/sec    0    403 KBytes       
+[  6]   3.00-4.00   sec  2.73 MBytes  22.9 Mbits/sec   11    311 KBytes       
+[  6]   4.00-5.00   sec  3.23 MBytes  27.1 Mbits/sec    0    370 KBytes       
+[  6]   5.00-6.00   sec  5.72 MBytes  48.0 Mbits/sec    0    404 KBytes       
+[  6]   6.00-7.00   sec  5.34 MBytes  44.8 Mbits/sec    0    424 KBytes       
+[  6]   7.00-8.00   sec  6.15 MBytes  51.6 Mbits/sec    0    434 KBytes       
+[  6]   8.00-9.00   sec  5.78 MBytes  48.5 Mbits/sec    0    438 KBytes       
+[  6]   9.00-10.00  sec  6.21 MBytes  52.1 Mbits/sec    0    438 KBytes       
+[  6]  10.00-11.00  sec  5.65 MBytes  47.4 Mbits/sec    0    438 KBytes       
+[  6]  11.00-12.00  sec  5.72 MBytes  48.0 Mbits/sec    0    443 KBytes       
+[  6]  12.00-13.00  sec  5.78 MBytes  48.5 Mbits/sec    0    452 KBytes       
+[  6]  13.00-14.00  sec  4.35 MBytes  36.5 Mbits/sec    0    472 KBytes       
+[  6]  14.00-15.00  sec  3.11 MBytes  26.1 Mbits/sec    0    503 KBytes       
+[  6]  15.00-16.00  sec  3.04 MBytes  25.5 Mbits/sec    0    554 KBytes       
+[  6]  16.00-17.00  sec  3.98 MBytes  33.4 Mbits/sec    9    434 KBytes       
+[  6]  17.00-18.00  sec  3.73 MBytes  31.3 Mbits/sec    0    489 KBytes       
+[  6]  18.00-19.00  sec  5.34 MBytes  44.8 Mbits/sec    0    539 KBytes       
+[  6]  19.00-20.00  sec  4.72 MBytes  39.6 Mbits/sec    0    567 KBytes       
+[  6]  20.00-21.00  sec  5.28 MBytes  44.3 Mbits/sec    0    580 KBytes       
+[  6]  21.00-22.00  sec  3.85 MBytes  32.3 Mbits/sec    0    588 KBytes       
+[  6]  22.00-23.00  sec  5.22 MBytes  43.8 Mbits/sec    0    591 KBytes       
+[  6]  23.00-24.00  sec  2.61 MBytes  21.9 Mbits/sec    0    591 KBytes       
+[  6]  24.00-25.00  sec  1.43 MBytes  12.0 Mbits/sec    1    594 KBytes       
+[  6]  25.00-26.00  sec  3.85 MBytes  32.3 Mbits/sec    0    625 KBytes       
+[  6]  26.00-27.00  sec  4.66 MBytes  39.1 Mbits/sec    0    696 KBytes       
+[  6]  27.00-28.00  sec  3.98 MBytes  33.4 Mbits/sec    0    732 KBytes       
+[  6]  28.00-29.00  sec  1.68 MBytes  14.1 Mbits/sec    1    314 KBytes       
+[  6]  29.00-29.89  sec   891 KBytes  8.17 Mbits/sec    0    410 KBytes       
+- - - - - - - - - - - - - - - - - - - - - - - - -
+Test Complete. Summary Results:
+[ ID] Interval           Transfer     Bitrate         Retr
+[  6]   0.00-29.89  sec   123 MBytes  34.5 Mbits/sec   22             sender
+[  6]   0.00-29.89  sec  0.00 Bytes  0.00 bits/sec                  receiver
+CPU Utilization: local/sender 0.5% (0.0%u/0.5%s), remote/receiver 0.0% (0.0%u/0.0%s)
+snd_tcp_congestion cubic
+iperf3: interrupt - the client has terminated
+iperf 3.9
+Linux raspberrypi 5.15.32-v7l+ #1538 SMP Thu Mar 31 19:39:41 BST 2022 armv7l
+Time: Tue, 11 Apr 2023 21:50:06 GMT
+Connecting to host 192.168.11.1, port 5201
+      Cookie: 5fs5dn2xd5fk6pjuw36mevirigukb6hcpzqk
+      TCP MSS: 1448 (default)
+[  6] local 192.168.11.133 port 42008 connected to 192.168.11.1 port 5201
+Starting Test: protocol: TCP, 1 streams, 131072 byte blocks, omitting 0 seconds, 35 second test, tos 0
+[ ID] Interval           Transfer     Bitrate         Retr  Cwnd
+[  6]   0.00-1.00   sec  3.87 MBytes  32.4 Mbits/sec    0    283 KBytes       
+[  6]   1.00-2.00   sec  2.86 MBytes  24.0 Mbits/sec    0    378 KBytes       
+[  6]   2.00-3.00   sec  1.86 MBytes  15.6 Mbits/sec    0    426 KBytes       
+[  6]   3.00-4.00   sec  2.98 MBytes  25.0 Mbits/sec    0    544 KBytes       
+[  6]   4.00-5.00   sec  2.67 MBytes  22.4 Mbits/sec   11    437 KBytes       
+[  6]   5.00-6.00   sec  3.11 MBytes  26.1 Mbits/sec    0    471 KBytes       
+[  6]   6.00-7.00   sec  3.17 MBytes  26.6 Mbits/sec    3    355 KBytes       
+[  6]   7.00-8.00   sec  3.36 MBytes  28.2 Mbits/sec    0    390 KBytes       
+[  6]   8.00-9.00   sec  4.10 MBytes  34.4 Mbits/sec    4    293 KBytes       
+[  6]   9.00-10.00  sec  3.42 MBytes  28.7 Mbits/sec    0    318 KBytes       
+[  6]  10.00-11.00  sec  2.55 MBytes  21.4 Mbits/sec    0    324 KBytes       
+[  6]  11.00-12.00  sec  3.42 MBytes  28.7 Mbits/sec    0    341 KBytes       
+[  6]  12.00-13.00  sec  3.98 MBytes  33.4 Mbits/sec    0    342 KBytes       
+[  6]  13.00-14.00  sec  1.43 MBytes  12.0 Mbits/sec    0    342 KBytes       
+[  6]  14.00-15.00  sec  1.37 MBytes  11.5 Mbits/sec    2    240 KBytes       
+[  6]  15.00-16.00  sec   636 KBytes  5.21 Mbits/sec    0    283 KBytes       
+[  6]  16.00-17.00  sec  1.43 MBytes  12.0 Mbits/sec    0    307 KBytes       
+[  6]  17.00-18.00  sec  2.61 MBytes  21.9 Mbits/sec    0    331 KBytes       
+[  6]  18.00-19.00  sec  4.60 MBytes  38.6 Mbits/sec    0    339 KBytes       
+[  6]  19.00-20.00  sec  3.48 MBytes  29.2 Mbits/sec    0    344 KBytes       
+[  6]  20.00-21.00  sec  3.48 MBytes  29.2 Mbits/sec    0    344 KBytes       
+[  6]  21.00-22.00  sec  2.67 MBytes  22.4 Mbits/sec    0    344 KBytes       
+[  6]  22.00-23.00  sec  2.49 MBytes  20.9 Mbits/sec    0    348 KBytes       
+[  6]  23.00-24.00  sec  3.48 MBytes  29.2 Mbits/sec    0    361 KBytes       
+[  6]  24.00-25.00  sec  2.86 MBytes  24.0 Mbits/sec    0    382 KBytes       
+[  6]  25.00-26.00  sec  2.49 MBytes  20.9 Mbits/sec    1    300 KBytes       
+[  6]  26.00-27.00  sec  4.04 MBytes  33.9 Mbits/sec    0    337 KBytes       
+[  6]  27.00-28.00  sec  1.93 MBytes  16.2 Mbits/sec    5    249 KBytes       
+[  6]  28.00-29.00  sec  1.86 MBytes  15.6 Mbits/sec    8    137 KBytes       
+[  6]  29.00-29.95  sec  3.17 MBytes  27.9 Mbits/sec    0    150 KBytes       
+- - - - - - - - - - - - - - - - - - - - - - - - -
+Test Complete. Summary Results:
+[ ID] Interval           Transfer     Bitrate         Retr
+[  6]   0.00-29.95  sec  85.3 MBytes  23.9 Mbits/sec   34             sender
+[  6]   0.00-29.95  sec  0.00 Bytes  0.00 bits/sec                  receiver
+CPU Utilization: local/sender 0.6% (0.0%u/0.6%s), remote/receiver 0.0% (0.0%u/0.0%s)
+snd_tcp_congestion cubic
+iperf3: interrupt - the client has terminated
+iperf 3.9
+Linux raspberrypi 5.15.32-v7l+ #1538 SMP Thu Mar 31 19:39:41 BST 2022 armv7l
+Time: Tue, 11 Apr 2023 21:51:19 GMT
+Connecting to host 192.168.11.1, port 5201
+      Cookie: kji6q3zgye5ubxqsqucwdltd5eim2d3lxms6
+      TCP MSS: 1448 (default)
+[  6] local 192.168.11.133 port 42014 connected to 192.168.11.1 port 5201
+Starting Test: protocol: TCP, 1 streams, 131072 byte blocks, omitting 0 seconds, 35 second test, tos 0
+[ ID] Interval           Transfer     Bitrate         Retr  Cwnd
+[  6]   0.00-1.00   sec  1.24 MBytes  10.4 Mbits/sec    1    112 KBytes       
+[  6]   1.00-2.00   sec   954 KBytes  7.82 Mbits/sec    0    130 KBytes       
+[  6]   2.00-3.00   sec   954 KBytes  7.82 Mbits/sec    0    139 KBytes       
+[  6]   3.00-4.00   sec  2.42 MBytes  20.3 Mbits/sec    0    141 KBytes       
+[  6]   4.00-5.00   sec  2.92 MBytes  24.5 Mbits/sec    0    141 KBytes       
+[  6]   5.00-6.00   sec  4.78 MBytes  40.1 Mbits/sec    0    161 KBytes       
+[  6]   6.00-7.00   sec  4.47 MBytes  37.5 Mbits/sec    0    180 KBytes       
+[  6]   7.00-8.00   sec  4.85 MBytes  40.7 Mbits/sec    0    197 KBytes       
+[  6]   8.00-9.00   sec  5.59 MBytes  46.9 Mbits/sec    0    216 KBytes       
+[  6]   9.00-10.00  sec  5.28 MBytes  44.3 Mbits/sec    0    233 KBytes       
+[  6]  10.00-11.00  sec  5.97 MBytes  50.0 Mbits/sec    0    290 KBytes       
+[  6]  11.00-12.00  sec  5.84 MBytes  49.0 Mbits/sec    0    370 KBytes       
+[  6]  12.00-13.00  sec  6.21 MBytes  52.1 Mbits/sec    0    448 KBytes       
+[  6]  13.00-14.00  sec  5.78 MBytes  48.5 Mbits/sec    0    567 KBytes       
+[  6]  14.00-15.00  sec  5.84 MBytes  49.0 Mbits/sec    0    754 KBytes       
+[  6]  15.00-16.00  sec  5.65 MBytes  47.4 Mbits/sec    0    880 KBytes       
+[  6]  16.00-17.00  sec  6.65 MBytes  55.8 Mbits/sec    0   1.07 MBytes       
+[  6]  17.00-18.00  sec  6.03 MBytes  50.6 Mbits/sec    0   1.07 MBytes       
+[  6]  18.00-19.00  sec  5.97 MBytes  50.0 Mbits/sec    0   1.09 MBytes       
+[  6]  19.00-20.00  sec  5.97 MBytes  50.0 Mbits/sec    0   1.09 MBytes       
+[  6]  20.00-21.00  sec  5.97 MBytes  50.0 Mbits/sec    0   1.09 MBytes       
+[  6]  21.00-22.00  sec  5.00 MBytes  41.9 Mbits/sec    0   1.77 MBytes       
+[  6]  22.00-23.00  sec  6.25 MBytes  52.4 Mbits/sec    6   1.24 MBytes       
+[  6]  23.00-24.00  sec  3.75 MBytes  31.5 Mbits/sec    0   1.24 MBytes       
+[  6]  24.00-25.00  sec  5.00 MBytes  42.0 Mbits/sec    0   1.24 MBytes       
+[  6]  25.00-26.00  sec  3.75 MBytes  31.5 Mbits/sec    0   1.24 MBytes       
+[  6]  26.00-27.00  sec  2.50 MBytes  21.0 Mbits/sec    1    887 KBytes       
+[  6]  27.00-28.00  sec  2.50 MBytes  21.0 Mbits/sec   13    218 KBytes       
+[  6]  28.00-29.00  sec  1.25 MBytes  10.5 Mbits/sec    3    434 KBytes       
+[  6]  29.00-29.79  sec  1.25 MBytes  13.2 Mbits/sec    0    434 KBytes       
+- - - - - - - - - - - - - - - - - - - - - - - - -
+Test Complete. Summary Results:
+[ ID] Interval           Transfer     Bitrate         Retr
+[  6]   0.00-29.79  sec   131 MBytes  36.8 Mbits/sec   24             sender
+[  6]   0.00-29.79  sec  0.00 Bytes  0.00 bits/sec                  receiver
+CPU Utilization: local/sender 1.3% (0.1%u/1.2%s), remote/receiver 0.0% (0.0%u/0.0%s)
+snd_tcp_congestion cubic
+iperf3: interrupt - the client has terminated
+iperf 3.9
+Linux raspberrypi 5.15.32-v7l+ #1538 SMP Thu Mar 31 19:39:41 BST 2022 armv7l
+Time: Tue, 11 Apr 2023 21:58:50 GMT
+Connecting to host 192.168.11.1, port 5201
+      Cookie: n2yh7rafgf7weejhd3j62j55ndfoonedsa3u
+      TCP MSS: 1448 (default)
+[  6] local 192.168.11.133 port 42020 connected to 192.168.11.1 port 5201
+Starting Test: protocol: TCP, 1 streams, 131072 byte blocks, omitting 0 seconds, 35 second test, tos 0
+[ ID] Interval           Transfer     Bitrate         Retr  Cwnd
+[  6]   0.00-1.00   sec  3.25 MBytes  27.2 Mbits/sec    0    212 KBytes       
+[  6]   1.00-2.00   sec  3.04 MBytes  25.5 Mbits/sec    0    332 KBytes       
+[  6]   2.00-3.00   sec  3.17 MBytes  26.6 Mbits/sec    0    433 KBytes       
+[  6]   3.00-4.00   sec  2.73 MBytes  22.9 Mbits/sec   16    322 KBytes       
+[  6]   4.00-5.00   sec  2.67 MBytes  22.4 Mbits/sec    0    362 KBytes       
+[  6]   5.00-6.00   sec  3.29 MBytes  27.6 Mbits/sec    0    397 KBytes       
+[  6]   6.00-7.00   sec  4.60 MBytes  38.6 Mbits/sec    0    440 KBytes       
+[  6]   7.00-8.00   sec  3.98 MBytes  33.4 Mbits/sec    0    450 KBytes       
+[  6]   8.00-9.00   sec  2.17 MBytes  18.2 Mbits/sec   17    132 KBytes       
+[  6]   9.00-10.00  sec   573 KBytes  4.69 Mbits/sec   38    156 KBytes       
+[  6]  10.00-11.00  sec   573 KBytes  4.69 Mbits/sec    9    116 KBytes       
+[  6]  11.00-12.00  sec   509 KBytes  4.17 Mbits/sec    0    127 KBytes       
+[  6]  12.00-13.00  sec   509 KBytes  4.17 Mbits/sec    0    132 KBytes       
+[  6]  13.00-14.00  sec  1018 KBytes  8.34 Mbits/sec   12    102 KBytes       
+[  6]  14.00-15.00  sec   509 KBytes  4.17 Mbits/sec    8   35.4 KBytes       
+[  6]  15.00-16.00  sec  0.00 Bytes  0.00 bits/sec    2   19.8 KBytes       
+[  6]  16.00-17.00  sec  0.00 Bytes  0.00 bits/sec    3   17.0 KBytes       
+[  6]  17.00-18.00  sec  1018 KBytes  8.35 Mbits/sec    4   25.5 KBytes       
+[  6]  18.00-19.00  sec  2.05 MBytes  17.2 Mbits/sec    0   59.4 KBytes       
+[  6]  19.00-20.00  sec  2.98 MBytes  25.0 Mbits/sec    3   76.4 KBytes       
+[  6]  20.00-21.00  sec  1.49 MBytes  12.5 Mbits/sec    2   49.5 KBytes       
+[  6]  21.00-22.00  sec  1018 KBytes  8.34 Mbits/sec    7   38.2 KBytes       
+[  6]  22.00-23.00  sec   509 KBytes  4.17 Mbits/sec    5   25.5 KBytes       
+[  6]  23.00-24.00  sec  1.49 MBytes  12.5 Mbits/sec    3   43.8 KBytes       
+[  6]  24.00-25.00  sec  2.49 MBytes  20.9 Mbits/sec    1   59.4 KBytes       
+[  6]  25.00-26.00  sec  1.49 MBytes  12.5 Mbits/sec    7   42.4 KBytes       
+[  6]  26.00-27.00  sec  1.99 MBytes  16.7 Mbits/sec    3   55.1 KBytes       
+[  6]  27.00-28.00  sec  1.49 MBytes  12.5 Mbits/sec    4   39.6 KBytes       
+[  6]  28.00-29.00  sec  1.99 MBytes  16.7 Mbits/sec    0   65.0 KBytes       
+[  6]  29.00-30.00  sec   509 KBytes  4.17 Mbits/sec    8   50.9 KBytes       
+[  6]  30.00-30.15  sec  0.00 Bytes  0.00 bits/sec    0   50.9 KBytes       
+- - - - - - - - - - - - - - - - - - - - - - - - -
+Test Complete. Summary Results:
+[ ID] Interval           Transfer     Bitrate         Retr
+[  6]   0.00-30.15  sec  53.0 MBytes  14.7 Mbits/sec  152             sender
+[  6]   0.00-30.15  sec  0.00 Bytes  0.00 bits/sec                  receiver
+CPU Utilization: local/sender 0.3% (0.0%u/0.3%s), remote/receiver 0.0% (0.0%u/0.0%s)
+snd_tcp_congestion cubic
+iperf3: interrupt - the client has terminated
+iperf 3.9
+Linux raspberrypi 5.15.32-v7l+ #1538 SMP Thu Mar 31 19:39:41 BST 2022 armv7l
+Time: Tue, 11 Apr 2023 22:01:37 GMT
+Connecting to host 192.168.11.1, port 5201
+      Cookie: wsslbrrldv6hfuon6ctxljbp7e5w5ep2lzng
+      TCP MSS: 1448 (default)
+[  6] local 192.168.11.133 port 42026 connected to 192.168.11.1 port 5201
+Starting Test: protocol: TCP, 1 streams, 131072 byte blocks, omitting 0 seconds, 35 second test, tos 0
+[ ID] Interval           Transfer     Bitrate         Retr  Cwnd
+[  6]   0.00-1.00   sec  4.37 MBytes  36.6 Mbits/sec    0    243 KBytes       
+[  6]   1.00-2.00   sec  4.35 MBytes  36.5 Mbits/sec    0    372 KBytes       
+[  6]   2.00-3.00   sec  2.36 MBytes  19.8 Mbits/sec    0    436 KBytes       
+[  6]   3.00-4.00   sec  3.85 MBytes  32.3 Mbits/sec    0    489 KBytes       
+[  6]   4.00-5.00   sec  3.23 MBytes  27.1 Mbits/sec    0    580 KBytes       
+[  6]   5.00-6.00   sec  4.78 MBytes  40.1 Mbits/sec    0    618 KBytes       
+[  6]   6.00-7.00   sec  3.48 MBytes  29.2 Mbits/sec   26    465 KBytes       
+[  6]   7.00-8.00   sec  4.35 MBytes  36.5 Mbits/sec    0    503 KBytes       
+[  6]   8.00-9.00   sec  4.47 MBytes  37.5 Mbits/sec    0    556 KBytes       
+[  6]   9.00-10.00  sec  3.04 MBytes  25.5 Mbits/sec    7    416 KBytes       
+[  6]  10.00-11.00  sec  3.67 MBytes  30.8 Mbits/sec    4    314 KBytes       
+[  6]  11.00-12.00  sec  2.11 MBytes  17.7 Mbits/sec    3    233 KBytes       
+[  6]  12.00-13.00  sec  2.05 MBytes  17.2 Mbits/sec    0    252 KBytes       
+[  6]  13.00-14.00  sec  3.60 MBytes  30.2 Mbits/sec    0    270 KBytes       
+[  6]  14.00-15.00  sec  3.60 MBytes  30.2 Mbits/sec    1    201 KBytes       
+[  6]  15.00-16.00  sec  2.80 MBytes  23.5 Mbits/sec    1    157 KBytes       
+[  6]  16.00-17.00  sec  2.05 MBytes  17.2 Mbits/sec    0    170 KBytes       
+[  6]  17.00-18.00  sec  2.11 MBytes  17.7 Mbits/sec    9    137 KBytes       
+[  6]  18.00-19.00  sec  2.92 MBytes  24.5 Mbits/sec    0    157 KBytes       
+[  6]  19.00-20.00  sec   700 KBytes  5.73 Mbits/sec   12   31.1 KBytes       
+[  6]  20.00-21.00  sec   700 KBytes  5.73 Mbits/sec   15   26.9 KBytes       
+[  6]  21.00-22.00  sec  2.05 MBytes  17.2 Mbits/sec    2   49.5 KBytes       
+[  6]  22.00-23.00  sec  1.37 MBytes  11.5 Mbits/sec    6   48.1 KBytes       
+[  6]  23.00-24.00  sec   700 KBytes  5.73 Mbits/sec    0   60.8 KBytes       
+[  6]  24.00-25.00  sec   700 KBytes  5.74 Mbits/sec    1   52.3 KBytes       
+[  6]  25.00-26.00  sec   700 KBytes  5.73 Mbits/sec   10   32.5 KBytes       
+[  6]  26.00-27.00  sec   700 KBytes  5.73 Mbits/sec    1   1.41 KBytes       
+[  6]  27.00-28.00  sec   700 KBytes  5.74 Mbits/sec    0   70.7 KBytes       
+[  6]  28.00-29.00  sec  1.37 MBytes  11.5 Mbits/sec    2   91.9 KBytes       
+[  6]  29.00-30.00  sec  1.37 MBytes  11.5 Mbits/sec   26   18.4 KBytes       
+[  6]  30.00-30.14  sec  0.00 Bytes  0.00 bits/sec    0   31.1 KBytes       
+- - - - - - - - - - - - - - - - - - - - - - - - -
+Test Complete. Summary Results:
+[ ID] Interval           Transfer     Bitrate         Retr
+[  6]   0.00-30.14  sec  74.2 MBytes  20.6 Mbits/sec  126             sender
+[  6]   0.00-30.14  sec  0.00 Bytes  0.00 bits/sec                  receiver
+CPU Utilization: local/sender 0.4% (0.1%u/0.3%s), remote/receiver 0.0% (0.0%u/0.0%s)
+snd_tcp_congestion cubic
+iperf3: interrupt - the client has terminated

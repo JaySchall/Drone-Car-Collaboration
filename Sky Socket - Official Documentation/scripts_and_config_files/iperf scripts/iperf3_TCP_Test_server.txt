@@ -1,0 +1,899 @@
+iperf 3.6
+Linux clover-3321 5.10.17-v7l+ #1414 SMP Fri Apr 30 13:20:47 BST 2021 armv7l
+-----------------------------------------------------------
+Server listening on 5201
+-----------------------------------------------------------
+iperf3: interrupt - the server has terminated
+iperf 3.6
+Linux clover-3321 5.10.17-v7l+ #1414 SMP Fri Apr 30 13:20:47 BST 2021 armv7l
+-----------------------------------------------------------
+Server listening on 5201
+-----------------------------------------------------------
+iperf3: interrupt - the server has terminated
+iperf 3.6
+Linux clover-3321 5.10.17-v7l+ #1414 SMP Fri Apr 30 13:20:47 BST 2021 armv7l
+-----------------------------------------------------------
+Server listening on 5201
+-----------------------------------------------------------
+iperf3: interrupt - the server has terminated
+iperf 3.6
+Linux clover-3321 5.10.17-v7l+ #1414 SMP Fri Apr 30 13:20:47 BST 2021 armv7l
+-----------------------------------------------------------
+Server listening on 5201
+-----------------------------------------------------------
+Time: Tue, 11 Apr 2023 17:04:44 GMT
+Accepted connection from 192.168.11.133, port 53574
+      Cookie: nr7jcqzj57yj5ykebvukpqoadahoqqhepuqo
+      TCP MSS: 0 (default)
+[  6] local 192.168.11.1 port 5201 connected to 192.168.11.133 port 53576
+Starting Test: protocol: TCP, 1 streams, 131072 byte blocks, omitting 0 seconds, 30 second test, tos 0
+[ ID] Interval           Transfer     Bitrate
+[  6]   0.00-1.00   sec  5.98 MBytes  50.1 Mbits/sec                  
+[  6]   1.00-2.00   sec  5.74 MBytes  48.1 Mbits/sec                  
+[  6]   2.00-3.00   sec  6.48 MBytes  54.3 Mbits/sec                  
+[  6]   3.00-4.00   sec  6.34 MBytes  53.2 Mbits/sec                  
+[  6]   4.00-5.00   sec  6.26 MBytes  52.5 Mbits/sec                  
+[  6]   5.00-6.00   sec  6.25 MBytes  52.4 Mbits/sec                  
+[  6]   6.00-7.00   sec  6.43 MBytes  53.9 Mbits/sec                  
+[  6]   7.00-8.00   sec  6.49 MBytes  54.5 Mbits/sec                  
+[  6]   8.00-9.00   sec  6.63 MBytes  55.7 Mbits/sec                  
+[  6]   9.00-10.00  sec  6.58 MBytes  55.2 Mbits/sec                  
+[  6]  10.00-11.00  sec  6.57 MBytes  55.1 Mbits/sec                  
+[  6]  11.00-12.00  sec  6.63 MBytes  55.6 Mbits/sec                  
+[  6]  12.00-13.00  sec  6.64 MBytes  55.7 Mbits/sec                  
+[  6]  13.00-14.00  sec  6.41 MBytes  53.8 Mbits/sec                  
+[  6]  14.00-15.00  sec  6.41 MBytes  53.7 Mbits/sec                  
+[  6]  15.00-16.00  sec  6.44 MBytes  54.0 Mbits/sec                  
+[  6]  16.00-17.00  sec  6.44 MBytes  54.1 Mbits/sec                  
+[  6]  17.00-18.00  sec  6.61 MBytes  55.4 Mbits/sec                  
+[  6]  18.00-19.00  sec  6.46 MBytes  54.2 Mbits/sec                  
+[  6]  19.00-20.00  sec  6.60 MBytes  55.4 Mbits/sec                  
+[  6]  20.00-21.00  sec  6.64 MBytes  55.7 Mbits/sec                  
+[  6]  21.00-22.00  sec  6.71 MBytes  56.2 Mbits/sec                  
+[  6]  22.00-23.00  sec  6.49 MBytes  54.5 Mbits/sec                  
+[  6]  23.00-24.00  sec  6.18 MBytes  51.8 Mbits/sec                  
+[  6]  24.00-25.00  sec  6.38 MBytes  53.5 Mbits/sec                  
+[  6]  25.00-26.00  sec  6.45 MBytes  54.1 Mbits/sec                  
+[  6]  26.00-27.00  sec  6.33 MBytes  53.1 Mbits/sec                  
+[  6]  27.00-28.00  sec  6.61 MBytes  55.4 Mbits/sec                  
+[  6]  28.00-29.00  sec  6.68 MBytes  56.0 Mbits/sec                  
+[  6]  29.00-30.00  sec  6.69 MBytes  56.1 Mbits/sec                  
+[  6]  30.00-30.03  sec   247 KBytes  62.8 Mbits/sec                  
+- - - - - - - - - - - - - - - - - - - - - - - - -
+Test Complete. Summary Results:
+[ ID] Interval           Transfer     Bitrate
+[  6] (sender statistics not available)
+[  6]   0.00-30.03  sec   194 MBytes  54.1 Mbits/sec                  receiver
+CPU Utilization: local/receiver 6.5% (0.2%u/6.3%s), remote/sender 0.0% (0.0%u/0.0%s)
+rcv_tcp_congestion cubic
+iperf 3.6
+Linux clover-3321 5.10.17-v7l+ #1414 SMP Fri Apr 30 13:20:47 BST 2021 armv7l
+-----------------------------------------------------------
+Server listening on 5201
+-----------------------------------------------------------
+iperf3: interrupt - the server has terminated
+iperf 3.6
+Linux clover-3321 5.10.17-v7l+ #1414 SMP Fri Apr 30 13:20:47 BST 2021 armv7l
+-----------------------------------------------------------
+Server listening on 5201
+-----------------------------------------------------------
+Time: Tue, 11 Apr 2023 17:09:26 GMT
+Accepted connection from 192.168.11.133, port 53578
+      Cookie: 5mtvs3k4jsqdhhbo6puwd3tbomgl4actl23x
+      TCP MSS: 0 (default)
+[  6] local 192.168.11.1 port 5201 connected to 192.168.11.133 port 53580
+Starting Test: protocol: TCP, 1 streams, 131072 byte blocks, omitting 0 seconds, 30 second test, tos 0
+[ ID] Interval           Transfer     Bitrate
+[  6]   0.00-1.00   sec  5.89 MBytes  49.4 Mbits/sec                  
+[  6]   1.00-2.00   sec  5.58 MBytes  46.8 Mbits/sec                  
+[  6]   2.00-3.00   sec  6.58 MBytes  55.1 Mbits/sec                  
+[  6]   3.00-4.00   sec  6.63 MBytes  55.7 Mbits/sec                  
+[  6]   4.00-5.00   sec  6.57 MBytes  55.1 Mbits/sec                  
+[  6]   5.00-6.00   sec  6.63 MBytes  55.6 Mbits/sec                  
+[  6]   5.00-6.00   sec  6.63 MBytes  55.6 Mbits/sec                  
+- - - - - - - - - - - - - - - - - - - - - - - - -
+Test Complete. Summary Results:
+[ ID] Interval           Transfer     Bitrate
+[  6] (sender statistics not available)
+[  6]   0.00-6.00   sec  38.6 MBytes  53.9 Mbits/sec                  receiver
+CPU Utilization: local/receiver 0.7% (0.0%u/0.7%s), remote/sender 0.0% (0.0%u/0.0%s)
+rcv_tcp_congestion cubic
+iperf3: the client has terminated
+iperf 3.6
+Linux clover-3321 5.10.17-v7l+ #1414 SMP Fri Apr 30 13:20:47 BST 2021 armv7l
+-----------------------------------------------------------
+Server listening on 5201
+-----------------------------------------------------------
+Time: Tue, 11 Apr 2023 17:12:35 GMT
+Accepted connection from 192.168.11.133, port 53582
+      Cookie: upbxmyaveq6z4vixrztwrcvkzfswzinxviwf
+      TCP MSS: 0 (default)
+[  6] local 192.168.11.1 port 5201 connected to 192.168.11.133 port 53584
+Starting Test: protocol: TCP, 1 streams, 131072 byte blocks, omitting 0 seconds, 35 second test, tos 0
+[ ID] Interval           Transfer     Bitrate
+[  6]   0.00-1.00   sec  5.60 MBytes  47.0 Mbits/sec                  
+[  6]   1.00-2.00   sec  5.95 MBytes  49.9 Mbits/sec                  
+[  6]   2.00-3.00   sec  6.48 MBytes  54.3 Mbits/sec                  
+[  6]   3.00-4.00   sec  6.61 MBytes  55.5 Mbits/sec                  
+[  6]   4.00-5.00   sec  6.52 MBytes  54.7 Mbits/sec                  
+[  6]   5.00-6.00   sec  6.48 MBytes  54.3 Mbits/sec                  
+[  6]   6.00-7.00   sec  6.72 MBytes  56.3 Mbits/sec                  
+[  6]   7.00-8.00   sec  6.48 MBytes  54.4 Mbits/sec                  
+[  6]   8.00-9.00   sec  6.65 MBytes  55.7 Mbits/sec                  
+[  6]   9.00-10.00  sec  6.73 MBytes  56.4 Mbits/sec                  
+[  6]  10.00-11.00  sec  6.67 MBytes  56.0 Mbits/sec                  
+[  6]  11.00-12.00  sec  6.63 MBytes  55.6 Mbits/sec                  
+[  6]  12.00-13.00  sec  6.55 MBytes  55.0 Mbits/sec                  
+[  6]  13.00-14.00  sec  6.55 MBytes  55.0 Mbits/sec                  
+[  6]  14.00-15.00  sec  6.60 MBytes  55.4 Mbits/sec                  
+[  6]  15.00-16.00  sec  6.73 MBytes  56.5 Mbits/sec                  
+[  6]  16.00-17.00  sec  6.69 MBytes  56.2 Mbits/sec                  
+[  6]  17.00-18.00  sec  6.68 MBytes  56.0 Mbits/sec                  
+[  6]  18.00-19.00  sec  6.54 MBytes  54.8 Mbits/sec                  
+[  6]  19.00-20.00  sec  6.45 MBytes  54.1 Mbits/sec                  
+[  6]  20.00-21.00  sec  6.44 MBytes  53.9 Mbits/sec                  
+[  6]  21.00-22.00  sec  6.76 MBytes  56.8 Mbits/sec                  
+[  6]  22.00-23.00  sec  6.77 MBytes  56.8 Mbits/sec                  
+[  6]  23.00-24.00  sec  6.65 MBytes  55.8 Mbits/sec                  
+[  6]  24.00-25.00  sec  6.85 MBytes  57.4 Mbits/sec                  
+[  6]  25.00-26.00  sec  6.65 MBytes  55.8 Mbits/sec                  
+[  6]  26.00-27.00  sec  6.34 MBytes  53.1 Mbits/sec                  
+[  6]  27.00-28.00  sec  6.58 MBytes  55.2 Mbits/sec                  
+[  6]  28.00-29.00  sec  6.57 MBytes  55.1 Mbits/sec                  
+[  6]  29.00-30.00  sec  6.52 MBytes  54.7 Mbits/sec                  
+[  6]  29.00-30.00  sec  6.52 MBytes  54.7 Mbits/sec                  
+- - - - - - - - - - - - - - - - - - - - - - - - -
+Test Complete. Summary Results:
+[ ID] Interval           Transfer     Bitrate
+[  6] (sender statistics not available)
+[  6]   0.00-30.00  sec   198 MBytes  55.4 Mbits/sec                  receiver
+CPU Utilization: local/receiver 1.1% (0.0%u/1.1%s), remote/sender 0.0% (0.0%u/0.0%s)
+rcv_tcp_congestion cubic
+iperf3: the client has terminated
+iperf 3.6
+Linux clover-3321 5.10.17-v7l+ #1414 SMP Fri Apr 30 13:20:47 BST 2021 armv7l
+-----------------------------------------------------------
+Server listening on 5201
+-----------------------------------------------------------
+iperf3: interrupt - the server has terminated
+iperf 3.6
+Linux clover-3321 5.10.17-v7l+ #1414 SMP Fri Apr 30 13:20:47 BST 2021 armv7l
+-----------------------------------------------------------
+Server listening on 5201
+-----------------------------------------------------------
+Time: Tue, 11 Apr 2023 17:15:57 GMT
+Accepted connection from 192.168.11.133, port 53588
+      Cookie: tjnh2r72gx7buccudsrp3y7lwyt7wo5xrd3o
+      TCP MSS: 0 (default)
+[  6] local 192.168.11.1 port 5201 connected to 192.168.11.133 port 53590
+Starting Test: protocol: TCP, 1 streams, 131072 byte blocks, omitting 0 seconds, 35 second test, tos 0
+[ ID] Interval           Transfer     Bitrate
+[  6]   0.00-1.00   sec  6.20 MBytes  52.0 Mbits/sec                  
+[  6]   1.00-2.00   sec  5.66 MBytes  47.5 Mbits/sec                  
+[  6]   2.00-3.00   sec  6.51 MBytes  54.6 Mbits/sec                  
+[  6]   3.00-4.00   sec  6.38 MBytes  53.5 Mbits/sec                  
+[  6]   4.00-5.00   sec  6.26 MBytes  52.5 Mbits/sec                  
+[  6]   5.00-6.00   sec  6.40 MBytes  53.7 Mbits/sec                  
+[  6]   6.00-7.00   sec  6.42 MBytes  53.9 Mbits/sec                  
+[  6]   7.00-8.00   sec  6.69 MBytes  56.1 Mbits/sec                  
+[  6]   8.00-9.00   sec  6.85 MBytes  57.5 Mbits/sec                  
+[  6]   9.00-10.00  sec  6.54 MBytes  54.8 Mbits/sec                  
+[  6]  10.00-11.00  sec  6.71 MBytes  56.3 Mbits/sec                  
+[  6]  11.00-12.00  sec  6.75 MBytes  56.6 Mbits/sec                  
+[  6]  12.00-13.00  sec  6.54 MBytes  54.9 Mbits/sec                  
+[  6]  13.00-14.00  sec  6.46 MBytes  54.2 Mbits/sec                  
+[  6]  14.00-15.00  sec  6.71 MBytes  56.3 Mbits/sec                  
+[  6]  15.00-16.00  sec  6.64 MBytes  55.7 Mbits/sec                  
+[  6]  16.00-17.00  sec  6.59 MBytes  55.3 Mbits/sec                  
+[  6]  17.00-18.00  sec  6.76 MBytes  56.7 Mbits/sec                  
+[  6]  18.00-19.00  sec  6.55 MBytes  55.0 Mbits/sec                  
+[  6]  19.00-20.00  sec  6.58 MBytes  55.2 Mbits/sec                  
+[  6]  20.00-21.00  sec  6.82 MBytes  57.2 Mbits/sec                  
+[  6]  21.00-22.00  sec  6.49 MBytes  54.4 Mbits/sec                  
+[  6]  22.00-23.00  sec  6.35 MBytes  53.2 Mbits/sec                  
+[  6]  23.00-24.00  sec  6.65 MBytes  55.8 Mbits/sec                  
+[  6]  24.00-25.00  sec  6.50 MBytes  54.5 Mbits/sec                  
+[  6]  25.00-26.00  sec  6.42 MBytes  53.9 Mbits/sec                  
+[  6]  26.00-27.00  sec  6.21 MBytes  52.1 Mbits/sec                  
+[  6]  27.00-28.00  sec  6.67 MBytes  55.9 Mbits/sec                  
+[  6]  28.00-29.00  sec  6.59 MBytes  55.3 Mbits/sec                  
+[  6]  29.00-30.00  sec  6.80 MBytes  57.0 Mbits/sec                  
+[  6]  29.00-30.00  sec  6.80 MBytes  57.0 Mbits/sec                  
+- - - - - - - - - - - - - - - - - - - - - - - - -
+Test Complete. Summary Results:
+[ ID] Interval           Transfer     Bitrate
+[  6] (sender statistics not available)
+[  6]   0.00-30.00  sec   197 MBytes  55.2 Mbits/sec                  receiver
+CPU Utilization: local/receiver 5.6% (0.2%u/5.4%s), remote/sender 0.0% (0.0%u/0.0%s)
+rcv_tcp_congestion cubic
+iperf3: the client has terminated
+iperf 3.6
+Linux clover-3321 5.10.17-v7l+ #1414 SMP Fri Apr 30 13:20:47 BST 2021 armv7l
+-----------------------------------------------------------
+Server listening on 5201
+-----------------------------------------------------------
+iperf3: interrupt - the server has terminated
+iperf 3.6
+Linux clover-3321 5.10.17-v7l+ #1414 SMP Fri Apr 30 13:20:47 BST 2021 armv7l
+-----------------------------------------------------------
+Server listening on 5201
+-----------------------------------------------------------
+Time: Tue, 11 Apr 2023 21:02:27 GMT
+Accepted connection from 192.168.11.133, port 60538
+      Cookie: pvmvzxtsrd6m4l4gw3yzlakaxw4tmghgeksg
+      TCP MSS: 0 (default)
+[  6] local 192.168.11.1 port 5201 connected to 192.168.11.133 port 60540
+Starting Test: protocol: TCP, 1 streams, 131072 byte blocks, omitting 0 seconds, 35 second test, tos 0
+[ ID] Interval           Transfer     Bitrate
+[  6]   0.00-1.00   sec  5.59 MBytes  46.9 Mbits/sec                  
+[  6]   1.00-2.00   sec  6.61 MBytes  55.5 Mbits/sec                  
+[  6]   2.00-3.00   sec  6.68 MBytes  56.0 Mbits/sec                  
+[  6]   3.00-4.00   sec  6.66 MBytes  55.9 Mbits/sec                  
+[  6]   4.00-5.00   sec  6.82 MBytes  57.2 Mbits/sec                  
+[  6]   5.00-6.00   sec  6.67 MBytes  55.9 Mbits/sec                  
+[  6]   6.00-7.00   sec  6.69 MBytes  56.1 Mbits/sec                  
+[  6]   7.00-8.00   sec  6.69 MBytes  56.1 Mbits/sec                  
+[  6]   8.00-9.00   sec  6.59 MBytes  55.3 Mbits/sec                  
+[  6]   9.00-10.00  sec  6.68 MBytes  56.0 Mbits/sec                  
+[  6]  10.00-11.00  sec  6.64 MBytes  55.7 Mbits/sec                  
+[  6]  11.00-12.00  sec  6.48 MBytes  54.4 Mbits/sec                  
+[  6]  12.00-13.00  sec  6.46 MBytes  54.2 Mbits/sec                  
+[  6]  13.00-14.00  sec  6.72 MBytes  56.4 Mbits/sec                  
+[  6]  14.00-15.00  sec  6.75 MBytes  56.7 Mbits/sec                  
+[  6]  15.00-16.00  sec  6.38 MBytes  53.5 Mbits/sec                  
+[  6]  16.00-17.00  sec  6.55 MBytes  55.0 Mbits/sec                  
+[  6]  17.00-18.00  sec  6.76 MBytes  56.7 Mbits/sec                  
+[  6]  18.00-19.00  sec  6.67 MBytes  56.0 Mbits/sec                  
+[  6]  19.00-20.00  sec  6.60 MBytes  55.3 Mbits/sec                  
+[  6]  20.00-21.00  sec  6.55 MBytes  54.9 Mbits/sec                  
+[  6]  21.00-22.00  sec  6.59 MBytes  55.3 Mbits/sec                  
+[  6]  22.00-23.00  sec  6.69 MBytes  56.1 Mbits/sec                  
+[  6]  23.00-24.00  sec  6.41 MBytes  53.8 Mbits/sec                  
+[  6]  24.00-25.00  sec  6.70 MBytes  56.2 Mbits/sec                  
+[  6]  25.00-26.00  sec  6.64 MBytes  55.7 Mbits/sec                  
+[  6]  26.00-27.00  sec  6.76 MBytes  56.7 Mbits/sec                  
+[  6]  27.00-28.00  sec  6.64 MBytes  55.7 Mbits/sec                  
+[  6]  28.00-29.00  sec  6.63 MBytes  55.6 Mbits/sec                  
+[  6]  29.00-30.00  sec  6.61 MBytes  55.4 Mbits/sec                  
+[  6]  29.00-30.00  sec  6.61 MBytes  55.4 Mbits/sec                  
+- - - - - - - - - - - - - - - - - - - - - - - - -
+Test Complete. Summary Results:
+[ ID] Interval           Transfer     Bitrate
+[  6] (sender statistics not available)
+[  6]   0.00-30.00  sec   199 MBytes  55.8 Mbits/sec                  receiver
+CPU Utilization: local/receiver 5.0% (0.2%u/4.8%s), remote/sender 0.0% (0.0%u/0.0%s)
+rcv_tcp_congestion cubic
+iperf3: the client has terminated
+iperf 3.6
+Linux clover-3321 5.10.17-v7l+ #1414 SMP Fri Apr 30 13:20:47 BST 2021 armv7l
+-----------------------------------------------------------
+Server listening on 5201
+-----------------------------------------------------------
+iperf3: interrupt - the server has terminated
+iperf 3.6
+Linux clover-3321 5.10.17-v7l+ #1414 SMP Fri Apr 30 13:20:47 BST 2021 armv7l
+-----------------------------------------------------------
+Server listening on 5201
+-----------------------------------------------------------
+Time: Tue, 11 Apr 2023 20:44:44 GMT
+Accepted connection from 192.168.11.133, port 41736
+      Cookie: eqhsoc44a3yy34rrposfn6nzebin2smj3zkj
+      TCP MSS: 0 (default)
+[  6] local 192.168.11.1 port 5201 connected to 192.168.11.133 port 41738
+Starting Test: protocol: TCP, 1 streams, 131072 byte blocks, omitting 0 seconds, 35 second test, tos 0
+[ ID] Interval           Transfer     Bitrate
+[  6]   0.00-1.00   sec  3.47 MBytes  29.1 Mbits/sec                  
+[  6]   1.00-2.00   sec  5.78 MBytes  48.5 Mbits/sec                  
+[  6]   2.00-3.00   sec  5.61 MBytes  47.0 Mbits/sec                  
+[  6]   3.00-4.00   sec  6.06 MBytes  50.8 Mbits/sec                  
+[  6]   4.00-5.00   sec  6.25 MBytes  52.4 Mbits/sec                  
+[  6]   5.00-6.00   sec  6.21 MBytes  52.1 Mbits/sec                  
+[  6]   6.00-7.00   sec  5.92 MBytes  49.6 Mbits/sec                  
+[  6]   7.00-8.00   sec  4.74 MBytes  39.8 Mbits/sec                  
+[  6]   8.00-9.00   sec  4.00 MBytes  33.5 Mbits/sec                  
+[  6]   9.00-10.00  sec  4.36 MBytes  36.6 Mbits/sec                  
+[  6]  10.00-11.00  sec  5.04 MBytes  42.3 Mbits/sec                  
+[  6]  11.00-12.00  sec  4.31 MBytes  36.2 Mbits/sec                  
+[  6]  12.00-13.00  sec  5.85 MBytes  49.0 Mbits/sec                  
+[  6]  13.00-14.00  sec  5.88 MBytes  49.3 Mbits/sec                  
+[  6]  14.00-15.00  sec  6.23 MBytes  52.3 Mbits/sec                  
+[  6]  15.00-16.00  sec  6.18 MBytes  51.9 Mbits/sec                  
+[  6]  16.00-17.00  sec  6.02 MBytes  50.5 Mbits/sec                  
+[  6]  17.00-18.00  sec  5.65 MBytes  47.4 Mbits/sec                  
+[  6]  18.00-19.00  sec  4.38 MBytes  36.7 Mbits/sec                  
+[  6]  19.00-20.00  sec  4.36 MBytes  36.6 Mbits/sec                  
+[  6]  20.00-21.00  sec  3.88 MBytes  32.6 Mbits/sec                  
+[  6]  21.00-22.00  sec  5.11 MBytes  42.8 Mbits/sec                  
+[  6]  22.00-23.00  sec  4.39 MBytes  36.8 Mbits/sec                  
+[  6]  23.00-24.00  sec  5.08 MBytes  42.6 Mbits/sec                  
+[  6]  24.00-25.00  sec  4.78 MBytes  40.1 Mbits/sec                  
+[  6]  25.00-26.00  sec  4.88 MBytes  40.9 Mbits/sec                  
+[  6]  26.00-27.00  sec  4.56 MBytes  38.3 Mbits/sec                  
+[  6]  27.00-28.00  sec  1.34 MBytes  11.2 Mbits/sec                  
+[  6]  28.00-29.00  sec  4.41 MBytes  37.0 Mbits/sec                  
+[  6]  29.00-30.00  sec  5.79 MBytes  48.6 Mbits/sec                  
+[  6]  29.00-30.00  sec  5.79 MBytes  48.6 Mbits/sec                  
+- - - - - - - - - - - - - - - - - - - - - - - - -
+Test Complete. Summary Results:
+[ ID] Interval           Transfer     Bitrate
+[  6] (sender statistics not available)
+[  6]   0.00-30.00  sec   151 MBytes  42.3 Mbits/sec                  receiver
+CPU Utilization: local/receiver 2.1% (0.1%u/2.0%s), remote/sender 0.0% (0.0%u/0.0%s)
+rcv_tcp_congestion cubic
+iperf3: the client has terminated
+iperf 3.6
+Linux clover-3321 5.10.17-v7l+ #1414 SMP Fri Apr 30 13:20:47 BST 2021 armv7l
+-----------------------------------------------------------
+Server listening on 5201
+-----------------------------------------------------------
+iperf3: interrupt - the server has terminated
+iperf 3.6
+Linux clover-3321 5.10.17-v7l+ #1414 SMP Fri Apr 30 13:20:47 BST 2021 armv7l
+-----------------------------------------------------------
+Server listening on 5201
+-----------------------------------------------------------
+Time: Tue, 11 Apr 2023 20:55:34 GMT
+Accepted connection from 192.168.11.133, port 41740
+      Cookie: t3x4lceek4d3wvmqkozhlazolsyzi6su3pd6
+      TCP MSS: 0 (default)
+[  6] local 192.168.11.1 port 5201 connected to 192.168.11.133 port 41742
+Starting Test: protocol: TCP, 1 streams, 131072 byte blocks, omitting 0 seconds, 35 second test, tos 0
+[ ID] Interval           Transfer     Bitrate
+[  6]   0.00-1.00   sec  2.11 MBytes  17.7 Mbits/sec                  
+[  6]   1.00-2.00   sec  4.70 MBytes  39.4 Mbits/sec                  
+[  6]   2.00-3.00   sec  5.10 MBytes  42.8 Mbits/sec                  
+[  6]   3.00-4.00   sec  5.46 MBytes  45.8 Mbits/sec                  
+[  6]   4.00-5.00   sec  4.41 MBytes  37.0 Mbits/sec                  
+[  6]   5.00-6.00   sec  4.01 MBytes  33.7 Mbits/sec                  
+[  6]   6.00-7.00   sec  3.26 MBytes  27.4 Mbits/sec                  
+[  6]   7.00-8.00   sec  3.84 MBytes  32.2 Mbits/sec                  
+[  6]   8.00-9.00   sec  4.31 MBytes  36.2 Mbits/sec                  
+[  6]   9.00-10.00  sec  4.15 MBytes  34.8 Mbits/sec                  
+[  6]  10.00-11.00  sec  3.83 MBytes  32.1 Mbits/sec                  
+[  6]  11.00-12.00  sec  3.91 MBytes  32.8 Mbits/sec                  
+[  6]  12.00-13.00  sec  2.91 MBytes  24.4 Mbits/sec                  
+[  6]  13.00-14.00  sec  3.45 MBytes  28.9 Mbits/sec                  
+[  6]  14.00-15.00  sec   799 KBytes  6.54 Mbits/sec                  
+[  6]  15.00-16.00  sec  0.00 Bytes  0.00 bits/sec                  
+[  6]  16.00-17.00  sec   178 KBytes  1.46 Mbits/sec                  
+[  6]  17.00-18.00  sec   441 KBytes  3.62 Mbits/sec                  
+[  6]  18.00-19.00  sec   349 KBytes  2.86 Mbits/sec                  
+[  6]  19.00-20.00  sec  21.2 KBytes   174 Kbits/sec                  
+[  6]  20.00-21.00  sec   491 KBytes  4.02 Mbits/sec                  
+[  6]  21.00-22.00  sec   877 KBytes  7.18 Mbits/sec                  
+[  6]  22.00-23.00  sec   679 KBytes  5.56 Mbits/sec                  
+[  6]  23.00-24.00  sec   447 KBytes  3.66 Mbits/sec                  
+[  6]  24.00-25.00  sec   622 KBytes  5.10 Mbits/sec                  
+[  6]  25.00-26.00  sec   666 KBytes  5.46 Mbits/sec                  
+[  6]  26.00-27.00  sec   929 KBytes  7.61 Mbits/sec                  
+[  6]  27.00-28.00  sec  1.35 MBytes  11.3 Mbits/sec                  
+[  6]  28.00-29.00  sec   956 KBytes  7.83 Mbits/sec                  
+[  6]  28.00-29.00  sec   956 KBytes  7.83 Mbits/sec                  
+- - - - - - - - - - - - - - - - - - - - - - - - -
+Test Complete. Summary Results:
+[ ID] Interval           Transfer     Bitrate
+[  6] (sender statistics not available)
+[  6]   0.00-29.00  sec  64.1 MBytes  18.5 Mbits/sec                  receiver
+CPU Utilization: local/receiver 1.0% (0.1%u/1.0%s), remote/sender 0.0% (0.0%u/0.0%s)
+rcv_tcp_congestion cubic
+iperf3: the client has terminated
+iperf 3.6
+Linux clover-3321 5.10.17-v7l+ #1414 SMP Fri Apr 30 13:20:47 BST 2021 armv7l
+iperf 3.6
+Linux clover-3321 5.10.17-v7l+ #1414 SMP Fri Apr 30 13:20:47 BST 2021 armv7l
+-----------------------------------------------------------
+Server listening on 5201
+-----------------------------------------------------------
+iperf3: interrupt - the server has terminated
+iperf 3.6
+Linux clover-3321 5.10.17-v7l+ #1414 SMP Fri Apr 30 13:20:47 BST 2021 armv7l
+-----------------------------------------------------------
+Server listening on 5201
+-----------------------------------------------------------
+Time: Tue, 11 Apr 2023 20:31:28 GMT
+Accepted connection from 192.168.11.133, port 41984
+      Cookie: 2trfisptxn5ns2bp7dsggnyhg5rajjzkixp6
+      TCP MSS: 0 (default)
+[  6] local 192.168.11.1 port 5201 connected to 192.168.11.133 port 41986
+Starting Test: protocol: TCP, 1 streams, 131072 byte blocks, omitting 0 seconds, 35 second test, tos 0
+[ ID] Interval           Transfer     Bitrate
+[  6]   0.00-1.00   sec  3.72 MBytes  31.2 Mbits/sec                  
+[  6]   1.00-2.00   sec  3.91 MBytes  32.8 Mbits/sec                  
+[  6]   2.00-3.00   sec  3.73 MBytes  31.3 Mbits/sec                  
+[  6]   3.00-4.00   sec  3.47 MBytes  29.1 Mbits/sec                  
+[  6]   4.00-5.00   sec  3.48 MBytes  29.1 Mbits/sec                  
+[  6]   5.00-6.00   sec  3.66 MBytes  30.8 Mbits/sec                  
+[  6]   6.00-7.00   sec  3.36 MBytes  28.2 Mbits/sec                  
+[  6]   7.00-8.00   sec  4.16 MBytes  34.9 Mbits/sec                  
+[  6]   8.00-9.00   sec  5.54 MBytes  46.5 Mbits/sec                  
+[  6]   9.00-10.00  sec  4.82 MBytes  40.4 Mbits/sec                  
+[  6]  10.00-11.00  sec  5.90 MBytes  49.5 Mbits/sec                  
+[  6]  11.00-12.00  sec  6.92 MBytes  58.0 Mbits/sec                  
+[  6]  12.00-13.00  sec  3.97 MBytes  33.3 Mbits/sec                  
+[  6]  13.00-14.00  sec  5.89 MBytes  49.4 Mbits/sec                  
+[  6]  14.00-15.00  sec  5.70 MBytes  47.8 Mbits/sec                  
+[  6]  15.00-16.00  sec  4.75 MBytes  39.8 Mbits/sec                  
+[  6]  16.00-17.00  sec  5.37 MBytes  45.0 Mbits/sec                  
+[  6]  17.00-18.00  sec  6.00 MBytes  50.3 Mbits/sec                  
+[  6]  18.00-19.00  sec  5.35 MBytes  44.9 Mbits/sec                  
+[  6]  19.00-20.00  sec  5.54 MBytes  46.5 Mbits/sec                  
+[  6]  20.00-21.00  sec  5.32 MBytes  44.6 Mbits/sec                  
+[  6]  21.00-22.00  sec  5.16 MBytes  43.3 Mbits/sec                  
+[  6]  22.00-23.00  sec  5.09 MBytes  42.7 Mbits/sec                  
+[  6]  23.00-24.00  sec  4.78 MBytes  40.1 Mbits/sec                  
+[  6]  24.00-25.00  sec  5.52 MBytes  46.3 Mbits/sec                  
+[  6]  25.00-26.00  sec  5.55 MBytes  46.6 Mbits/sec                  
+[  6]  26.00-27.00  sec  4.80 MBytes  40.2 Mbits/sec                  
+[  6]  27.00-28.00  sec  4.50 MBytes  37.8 Mbits/sec                  
+[  6]  28.00-29.00  sec  4.92 MBytes  41.3 Mbits/sec                  
+[  6]  29.00-30.00  sec  4.43 MBytes  37.2 Mbits/sec                  
+[  6]  29.00-30.00  sec  4.43 MBytes  37.2 Mbits/sec                  
+- - - - - - - - - - - - - - - - - - - - - - - - -
+Test Complete. Summary Results:
+[ ID] Interval           Transfer     Bitrate
+[  6] (sender statistics not available)
+[  6]   0.00-30.00  sec   146 MBytes  40.9 Mbits/sec                  receiver
+CPU Utilization: local/receiver 1.2% (0.1%u/1.1%s), remote/sender 0.0% (0.0%u/0.0%s)
+rcv_tcp_congestion cubic
+iperf3: the client has terminated
+iperf 3.6
+Linux clover-3321 5.10.17-v7l+ #1414 SMP Fri Apr 30 13:20:47 BST 2021 armv7l
+-----------------------------------------------------------
+Server listening on 5201
+-----------------------------------------------------------
+iperf3: interrupt - the server has terminated
+iperf 3.6
+Linux clover-3321 5.10.17-v7l+ #1414 SMP Fri Apr 30 13:20:47 BST 2021 armv7l
+-----------------------------------------------------------
+Server listening on 5201
+-----------------------------------------------------------
+Time: Tue, 11 Apr 2023 20:36:14 GMT
+Accepted connection from 192.168.11.133, port 41988
+      Cookie: pekxg3x4he6bnsgzqdf33olwy3wsvghwrsmm
+      TCP MSS: 0 (default)
+[  6] local 192.168.11.1 port 5201 connected to 192.168.11.133 port 41992
+Starting Test: protocol: TCP, 1 streams, 131072 byte blocks, omitting 0 seconds, 35 second test, tos 0
+[ ID] Interval           Transfer     Bitrate
+[  6]   0.00-1.00   sec  1.26 MBytes  10.6 Mbits/sec                  
+[  6]   1.00-2.00   sec  1.36 MBytes  11.4 Mbits/sec                  
+[  6]   2.00-3.00   sec  2.33 MBytes  19.6 Mbits/sec                  
+[  6]   3.00-4.00   sec  1.81 MBytes  15.2 Mbits/sec                  
+[  6]   4.00-5.00   sec  2.07 MBytes  17.4 Mbits/sec                  
+[  6]   5.00-6.00   sec  2.25 MBytes  18.9 Mbits/sec                  
+[  6]   6.00-7.00   sec  2.13 MBytes  17.9 Mbits/sec                  
+[  6]   7.00-8.00   sec  2.90 MBytes  24.4 Mbits/sec                  
+[  6]   8.00-9.00   sec  2.73 MBytes  22.9 Mbits/sec                  
+[  6]   9.00-10.00  sec  1.59 MBytes  13.4 Mbits/sec                  
+[  6]  10.00-11.00  sec  2.88 MBytes  24.2 Mbits/sec                  
+[  6]  11.00-12.00  sec  4.38 MBytes  36.7 Mbits/sec                  
+[  6]  12.00-13.00  sec  4.72 MBytes  39.6 Mbits/sec                  
+[  6]  13.00-14.00  sec  4.95 MBytes  41.5 Mbits/sec                  
+[  6]  14.00-15.00  sec  5.49 MBytes  46.0 Mbits/sec                  
+[  6]  15.00-16.00  sec  5.19 MBytes  43.5 Mbits/sec                  
+[  6]  16.00-17.00  sec  5.82 MBytes  48.8 Mbits/sec                  
+[  6]  17.00-18.00  sec  5.48 MBytes  46.0 Mbits/sec                  
+[  6]  18.00-19.00  sec  5.64 MBytes  47.3 Mbits/sec                  
+[  6]  19.00-20.00  sec  6.04 MBytes  50.7 Mbits/sec                  
+[  6]  20.00-21.00  sec  4.32 MBytes  36.2 Mbits/sec                  
+[  6]  21.00-22.00  sec  4.80 MBytes  40.2 Mbits/sec                  
+[  6]  22.00-23.00  sec  4.55 MBytes  38.1 Mbits/sec                  
+[  6]  23.00-24.00  sec  5.72 MBytes  48.0 Mbits/sec                  
+[  6]  24.00-25.00  sec  6.00 MBytes  50.4 Mbits/sec                  
+[  6]  25.00-26.00  sec  5.11 MBytes  42.8 Mbits/sec                  
+[  6]  26.00-27.00  sec  5.29 MBytes  44.4 Mbits/sec                  
+[  6]  27.00-28.00  sec  5.61 MBytes  47.0 Mbits/sec                  
+[  6]  28.00-29.00  sec  5.37 MBytes  45.1 Mbits/sec                  
+[  6]  28.00-29.00  sec  5.37 MBytes  45.1 Mbits/sec                  
+- - - - - - - - - - - - - - - - - - - - - - - - -
+Test Complete. Summary Results:
+[ ID] Interval           Transfer     Bitrate
+[  6] (sender statistics not available)
+[  6]   0.00-29.00  sec   123 MBytes  35.4 Mbits/sec                  receiver
+CPU Utilization: local/receiver 2.2% (0.1%u/2.1%s), remote/sender 0.0% (0.0%u/0.0%s)
+rcv_tcp_congestion cubic
+iperf3: the client has terminated
+iperf 3.6
+Linux clover-3321 5.10.17-v7l+ #1414 SMP Fri Apr 30 13:20:47 BST 2021 armv7l
+-----------------------------------------------------------
+Server listening on 5201
+-----------------------------------------------------------
+iperf3: interrupt - the server has terminated
+iperf 3.6
+Linux clover-3321 5.10.17-v7l+ #1414 SMP Fri Apr 30 13:20:47 BST 2021 armv7l
+-----------------------------------------------------------
+Server listening on 5201
+-----------------------------------------------------------
+Time: Tue, 11 Apr 2023 20:39:30 GMT
+Accepted connection from 192.168.11.133, port 41994
+      Cookie: okxaoygx5psbwknzbsf3ec6yhbne7bb7nyqo
+      TCP MSS: 0 (default)
+[  6] local 192.168.11.1 port 5201 connected to 192.168.11.133 port 41996
+Starting Test: protocol: TCP, 1 streams, 131072 byte blocks, omitting 0 seconds, 35 second test, tos 0
+[ ID] Interval           Transfer     Bitrate
+[  6]   0.00-1.00   sec  3.56 MBytes  29.8 Mbits/sec                  
+[  6]   1.00-2.00   sec  2.92 MBytes  24.5 Mbits/sec                  
+[  6]   2.00-3.00   sec  3.30 MBytes  27.7 Mbits/sec                  
+[  6]   3.00-4.00   sec  3.60 MBytes  30.2 Mbits/sec                  
+[  6]   4.00-5.00   sec  3.00 MBytes  25.2 Mbits/sec                  
+[  6]   5.00-6.00   sec  2.82 MBytes  23.6 Mbits/sec                  
+[  6]   6.00-7.00   sec  3.75 MBytes  31.5 Mbits/sec                  
+[  6]   7.00-8.00   sec  4.38 MBytes  36.8 Mbits/sec                  
+[  6]   8.00-9.00   sec  4.88 MBytes  40.9 Mbits/sec                  
+[  6]   9.00-10.00  sec  5.42 MBytes  45.5 Mbits/sec                  
+[  6]  10.00-11.00  sec  5.72 MBytes  48.0 Mbits/sec                  
+[  6]  11.00-12.00  sec  5.65 MBytes  47.4 Mbits/sec                  
+[  6]  12.00-13.00  sec  5.03 MBytes  42.2 Mbits/sec                  
+[  6]  13.00-14.00  sec  5.71 MBytes  47.9 Mbits/sec                  
+[  6]  14.00-15.00  sec  5.69 MBytes  47.7 Mbits/sec                  
+[  6]  15.00-16.00  sec  6.23 MBytes  52.2 Mbits/sec                  
+[  6]  16.00-17.00  sec  6.47 MBytes  54.3 Mbits/sec                  
+[  6]  17.00-18.00  sec  5.67 MBytes  47.6 Mbits/sec                  
+[  6]  18.00-19.00  sec  4.89 MBytes  41.0 Mbits/sec                  
+[  6]  19.00-20.00  sec  6.31 MBytes  52.9 Mbits/sec                  
+[  6]  20.00-21.00  sec  5.71 MBytes  47.9 Mbits/sec                  
+[  6]  21.00-22.00  sec  5.64 MBytes  47.3 Mbits/sec                  
+[  6]  22.00-23.00  sec  5.98 MBytes  50.2 Mbits/sec                  
+[  6]  23.00-24.00  sec  6.34 MBytes  53.2 Mbits/sec                  
+[  6]  24.00-25.00  sec  6.14 MBytes  51.5 Mbits/sec                  
+[  6]  25.00-26.00  sec  6.77 MBytes  56.8 Mbits/sec                  
+[  6]  26.00-27.00  sec  5.60 MBytes  46.9 Mbits/sec                  
+[  6]  27.00-28.00  sec  2.92 MBytes  24.5 Mbits/sec                  
+[  6]  28.00-29.00  sec  4.63 MBytes  38.9 Mbits/sec                  
+[  6]  28.00-29.00  sec  4.63 MBytes  38.9 Mbits/sec                  
+- - - - - - - - - - - - - - - - - - - - - - - - -
+Test Complete. Summary Results:
+[ ID] Interval           Transfer     Bitrate
+[  6] (sender statistics not available)
+[  6]   0.00-29.00  sec   149 MBytes  43.2 Mbits/sec                  receiver
+CPU Utilization: local/receiver 4.3% (0.1%u/4.2%s), remote/sender 0.0% (0.0%u/0.0%s)
+rcv_tcp_congestion cubic
+iperf3: the client has terminated
+iperf 3.6
+Linux clover-3321 5.10.17-v7l+ #1414 SMP Fri Apr 30 13:20:47 BST 2021 armv7l
+-----------------------------------------------------------
+Server listening on 5201
+-----------------------------------------------------------
+iperf3: interrupt - the server has terminated
+iperf 3.6
+Linux clover-3321 5.10.17-v7l+ #1414 SMP Fri Apr 30 13:20:47 BST 2021 armv7l
+-----------------------------------------------------------
+Server listening on 5201
+-----------------------------------------------------------
+Time: Tue, 11 Apr 2023 20:42:00 GMT
+Accepted connection from 192.168.11.133, port 41998
+      Cookie: t4iqscc3h2alekyvi643hmwuanmjaseiearh
+      TCP MSS: 0 (default)
+[  6] local 192.168.11.1 port 5201 connected to 192.168.11.133 port 42000
+Starting Test: protocol: TCP, 1 streams, 131072 byte blocks, omitting 0 seconds, 35 second test, tos 0
+[ ID] Interval           Transfer     Bitrate
+[  6]   0.00-1.00   sec  1.85 MBytes  15.6 Mbits/sec                  
+[  6]   1.00-2.00   sec  2.16 MBytes  18.1 Mbits/sec                  
+[  6]   2.00-3.00   sec  1.34 MBytes  11.2 Mbits/sec                  
+[  6]   3.00-4.00   sec  1.73 MBytes  14.5 Mbits/sec                  
+[  6]   4.00-5.00   sec  1.73 MBytes  14.5 Mbits/sec                  
+[  6]   5.00-6.00   sec  2.82 MBytes  23.6 Mbits/sec                  
+[  6]   6.00-7.00   sec  5.37 MBytes  45.1 Mbits/sec                  
+[  6]   7.00-8.00   sec  5.20 MBytes  43.6 Mbits/sec                  
+[  6]   8.00-9.00   sec  3.15 MBytes  26.4 Mbits/sec                  
+[  6]   9.00-10.00  sec  1.71 MBytes  14.3 Mbits/sec                  
+[  6]  10.00-11.00  sec  1.59 MBytes  13.3 Mbits/sec                  
+[  6]  11.00-12.00  sec  1.24 MBytes  10.4 Mbits/sec                  
+[  6]  12.00-13.00  sec  2.61 MBytes  21.9 Mbits/sec                  
+[  6]  13.00-14.00  sec  4.65 MBytes  39.0 Mbits/sec                  
+[  6]  14.00-15.00  sec  4.65 MBytes  39.0 Mbits/sec                  
+[  6]  15.00-16.00  sec  4.20 MBytes  35.2 Mbits/sec                  
+[  6]  16.00-17.00  sec  4.94 MBytes  41.5 Mbits/sec                  
+[  6]  17.00-18.00  sec  4.22 MBytes  35.4 Mbits/sec                  
+[  6]  18.00-19.00  sec  4.06 MBytes  34.0 Mbits/sec                  
+[  6]  19.00-20.00  sec  4.14 MBytes  34.7 Mbits/sec                  
+[  6]  20.00-21.00  sec  3.81 MBytes  31.9 Mbits/sec                  
+[  6]  21.00-22.00  sec  3.42 MBytes  28.7 Mbits/sec                  
+[  6]  22.00-23.00  sec  2.33 MBytes  19.6 Mbits/sec                  
+[  6]  23.00-24.00  sec  3.17 MBytes  26.6 Mbits/sec                  
+[  6]  24.00-25.00  sec  3.15 MBytes  26.5 Mbits/sec                  
+[  6]  25.00-26.00  sec  4.26 MBytes  35.8 Mbits/sec                  
+[  6]  26.00-27.00  sec  2.53 MBytes  21.3 Mbits/sec                  
+[  6]  27.00-28.00  sec  2.58 MBytes  21.6 Mbits/sec                  
+[  6]  28.00-29.00  sec  3.34 MBytes  28.0 Mbits/sec                  
+[  6]  29.00-30.00  sec  3.96 MBytes  33.2 Mbits/sec                  
+[  6]  29.00-30.00  sec  3.96 MBytes  33.2 Mbits/sec                  
+- - - - - - - - - - - - - - - - - - - - - - - - -
+Test Complete. Summary Results:
+[ ID] Interval           Transfer     Bitrate
+[  6] (sender statistics not available)
+[  6]   0.00-30.00  sec  96.7 MBytes  27.0 Mbits/sec                  receiver
+CPU Utilization: local/receiver 2.8% (0.1%u/2.7%s), remote/sender 0.0% (0.0%u/0.0%s)
+rcv_tcp_congestion cubic
+iperf3: the client has terminated
+iperf 3.6
+Linux clover-3321 5.10.17-v7l+ #1414 SMP Fri Apr 30 13:20:47 BST 2021 armv7l
+-----------------------------------------------------------
+Server listening on 5201
+-----------------------------------------------------------
+iperf3: interrupt - the server has terminated
+iperf 3.6
+Linux clover-3321 5.10.17-v7l+ #1414 SMP Fri Apr 30 13:20:47 BST 2021 armv7l
+-----------------------------------------------------------
+Server listening on 5201
+-----------------------------------------------------------
+Time: Tue, 11 Apr 2023 20:46:40 GMT
+Accepted connection from 192.168.11.133, port 42002
+      Cookie: hxlvk4rxcsr6icqj3jihvo4edcgggfkz26et
+      TCP MSS: 0 (default)
+[  6] local 192.168.11.1 port 5201 connected to 192.168.11.133 port 42004
+Starting Test: protocol: TCP, 1 streams, 131072 byte blocks, omitting 0 seconds, 35 second test, tos 0
+[ ID] Interval           Transfer     Bitrate
+[  6]   0.00-1.00   sec  3.20 MBytes  26.9 Mbits/sec                  
+[  6]   1.00-2.00   sec  1.96 MBytes  16.4 Mbits/sec                  
+[  6]   2.00-3.00   sec  2.76 MBytes  23.1 Mbits/sec                  
+[  6]   3.00-4.00   sec  2.75 MBytes  23.1 Mbits/sec                  
+[  6]   4.00-5.00   sec  3.45 MBytes  29.0 Mbits/sec                  
+[  6]   5.00-6.00   sec  5.63 MBytes  47.2 Mbits/sec                  
+[  6]   6.00-7.00   sec  5.58 MBytes  46.8 Mbits/sec                  
+[  6]   7.00-8.00   sec  5.88 MBytes  49.3 Mbits/sec                  
+[  6]   8.00-9.00   sec  5.80 MBytes  48.6 Mbits/sec                  
+[  6]   9.00-10.00  sec  6.06 MBytes  50.8 Mbits/sec                  
+[  6]  10.00-11.00  sec  5.61 MBytes  47.1 Mbits/sec                  
+[  6]  11.00-12.00  sec  5.79 MBytes  48.6 Mbits/sec                  
+[  6]  12.00-13.00  sec  5.82 MBytes  48.9 Mbits/sec                  
+[  6]  13.00-14.00  sec  4.79 MBytes  40.2 Mbits/sec                  
+[  6]  14.00-15.00  sec  3.19 MBytes  26.8 Mbits/sec                  
+[  6]  15.00-16.00  sec  2.26 MBytes  19.0 Mbits/sec                  
+[  6]  16.00-17.00  sec  3.87 MBytes  32.5 Mbits/sec                  
+[  6]  17.00-18.00  sec  4.36 MBytes  36.6 Mbits/sec                  
+[  6]  18.00-19.00  sec  4.71 MBytes  39.5 Mbits/sec                  
+[  6]  19.00-20.00  sec  4.80 MBytes  40.3 Mbits/sec                  
+[  6]  20.00-21.00  sec  5.03 MBytes  42.2 Mbits/sec                  
+[  6]  21.00-22.00  sec  4.57 MBytes  38.3 Mbits/sec                  
+[  6]  22.00-23.00  sec  4.50 MBytes  37.8 Mbits/sec                  
+[  6]  23.00-24.00  sec  2.81 MBytes  23.5 Mbits/sec                  
+[  6]  24.00-25.00  sec  1.58 MBytes  13.3 Mbits/sec                  
+[  6]  25.00-26.00  sec  4.08 MBytes  34.2 Mbits/sec                  
+[  6]  26.00-27.00  sec  3.70 MBytes  31.0 Mbits/sec                  
+[  6]  27.00-28.00  sec  3.99 MBytes  33.5 Mbits/sec                  
+[  6]  28.00-29.00  sec  1.70 MBytes  14.2 Mbits/sec                  
+[  6]  28.00-29.00  sec  1.70 MBytes  14.2 Mbits/sec                  
+- - - - - - - - - - - - - - - - - - - - - - - - -
+Test Complete. Summary Results:
+[ ID] Interval           Transfer     Bitrate
+[  6] (sender statistics not available)
+[  6]   0.00-29.00  sec   122 MBytes  35.2 Mbits/sec                  receiver
+CPU Utilization: local/receiver 1.8% (0.1%u/1.7%s), remote/sender 0.0% (0.0%u/0.0%s)
+rcv_tcp_congestion cubic
+iperf3: the client has terminated
+iperf 3.6
+Linux clover-3321 5.10.17-v7l+ #1414 SMP Fri Apr 30 13:20:47 BST 2021 armv7l
+-----------------------------------------------------------
+Server listening on 5201
+-----------------------------------------------------------
+iperf3: interrupt - the server has terminated
+iperf 3.6
+Linux clover-3321 5.10.17-v7l+ #1414 SMP Fri Apr 30 13:20:47 BST 2021 armv7l
+-----------------------------------------------------------
+Server listening on 5201
+-----------------------------------------------------------
+Time: Tue, 11 Apr 2023 20:48:55 GMT
+Accepted connection from 192.168.11.133, port 42006
+      Cookie: 5fs5dn2xd5fk6pjuw36mevirigukb6hcpzqk
+      TCP MSS: 0 (default)
+[  6] local 192.168.11.1 port 5201 connected to 192.168.11.133 port 42008
+Starting Test: protocol: TCP, 1 streams, 131072 byte blocks, omitting 0 seconds, 35 second test, tos 0
+[ ID] Interval           Transfer     Bitrate
+[  6]   0.00-1.00   sec  3.00 MBytes  25.1 Mbits/sec                  
+[  6]   1.00-2.00   sec  2.55 MBytes  21.3 Mbits/sec                  
+[  6]   2.00-3.00   sec  2.04 MBytes  17.1 Mbits/sec                  
+[  6]   3.00-4.00   sec  3.01 MBytes  25.2 Mbits/sec                  
+[  6]   4.00-5.00   sec  2.30 MBytes  19.3 Mbits/sec                  
+[  6]   5.00-6.00   sec  2.90 MBytes  24.3 Mbits/sec                  
+[  6]   6.00-7.00   sec  3.59 MBytes  30.2 Mbits/sec                  
+[  6]   7.00-8.00   sec  3.08 MBytes  25.9 Mbits/sec                  
+[  6]   8.00-9.00   sec  3.96 MBytes  33.2 Mbits/sec                  
+[  6]   9.00-10.00  sec  3.50 MBytes  29.3 Mbits/sec                  
+[  6]  10.00-11.00  sec  2.69 MBytes  22.5 Mbits/sec                  
+[  6]  11.00-12.00  sec  3.53 MBytes  29.6 Mbits/sec                  
+[  6]  12.00-13.00  sec  3.69 MBytes  31.0 Mbits/sec                  
+[  6]  13.00-14.00  sec  1.30 MBytes  10.9 Mbits/sec                  
+[  6]  14.00-15.00  sec  1.35 MBytes  11.3 Mbits/sec                  
+[  6]  15.00-16.00  sec   970 KBytes  7.95 Mbits/sec                  
+[  6]  16.00-17.00  sec  1.14 MBytes  9.60 Mbits/sec                  
+[  6]  17.00-18.00  sec  2.71 MBytes  22.7 Mbits/sec                  
+[  6]  18.00-19.00  sec  4.27 MBytes  35.8 Mbits/sec                  
+[  6]  19.00-20.00  sec  3.50 MBytes  29.3 Mbits/sec                  
+[  6]  20.00-21.00  sec  3.38 MBytes  28.4 Mbits/sec                  
+[  6]  21.00-22.00  sec  3.06 MBytes  25.7 Mbits/sec                  
+[  6]  22.00-23.00  sec  2.44 MBytes  20.5 Mbits/sec                  
+[  6]  23.00-24.00  sec  3.34 MBytes  28.0 Mbits/sec                  
+[  6]  24.00-25.00  sec  3.10 MBytes  26.0 Mbits/sec                  
+[  6]  25.00-26.00  sec  2.66 MBytes  22.3 Mbits/sec                  
+[  6]  26.00-27.00  sec  3.45 MBytes  28.9 Mbits/sec                  
+[  6]  27.00-28.00  sec  2.59 MBytes  21.7 Mbits/sec                  
+[  6]  28.00-29.00  sec  1.80 MBytes  15.1 Mbits/sec                  
+[  6]  29.00-30.00  sec  2.90 MBytes  24.3 Mbits/sec                  
+[  6]  29.00-30.00  sec  2.90 MBytes  24.3 Mbits/sec                  
+- - - - - - - - - - - - - - - - - - - - - - - - -
+Test Complete. Summary Results:
+[ ID] Interval           Transfer     Bitrate
+[  6] (sender statistics not available)
+[  6]   0.00-30.00  sec  83.8 MBytes  23.4 Mbits/sec                  receiver
+CPU Utilization: local/receiver 2.3% (0.1%u/2.1%s), remote/sender 0.0% (0.0%u/0.0%s)
+rcv_tcp_congestion cubic
+iperf3: the client has terminated
+iperf 3.6
+Linux clover-3321 5.10.17-v7l+ #1414 SMP Fri Apr 30 13:20:47 BST 2021 armv7l
+-----------------------------------------------------------
+Server listening on 5201
+-----------------------------------------------------------
+iperf3: interrupt - the server has terminated
+iperf 3.6
+Linux clover-3321 5.10.17-v7l+ #1414 SMP Fri Apr 30 13:20:47 BST 2021 armv7l
+-----------------------------------------------------------
+Server listening on 5201
+-----------------------------------------------------------
+Time: Tue, 11 Apr 2023 20:50:09 GMT
+Accepted connection from 192.168.11.133, port 42010
+      Cookie: kji6q3zgye5ubxqsqucwdltd5eim2d3lxms6
+      TCP MSS: 0 (default)
+[  6] local 192.168.11.1 port 5201 connected to 192.168.11.133 port 42014
+Starting Test: protocol: TCP, 1 streams, 131072 byte blocks, omitting 0 seconds, 35 second test, tos 0
+[ ID] Interval           Transfer     Bitrate
+[  6]   0.00-1.00   sec   741 KBytes  6.07 Mbits/sec                  
+[  6]   1.00-2.00   sec   887 KBytes  7.26 Mbits/sec                  
+[  6]   2.00-3.00   sec  1.04 MBytes  8.73 Mbits/sec                  
+[  6]   3.00-4.00   sec  1.59 MBytes  13.3 Mbits/sec                  
+[  6]   4.00-5.00   sec  3.10 MBytes  26.0 Mbits/sec                  
+[  6]   5.00-6.00   sec  4.26 MBytes  35.7 Mbits/sec                  
+[  6]   6.00-7.00   sec  4.83 MBytes  40.5 Mbits/sec                  
+[  6]   7.00-8.00   sec  4.35 MBytes  36.5 Mbits/sec                  
+[  6]   8.00-9.00   sec  5.45 MBytes  45.7 Mbits/sec                  
+[  6]   9.00-10.00  sec  5.65 MBytes  47.4 Mbits/sec                  
+[  6]  10.00-11.00  sec  5.48 MBytes  45.9 Mbits/sec                  
+[  6]  11.00-12.00  sec  5.99 MBytes  50.2 Mbits/sec                  
+[  6]  12.00-13.00  sec  5.98 MBytes  50.2 Mbits/sec                  
+[  6]  13.00-14.00  sec  5.74 MBytes  48.2 Mbits/sec                  
+[  6]  14.00-15.00  sec  5.05 MBytes  42.4 Mbits/sec                  
+[  6]  15.00-16.00  sec  5.10 MBytes  42.8 Mbits/sec                  
+[  6]  16.00-17.00  sec  5.85 MBytes  49.1 Mbits/sec                  
+[  6]  17.00-18.00  sec  5.91 MBytes  49.6 Mbits/sec                  
+[  6]  18.00-19.00  sec  5.97 MBytes  50.1 Mbits/sec                  
+[  6]  19.00-20.00  sec  6.14 MBytes  51.5 Mbits/sec                  
+[  6]  20.00-21.00  sec  5.87 MBytes  49.2 Mbits/sec                  
+[  6]  21.00-22.00  sec  5.52 MBytes  46.3 Mbits/sec                  
+[  6]  22.00-23.00  sec  5.16 MBytes  43.3 Mbits/sec                  
+[  6]  23.00-24.00  sec  4.99 MBytes  41.9 Mbits/sec                  
+[  6]  24.00-25.00  sec  4.18 MBytes  35.1 Mbits/sec                  
+[  6]  25.00-26.00  sec  4.17 MBytes  35.0 Mbits/sec                  
+[  6]  26.00-27.00  sec  3.28 MBytes  27.5 Mbits/sec                  
+[  6]  27.00-28.00  sec  2.36 MBytes  19.8 Mbits/sec                  
+[  6]  28.00-29.00  sec  1.19 MBytes  9.99 Mbits/sec                  
+[  6]  29.00-30.00  sec   953 KBytes  7.81 Mbits/sec                  
+[  6]  29.00-30.00  sec   953 KBytes  7.81 Mbits/sec                  
+- - - - - - - - - - - - - - - - - - - - - - - - -
+Test Complete. Summary Results:
+[ ID] Interval           Transfer     Bitrate
+[  6] (sender statistics not available)
+[  6]   0.00-30.00  sec   127 MBytes  35.5 Mbits/sec                  receiver
+CPU Utilization: local/receiver 2.8% (0.2%u/2.6%s), remote/sender 0.0% (0.0%u/0.0%s)
+rcv_tcp_congestion cubic
+iperf3: the client has terminated
+iperf 3.6
+Linux clover-3321 5.10.17-v7l+ #1414 SMP Fri Apr 30 13:20:47 BST 2021 armv7l
+-----------------------------------------------------------
+Server listening on 5201
+-----------------------------------------------------------
+iperf3: interrupt - the server has terminated
+iperf 3.6
+Linux clover-3321 5.10.17-v7l+ #1414 SMP Fri Apr 30 13:20:47 BST 2021 armv7l
+-----------------------------------------------------------
+Server listening on 5201
+-----------------------------------------------------------
+Time: Tue, 11 Apr 2023 20:57:40 GMT
+Accepted connection from 192.168.11.133, port 42016
+      Cookie: n2yh7rafgf7weejhd3j62j55ndfoonedsa3u
+      TCP MSS: 0 (default)
+[  6] local 192.168.11.1 port 5201 connected to 192.168.11.133 port 42020
+Starting Test: protocol: TCP, 1 streams, 131072 byte blocks, omitting 0 seconds, 35 second test, tos 0
+[ ID] Interval           Transfer     Bitrate
+[  6]   0.00-1.00   sec  2.88 MBytes  24.2 Mbits/sec                  
+[  6]   1.00-2.00   sec  2.73 MBytes  22.9 Mbits/sec                  
+[  6]   2.00-3.00   sec  2.67 MBytes  22.4 Mbits/sec                  
+[  6]   3.00-4.00   sec  2.67 MBytes  22.4 Mbits/sec                  
+[  6]   4.00-5.00   sec  2.82 MBytes  23.6 Mbits/sec                  
+[  6]   5.00-6.00   sec  3.26 MBytes  27.4 Mbits/sec                  
+[  6]   6.00-7.00   sec  4.74 MBytes  39.8 Mbits/sec                  
+[  6]   7.00-8.00   sec  4.40 MBytes  36.9 Mbits/sec                  
+[  6]   8.00-9.00   sec  1.43 MBytes  12.0 Mbits/sec                  
+[  6]   9.00-10.00  sec   814 KBytes  6.67 Mbits/sec                  
+[  6]  10.00-11.00  sec   581 KBytes  4.76 Mbits/sec                  
+[  6]  11.00-12.00  sec   495 KBytes  4.05 Mbits/sec                  
+[  6]  12.00-13.00  sec   716 KBytes  5.86 Mbits/sec                  
+[  6]  13.00-14.00  sec   615 KBytes  5.04 Mbits/sec                  
+[  6]  14.00-15.00  sec   416 KBytes  3.41 Mbits/sec                  
+[  6]  15.00-16.00  sec   256 KBytes  2.10 Mbits/sec                  
+[  6]  16.00-17.00  sec   204 KBytes  1.67 Mbits/sec                  
+[  6]  17.00-18.00  sec   850 KBytes  6.96 Mbits/sec                  
+[  6]  18.00-19.00  sec  1.92 MBytes  16.1 Mbits/sec                  
+[  6]  19.00-20.00  sec  2.81 MBytes  23.6 Mbits/sec                  
+[  6]  20.00-21.00  sec  1.94 MBytes  16.3 Mbits/sec                  
+[  6]  21.00-22.00  sec   802 KBytes  6.57 Mbits/sec                  
+[  6]  22.00-23.00  sec   498 KBytes  4.08 Mbits/sec                  
+[  6]  23.00-24.00  sec  1.32 MBytes  11.1 Mbits/sec                  
+[  6]  24.00-25.00  sec  2.47 MBytes  20.7 Mbits/sec                  
+[  6]  25.00-26.00  sec  1.83 MBytes  15.3 Mbits/sec                  
+[  6]  26.00-27.00  sec  1.66 MBytes  13.9 Mbits/sec                  
+[  6]  27.00-28.00  sec  1.70 MBytes  14.3 Mbits/sec                  
+[  6]  28.00-29.00  sec  1.87 MBytes  15.7 Mbits/sec                  
+[  6]  29.00-30.00  sec   708 KBytes  5.81 Mbits/sec                  
+[  6]  29.00-30.00  sec   708 KBytes  5.81 Mbits/sec                  
+- - - - - - - - - - - - - - - - - - - - - - - - -
+Test Complete. Summary Results:
+[ ID] Interval           Transfer     Bitrate
+[  6] (sender statistics not available)
+[  6]   0.00-30.00  sec  52.0 MBytes  14.5 Mbits/sec                  receiver
+CPU Utilization: local/receiver 1.5% (0.1%u/1.4%s), remote/sender 0.0% (0.0%u/0.0%s)
+rcv_tcp_congestion cubic
+iperf3: the client has terminated
+iperf 3.6
+Linux clover-3321 5.10.17-v7l+ #1414 SMP Fri Apr 30 13:20:47 BST 2021 armv7l
+-----------------------------------------------------------
+Server listening on 5201
+-----------------------------------------------------------
+iperf3: interrupt - the server has terminated
+iperf 3.6
+Linux clover-3321 5.10.17-v7l+ #1414 SMP Fri Apr 30 13:20:47 BST 2021 armv7l
+-----------------------------------------------------------
+Server listening on 5201
+-----------------------------------------------------------
+iperf3: interrupt - the server has terminated
+iperf 3.6
+Linux clover-3321 5.10.17-v7l+ #1414 SMP Fri Apr 30 13:20:47 BST 2021 armv7l
+-----------------------------------------------------------
+Server listening on 5201
+-----------------------------------------------------------
+Time: Tue, 11 Apr 2023 21:00:26 GMT
+Accepted connection from 192.168.11.133, port 42024
+      Cookie: wsslbrrldv6hfuon6ctxljbp7e5w5ep2lzng
+      TCP MSS: 0 (default)
+[  6] local 192.168.11.1 port 5201 connected to 192.168.11.133 port 42026
+Starting Test: protocol: TCP, 1 streams, 131072 byte blocks, omitting 0 seconds, 35 second test, tos 0
+[ ID] Interval           Transfer     Bitrate
+[  6]   0.00-1.00   sec  3.66 MBytes  30.7 Mbits/sec                  
+[  6]   1.00-2.00   sec  3.91 MBytes  32.8 Mbits/sec                  
+[  6]   2.00-3.00   sec  2.22 MBytes  18.6 Mbits/sec                  
+[  6]   3.00-4.00   sec  3.75 MBytes  31.5 Mbits/sec                  
+[  6]   4.00-5.00   sec  3.70 MBytes  31.0 Mbits/sec                  
+[  6]   5.00-6.00   sec  4.42 MBytes  37.1 Mbits/sec                  
+[  6]   6.00-7.00   sec  3.34 MBytes  28.1 Mbits/sec                  
+[  6]   7.00-8.00   sec  4.16 MBytes  34.9 Mbits/sec                  
+[  6]   8.00-9.00   sec  4.21 MBytes  35.4 Mbits/sec                  
+[  6]   9.00-10.00  sec  3.52 MBytes  29.5 Mbits/sec                  
+[  6]  10.00-11.00  sec  3.38 MBytes  28.4 Mbits/sec                  
+[  6]  11.00-12.00  sec  2.39 MBytes  20.1 Mbits/sec                  
+[  6]  12.00-13.00  sec  2.01 MBytes  16.9 Mbits/sec                  
+[  6]  13.00-14.00  sec  3.62 MBytes  30.3 Mbits/sec                  
+[  6]  14.00-15.00  sec  3.52 MBytes  29.5 Mbits/sec                  
+[  6]  15.00-16.00  sec  2.52 MBytes  21.1 Mbits/sec                  
+[  6]  16.00-17.00  sec  2.47 MBytes  20.8 Mbits/sec                  
+[  6]  17.00-18.00  sec  2.04 MBytes  17.1 Mbits/sec                  
+[  6]  18.00-19.00  sec  2.73 MBytes  22.9 Mbits/sec                  
+[  6]  19.00-20.00  sec   979 KBytes  8.02 Mbits/sec                  
+[  6]  20.00-21.00  sec   697 KBytes  5.71 Mbits/sec                  
+[  6]  21.00-22.00  sec  1.80 MBytes  15.1 Mbits/sec                  
+[  6]  22.00-23.00  sec  1.15 MBytes  9.64 Mbits/sec                  
+[  6]  23.00-24.00  sec   932 KBytes  7.63 Mbits/sec                  
+[  6]  24.00-25.00  sec   878 KBytes  7.19 Mbits/sec                  
+[  6]  25.00-26.00  sec   369 KBytes  3.02 Mbits/sec                  
+[  6]  26.00-27.00  sec   786 KBytes  6.44 Mbits/sec                  
+[  6]  27.00-28.00  sec   532 KBytes  4.36 Mbits/sec                  
+[  6]  28.00-29.00  sec  1.55 MBytes  13.0 Mbits/sec                  
+[  6]  29.00-30.00  sec  1.10 MBytes  9.26 Mbits/sec                  
+[  6]  29.00-30.00  sec  1.10 MBytes  9.26 Mbits/sec                  
+- - - - - - - - - - - - - - - - - - - - - - - - -
+Test Complete. Summary Results:
+[ ID] Interval           Transfer     Bitrate
+[  6] (sender statistics not available)
+[  6]   0.00-30.00  sec  72.6 MBytes  20.3 Mbits/sec                  receiver
+CPU Utilization: local/receiver 2.1% (0.1%u/2.0%s), remote/sender 0.0% (0.0%u/0.0%s)
+rcv_tcp_congestion cubic
+iperf3: the client has terminated
+iperf 3.6
+Linux clover-3321 5.10.17-v7l+ #1414 SMP Fri Apr 30 13:20:47 BST 2021 armv7l
