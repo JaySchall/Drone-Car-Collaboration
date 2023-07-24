@@ -7,7 +7,8 @@ from sensor_msgs.msg import Image
 import logging
 
 #global variables
-SUBSCRIBER_TOPIC = "main_camera/image_raw"
+SUBSCRIBER_TOPIC = 'main_camera/image_raw'
+PUBLISHER_TOPIC = 'EdgeServer_VideoTopic/image_raw'
 
 
 # Configure logging to write to a log file and console
@@ -49,8 +50,8 @@ def main():
         return
 
     global image_pub
-    image_pub = rospy.Publisher('EdgeServer_VideoTopic/image_raw', Image, queue_size=10)  # Create a publisher for the 'EdgeServer_VideoTopic/image_raw' topic
-    logging.info("ROS publisher created for 'EdgeServer_VideoTopic/image_raw' topic.")
+    image_pub = rospy.Publisher(PUBLISHER_TOPIC, Image, queue_size=10)  # Create a publisher for the 'EdgeServer_VideoTopic/image_raw' topic
+    logging.info("ROS publisher created for %s topic.", PUBLISHER_TOPIC)
 
     start_image_subscriber()  # Start the image subscriber to process received frames
 

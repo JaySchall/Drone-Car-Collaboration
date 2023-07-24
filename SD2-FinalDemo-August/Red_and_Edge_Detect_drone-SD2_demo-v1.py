@@ -8,6 +8,7 @@ import drone_client as connect #make sure drone_client.py file is in the same di
 
 # Global variables:
 SUBSCRIBER_TOPIC = "main_camera/image_raw"
+PUBLISHER_TOPIC = 'red_and_edge_object_detection/image_raw'
 SEND_STOP = 0
 SEND_CONT_DRIVE = 1
 SEND_REDUCE_SPEED = 2
@@ -187,8 +188,8 @@ def main():
         return
 
     global image_pub
-    image_pub = rospy.Publisher('red_and_edge_object_detection/image_raw', Image, queue_size=10)
-    logging.info("ROS publisher created for 'red_and_edge_object_detection/image_raw' topic.")
+    image_pub = rospy.Publisher(PUBLISHER_TOPIC, Image, queue_size=10)
+    logging.info("ROS publisher created for %s topic.", PUBLISHER_TOPIC)
 
     start_image_processing()
 
