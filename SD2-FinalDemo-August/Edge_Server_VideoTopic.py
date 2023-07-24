@@ -40,7 +40,7 @@ def image_callback(data):
 def start_image_subscriber():
     try:
         image_sub = rospy.Subscriber(SUBSCRIBER_TOPIC, Image, image_callback)  # Subscribe to 'main_camera/image_raw' topic
-        rospy.spin()  # Keeps the program running until the node is shut down
+        rospy.spin()  # Keeps the program running until the node is shut down --> change this line here to stop continuous sub and posting
 
     except rospy.ROSException as e:
         logging.error("ROSException in start_image_subscriber: %s", str(e))
