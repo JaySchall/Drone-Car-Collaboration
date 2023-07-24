@@ -44,7 +44,7 @@ def initialize_ros_node():
         logging.info("ROS node 'red_and_edge_object_detection' initialized.")
         return True
     except rospy.ROSInitException as e:
-        logging.error("Failed to initialize ROS node: %s", str(e))
+        logging.error("Failed to initialize red_and_edge_object_detection ROS node: %s", str(e))
         return False
 
 def send_message_to_car(command):
