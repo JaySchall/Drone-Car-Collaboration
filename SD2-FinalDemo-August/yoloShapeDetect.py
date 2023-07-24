@@ -5,6 +5,7 @@ import logging
 import car_edge_server as connect
 
 # Global variables
+SUBSCRIBER_TOPIC = "/main_camera/image_raw"
 SEND_STOP = 0  # Stop command
 SEND_CONT_DRIVE = 1  # Continue driving command
 SEND_REDUCE_SPEED = 2  # Reduce speed command
@@ -63,7 +64,7 @@ def main():
     height = network_height(network)
     
     # URL of the video stream
-    video_url = "http://192.168.11.1:8080/stream?topic=/main_camera/image_raw"  # Replace with the appropriate video URL
+    video_url = "http://192.168.11.1:8080/stream?topic=" + SUBSCRIBER_TOPIC
 
     # Create video capture object:
     cap = cv2.VideoCapture(video_url)

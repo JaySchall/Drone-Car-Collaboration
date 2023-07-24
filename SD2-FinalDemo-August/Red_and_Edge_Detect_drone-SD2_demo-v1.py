@@ -7,6 +7,7 @@ import logging
 import drone_client as connect #make sure drone_client.py file is in the same directory as where this program is run
 
 # Global variables:
+SUBSCRIBER_TOPIC = "main_camera/image_raw"
 SEND_STOP = 0
 SEND_CONT_DRIVE = 1
 SEND_REDUCE_SPEED = 2
@@ -172,7 +173,7 @@ def image_callback(data):
 
 def start_image_processing():
     try:
-        image_sub = rospy.Subscriber('main_camera/image_raw', Image, image_callback)
+        image_sub = rospy.Subscriber(SUBSCRIBER_TOPIC, Image, image_callback)
         rospy.spin()
 
     except rospy.ROSException as e:

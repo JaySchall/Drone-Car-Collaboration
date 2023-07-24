@@ -6,6 +6,10 @@ import rospy
 from sensor_msgs.msg import Image
 import logging
 
+#global variables
+SUBSCRIBER_TOPIC = "main_camera/image_raw"
+
+
 # Configure logging to write to a log file and console
 logging.basicConfig(
     level=logging.INFO,
@@ -34,7 +38,7 @@ def image_callback(data):
 
 def start_image_subscriber():
     try:
-        image_sub = rospy.Subscriber('main_camera/image_raw', Image, image_callback)  # Subscribe to 'main_camera/image_raw' topic
+        image_sub = rospy.Subscriber(SUBSCRIBER_TOPIC, Image, image_callback)  # Subscribe to 'main_camera/image_raw' topic
         rospy.spin()  # Keeps the program running until the node is shut down
 
     except rospy.ROSException as e:
