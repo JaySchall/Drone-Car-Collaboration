@@ -181,10 +181,10 @@ def start_image_processing():
         logging.error("ROSException in start_image_processing: %s", str(e))
 
 def main():
-    if not connect_to_car_command_server():
+    
+    if not initialize_ros_node(): # initialize ros node for posting topic
         return
-
-    if not initialize_ros_node():
+    if not connect_to_car_command_server(): # connect to car command server
         return
 
     global image_pub
