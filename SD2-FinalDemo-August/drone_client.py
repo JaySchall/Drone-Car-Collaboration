@@ -7,22 +7,22 @@ SERVER_PORT = 10600             # Server Port (Predefined)
 CLIENT_SOCKET = socket(AF_INET, SOCK_STREAM)  # Client Socket Creation 
 # Client Socket Creation (for second argument: SOCK_DGRAM=UDP, SOCK_STREAM=TCP)
 
-# Create a logger instance
+# Create a logger instance if not already created
 logger = logging.getLogger(__name__)
+if not logger.handlers:
+    # Clear log file before reopening in append mode
+    with open("red_and_edge_object_detection_log.txt", "w"):
+        pass
 
-# Clear log file before reopening in append mode
-with open("red_and_edge_object_detection_log.txt", "w"):
-    pass
-
-# Configure logging to write to a log file and console
-logger.setLevel(logging.INFO)
-formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
-file_handler = logging.FileHandler("red_and_edge_object_detection_log.txt")
-file_handler.setFormatter(formatter)
-stream_handler = logging.StreamHandler()
-stream_handler.setFormatter(formatter)
-logger.addHandler(file_handler)
-logger.addHandler(stream_handler)
+    # Configure logging to write to a log file and console
+    logger.setLevel(logging.INFO)
+    formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
+    file_handler = logging.FileHandler("red_and_edge_object_detection_log.txt")
+    file_handler.setFormatter(formatter)
+    stream_handler = logging.StreamHandler()
+    stream_handler.setFormatter(formatter)
+    logger.addHandler(file_handler)
+    logger.addHandler(stream_handler)
 
 ''' 
 Send a message to the car using the following protocol:
