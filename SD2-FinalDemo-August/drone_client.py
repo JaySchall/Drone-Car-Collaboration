@@ -7,6 +7,16 @@ SERVER_PORT = 10600             # Server Port (Predefined)
 CLIENT_SOCKET = socket(AF_INET, SOCK_STREAM)  # Client Socket Creation 
 # Client Socket Creation (for second argument: SOCK_DGRAM=UDP, SOCK_STREAM=TCP)
 
+# Configure logging to write to a log file and console
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    handlers=[
+        logging.FileHandler("red_and_edge_object_detection_log.txt"),
+        logging.StreamHandler()
+    ]
+)
+
 ''' 
 Send a message to the car using the following protocol:
 
