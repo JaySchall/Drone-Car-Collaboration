@@ -3,6 +3,23 @@ CURRENT ISSUES:
 *need to do some refactoring to make code neater
 *red detect works perfect. Now only need to integrate edge detection.
 *perhaps improve log output (like the timer, etc.), but so far it is very good and good enough!
+*CURRENT OUTPUT FOR LATEST BIG ISSUE - CANNOT INIT ROS NODE MORE THAN ONCE AND WITH DIFF NAMES IN THE SAME PARENT PROCESS OR ANY OF ITS CHILDREN?
+2023-07-19 18:04:33,783 - [Edge_Server_VideoTopic] - INFO - Edge_Server_VideoTopic module imported...Attempting to publish EdgeServer_VideoTopic
+2023-07-19 18:04:34,072 - [Edge_Server_VideoTopic] - INFO - ROS node 'EdgeServer_VideoTopic' initialized.
+2023-07-19 18:04:34,076 - [Edge_Server_VideoTopic] - INFO - ROS publisher created for EdgeServer_VideoTopic/image_raw topic.
+Traceback (most recent call last):
+  File "Red_and_Edge_Detect_drone-SD2_demo-v1.py", line 203, in <module>
+    main()
+  File "Red_and_Edge_Detect_drone-SD2_demo-v1.py", line 191, in main
+    if not initialize_ros_node(): # initialize ros node for posting topic
+  File "Red_and_Edge_Detect_drone-SD2_demo-v1.py", line 48, in initialize_ros_node
+    rospy.init_node('red_and_edge_object_detection')
+  File "/opt/ros/noetic/lib/python3/dist-packages/rospy/client.py", line 274, in init_node
+    raise rospy.exceptions.ROSException("rospy.init_node() has already been called with different arguments: "+str(_init_node_args))
+rospy.exceptions.ROSException: rospy.init_node() has already been called with different arguments: ('EdgeServer_VideoTopic', ['Red_and_Edge_Detect_drone-SD2_demo-v1.py'], False, None, False, False)
+
+****END OF CURRENT ISSUES ******
+
 
 #logging outputs to the console and appended to log files for both drone and car programs on the respective device where the program is ran.
 
