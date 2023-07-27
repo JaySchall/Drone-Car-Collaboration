@@ -29,6 +29,7 @@ car_command_server_logger = logging.getLogger(__name__)
 car_command_server_logger.setLevel(logging.INFO)
 formatter = logging.Formatter("%(asctime)s - [%(name)s] - %(levelname)s - %(message)s")
 file_handler = logging.FileHandler("car_log.txt", mode="w") #open in write mode to reset (truncate) file for a fresh log run
+file_handler.setFormatter(formatter)
 stream_handler = logging.StreamHandler()
 stream_handler.setFormatter(formatter)
 car_command_server_logger.addHandler(file_handler)
