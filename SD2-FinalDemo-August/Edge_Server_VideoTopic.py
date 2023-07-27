@@ -40,7 +40,7 @@ def initialize_ros_node():
 
 def image_callback(data):
     try:
-        image_pub.publish(data)  # Publish the received image data to the 'EdgeServer_VideoTopic/image_raw' topic
+        EdgeServer_image_pub.publish(data)  # Publish the received image data to the 'EdgeServer_VideoTopic/image_raw' topic
 
     except Exception as e:
         EdgeServer_video_logger.error("Error in image_callback: %s", str(e))
@@ -57,8 +57,8 @@ def main():
     if not initialize_ros_node():
         return
 
-    global image_pub
-    image_pub = rospy.Publisher(PUBLISHER_TOPIC, Image, queue_size=10)  # Create a publisher for the 'EdgeServer_VideoTopic/image_raw' topic
+    global EdgeServer_image_pub
+    EdgeServer_image_pub = rospy.Publisher(PUBLISHER_TOPIC, Image, queue_size=10)  # Create a publisher for the 'EdgeServer_VideoTopic/image_raw' topic
     EdgeServer_video_logger.info("ROS publisher created for %s topic.", PUBLISHER_TOPIC)
 
     start_image_subscriber()  # Start the image subscriber to process received frames

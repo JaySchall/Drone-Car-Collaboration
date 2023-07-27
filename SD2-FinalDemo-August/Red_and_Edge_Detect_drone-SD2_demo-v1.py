@@ -171,7 +171,7 @@ def image_callback(data):
 
         img_msg = bridge.cv2_to_imgmsg(cv_image_with_bboxes, encoding="bgr8")
 
-        image_pub.publish(img_msg)
+        red_and_edge_image_pub.publish(img_msg)
 
     except Exception as e:
         red_and_edge_detect_logger.error("Error in image_callback: %s", str(e))
@@ -191,8 +191,8 @@ def main():
     if not connect_to_car_command_server(): # connect to car command server
         return
 
-    global image_pub
-    image_pub = rospy.Publisher(PUBLISHER_TOPIC, Image, queue_size=10)
+    global red_and_edge_image_pub
+    red_and_edge_image_pub = rospy.Publisher(PUBLISHER_TOPIC, Image, queue_size=10)
     red_and_edge_detect_logger.info("ROS publisher created for %s topic.", PUBLISHER_TOPIC)
 
     start_image_processing()
