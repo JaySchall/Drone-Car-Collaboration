@@ -4,8 +4,8 @@ import numpy as np
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge
 import logging
-import drone_client as connect #make sure drone_client.py file is in the same directory as where this program is run
-import Edge_Server_VideoTopic
+import drone_client as connect # make sure drone_client.py file is in the same directory as where this program is run
+import Edge_Server_VideoTopic # make sure Edge_Server_VideoTopic.py file is in the same directory as where this program is run
 
 # Global variables:
 SUBSCRIBER_TOPIC = "main_camera/image_raw"
