@@ -23,34 +23,38 @@ NUM_CIRCLES = 0
 NUM_STARS = 0
 RED_OBJ_FOUND = False
 
+# Create a logger instance
+red_and_edge_detect_logger = logging.getLogger(__name__)
+
 # Configure logging to write to a log file and console
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s",
-    handlers=[
-        logging.FileHandler("red_and_edge_object_detection_log.txt"),
-        logging.StreamHandler()
-    ]
-)
+red_and_edge_detect_logger.setLevel(red_and_edge_detect_logger.info)
+formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
+file_handler = logging.FileHandler("red_and_edge_object_detection_log.txt", mode="a") #open in append mode so log file is not reset
+file_handler.setFormatter(formatter)
+stream_handler = logging.StreamHandler()
+stream_handler.setFormatter(formatter)
+red_and_edge_detect_logger.addHandler(file_handler)
+red_and_edge_detect_logger.addHandler(stream_handler)
+
 
 def connect_to_car_command_server():
-    logging.info("Trying to establish connection with car command server...")
+    red_and_edge_detect_logger.info("Trying to establish connection with car command server...")
     if not connect.establish_socket_connection():
-        logging.info("Failed to establish connection with the car command server.")
+        red_and_edge_detect_logger.info("Failed to establish connection with the car command server.")
         return False
     return True
 
 def initialize_ros_node():
     try:
         rospy.init_node('red_and_edge_object_detection')
-        logging.info("ROS node 'red_and_edge_object_detection' initialized.")
+        red_and_edge_detect_logger.info("ROS node 'red_and_edge_object_detection' initialized.")
         return True
     except rospy.ROSInitException as e:
         logging.error("Failed to initialize red_and_edge_object_detection ROS node: %s", str(e))
         return False
 
 def send_message_to_car(command):
-    logging.info("Sending message %s to car [0=stop, 1=cont_drive, 2=red_speed, 3=L, 4=R, 5=clear]", command)
+    red_and_edge_detect_logger.info("Sending message %s to car [0=stop, 1=cont_drive, 2=red_speed, 3=L, 4=R, 5=clear]", command)
     connect.message_car(command)
 
 def detect_red(cv_image):
@@ -189,7 +193,7 @@ def main():
 
     global image_pub
     image_pub = rospy.Publisher(PUBLISHER_TOPIC, Image, queue_size=10)
-    logging.info("ROS publisher created for %s topic.", PUBLISHER_TOPIC)
+    red_and_edge_detect_logger.info("ROS publisher created for %s topic.", PUBLISHER_TOPIC)
 
     start_image_processing()
 
