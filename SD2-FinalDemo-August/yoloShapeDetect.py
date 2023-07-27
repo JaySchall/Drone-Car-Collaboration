@@ -7,7 +7,6 @@ import logging
 import car_edge_server as connect
 
 # Global variables
-SUBSCRIBER_TOPIC = "/main_camera/image_raw"
 SEND_STOP = 0  # Stop command
 SEND_CONT_DRIVE = 1  # Continue driving command
 SEND_REDUCE_SPEED = 2  # Reduce speed command
@@ -60,6 +59,9 @@ def darknet_helper(img, width, height, network, class_names):
     return detections, width_ratio, height_ratio
 
 def main():
+
+    SUBSCRIBER_TOPIC = "/main_camera/image_raw"
+
     # Connect to car command server
     if not connect_to_car_command_server():
         return
