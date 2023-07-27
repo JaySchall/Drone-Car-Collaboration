@@ -7,7 +7,7 @@ SERVER_PORT = 10600             # Server Port (Predefined)
 CLIENT_SOCKET = socket(AF_INET, SOCK_STREAM)  # Client Socket Creation 
 # Client Socket Creation (for second argument: SOCK_DGRAM=UDP, SOCK_STREAM=TCP)
 
-# Clear log file before reopening in append mode
+# Clear log file (by opening in write mode) before reopening in append mode
 with open("red_and_edge_object_detection_log.txt", mode="w"):
     pass
 
