@@ -60,7 +60,7 @@ def darknet_helper(img, width, height, network, class_names):
 
 def main():
 
-    SUBSCRIBER_TOPIC = "/main_camera/image_raw"
+    SUBSCRIBER_TOPIC = "EdgeServer_VideoTopic/image_raw"
 
     # Connect to car command server
     if not connect_to_car_command_server():
