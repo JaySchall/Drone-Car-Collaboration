@@ -1,7 +1,5 @@
 CURRENT ISSUES: 
-*everything works perfectly!
 *need to do some refactoring to make code neater
-*red detect works perfect. Now only need to integrate edge detection.
 *perhaps improve log output (like the timer, etc.), but so far it is very good and good enough!
 *CURRENT OUTPUT FOR LATEST BIG ISSUE - CANNOT INIT ROS NODE MORE THAN ONCE AND WITH DIFF NAMES IN THE SAME PARENT PROCESS OR ANY OF ITS CHILDREN?
 2023-07-19 18:04:33,783 - [Edge_Server_VideoTopic] - INFO - Edge_Server_VideoTopic module imported...Attempting to publish EdgeServer_VideoTopic
