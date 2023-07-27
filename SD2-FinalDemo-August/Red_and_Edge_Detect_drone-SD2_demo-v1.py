@@ -50,7 +50,7 @@ def initialize_ros_node():
         red_and_edge_detect_logger.info("ROS node 'red_and_edge_object_detection' initialized.")
         return True
     except rospy.ROSInitException as e:
-        logging.error("Failed to initialize red_and_edge_object_detection ROS node: %s", str(e))
+        red_and_edge_detect_logger.error("Failed to initialize red_and_edge_object_detection ROS node: %s", str(e))
         return False
 
 def send_message_to_car(command):
@@ -174,7 +174,7 @@ def image_callback(data):
         image_pub.publish(img_msg)
 
     except Exception as e:
-        logging.error("Error in image_callback: %s", str(e))
+        red_and_edge_detect_logger.error("Error in image_callback: %s", str(e))
 
 def start_image_processing():
     try:
@@ -182,7 +182,7 @@ def start_image_processing():
         rospy.spin()
 
     except rospy.ROSException as e:
-        logging.error("ROSException in start_image_processing: %s", str(e))
+        red_and_edge_detect_logger.error("ROSException in start_image_processing: %s", str(e))
 
 def main():
     

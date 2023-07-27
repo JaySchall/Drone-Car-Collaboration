@@ -6,21 +6,21 @@ SERVER_PORT = 10600             # Server Port (Predefined)
 CLIENT_SOCKET = socket(AF_INET, SOCK_STREAM)  # Client Socket Creation 
 
 # Create a logger instance
-logger = logging.getLogger(__name__)
+edge_server_logger = logging.getLogger(__name__)
 
 # Clear log file before reopening in append mode
 with open("yoloShapeDetect_log.txt", "w"):
     pass
 
 # Configure logging to write to a log file and console
-logger.setLevel(logging.INFO)
-formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
+edge_server_logger.setLevel(logging.INFO)
+formatter = logging.Formatter("%(asctime)s - [%(name)s] - %(levelname)s - %(message)s")
 file_handler = logging.FileHandler("yoloShapeDetect_log.txt")
 file_handler.setFormatter(formatter)
 stream_handler = logging.StreamHandler()
 stream_handler.setFormatter(formatter)
-logger.addHandler(file_handler)
-logger.addHandler(stream_handler)
+edge_server_logger.addHandler(file_handler)
+edge_server_logger.addHandler(stream_handler)
 
 ''' 
 Send a message to the car using the following protocol:
@@ -32,31 +32,31 @@ Send a message to the car using the following protocol:
 5 = All clear (no perceived threats or recovery actions necessary; no changes)
 '''
 def message_car(var):
-    logger.info("Sending message: %s", var)
+    edge_server_logger.info("Sending message: %s", var)
     try:
         CLIENT_SOCKET.send(str(var).encode())  # Convert var to string and then encode it
-        logger.info("Message sent successfully!")
+        edge_server_logger.info("Message sent successfully!")
     except Exception as e:
-        logger.error("Error sending message: %s", str(e))
+        edge_server_logger.error("Error sending message: %s", str(e))
 
 # QUIT Protocol
 def close_socket():
     CLIENT_SOCKET.close()
-    logger.info("Socket closed.")
+    edge_server_logger.info("Socket closed.")
 
 def establish_socket_connection():
     try:
         CLIENT_SOCKET.connect((SERVER_NAME, SERVER_PORT))
-        logger.info("Connected to server: %s on port: %s", SERVER_NAME, SERVER_PORT)
+        edge_server_logger.info("Connected to server: %s on port: %s", SERVER_NAME, SERVER_PORT)
     except ConnectionRefusedError as e:
-        logger.error("Error connecting to server: %s", str(e))
+        edge_server_logger.error("Error connecting to server: %s", str(e))
         close_socket()
     # Debug messages to indicate the connection status
     if CLIENT_SOCKET.fileno() != -1:
-        logger.info("Socket connection is active (socket file descriptor = %s).", CLIENT_SOCKET.fileno())
+        edge_server_logger.info("Socket connection is active (socket file descriptor = %s).", CLIENT_SOCKET.fileno())
         return True
     else:
-        logger.info("Socket connection is closed (socket file descriptor = %s).", CLIENT_SOCKET.fileno())
+        edge_server_logger.info("Socket connection is closed (socket file descriptor = %s).", CLIENT_SOCKET.fileno())
         return False
 
 

@@ -13,24 +13,28 @@ SEND_TURN_LEFT = 3  # Turn left command
 SEND_TURN_RIGHT = 4  # Turn right command
 SEND_ALL_CLEAR = 5  # All clear command
 
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s",
-    handlers=[
-        logging.FileHandler("yoloShapeDetect_log.txt"),
-        logging.StreamHandler()
-    ]
-)
+# Create a logger instance
+yoloShapeDetect_logger = logging.getLogger(__name__)
+
+# Configure logging to write to a log file and console
+yoloShapeDetect_logger.setLevel(logging.INFO)
+formatter = logging.Formatter("%(asctime)s - [%(name)s] - %(levelname)s - %(message)s")
+file_handler = logging.FileHandler("red_and_edge_object_detection_log.txt", mode="a") #open in append mode so log file is not reset
+file_handler.setFormatter(formatter)
+stream_handler = logging.StreamHandler()
+stream_handler.setFormatter(formatter)
+yoloShapeDetect_logger.addHandler(file_handler)
+yoloShapeDetect_logger.addHandler(stream_handler)
 
 def connect_to_car_command_server():
-    logging.info("Trying to establish connection with car command server...")
+    yoloShapeDetect_logger.info("Trying to establish connection with car command server...")
     if not connect.establish_socket_connection():
-        logging.info("Failed to establish connection with the car command server.")
+        yoloShapeDetect_logger.info("Failed to establish connection with the car command server.")
         return False
     return True
 
 def send_message_to_car(command):
-    logging.info("Sending message %s to car [0=stop, 1=cont_drive, 2=red_speed, 3=L, 4=R, 5=clear]", command)
+    yoloShapeDetect_logger.info("Sending message %s to car [0=stop, 1=cont_drive, 2=red_speed, 3=L, 4=R, 5=clear]", command)
     connect.message_car(command)
 
 def darknet_helper(img, width, height, network, class_names):
@@ -70,7 +74,7 @@ def main():
     cap = cv2.VideoCapture(video_url)
 
     if not cap.isOpened():
-        logging.error("Failed to open the video stream.")
+        yoloShapeDetect_logger.error("Failed to open the video stream.")
         return
 
     # Initialize object detected variable to false
@@ -83,7 +87,7 @@ def main():
 
         # If the frame was not successfully read, then we have reached the end of the stream
         if not ret:
-            logging.error("Failed to read video stream; end of stream reached or stream/video error.")
+            yoloShapeDetect_logger.error("Failed to read video stream; end of stream reached or stream/video error.")
             break
 
         # Set obj_detected to false here which is used to determine if a command should be sent to stop the car
