@@ -8,7 +8,7 @@ CLIENT_SOCKET = socket(AF_INET, SOCK_STREAM)  # Client Socket Creation
 # Client Socket Creation (for second argument: SOCK_DGRAM=UDP, SOCK_STREAM=TCP)
 
 # Clear log file before reopening in append mode
-with open("red_and_edge_object_detection_log.txt", "w"):
+with open("red_and_edge_object_detection_log.txt", mode="w"):
     pass
 
 # Create a logger instance
@@ -17,7 +17,7 @@ drone_client_logger = logging.getLogger(__name__)
 # Configure logging to write to a log file and console
 drone_client_logger.setLevel(logging.INFO)
 formatter = logging.Formatter("%(asctime)s - [%(name)s] - %(levelname)s - %(message)s")
-file_handler = logging.FileHandler("red_and_edge_object_detection_log.txt", mode="w") # now open in append mode
+file_handler = logging.FileHandler("red_and_edge_object_detection_log.txt", mode="a") # now open in append mode
 file_handler.setFormatter(formatter)
 stream_handler = logging.StreamHandler()
 stream_handler.setFormatter(formatter)
