@@ -7,10 +7,6 @@ import rospy
 from sensor_msgs.msg import Image
 import logging
 
-#global variables
-SUBSCRIBER_TOPIC = 'main_camera/image_raw'
-PUBLISHER_TOPIC = 'EdgeServer_VideoTopic/image_raw'
-
 
 # Clear log file (by opening in write mode) before reopening in append mode
 with open("red_and_edge_object_detection_log.txt", mode="w"):
@@ -45,15 +41,19 @@ def image_callback(data):
     except Exception as e:
         EdgeServer_video_logger.error("Error in image_callback: %s", str(e))
 
-def start_image_subscriber():
+def start_image_subscriber(subscriber_topic):
     try:
-        image_sub = rospy.Subscriber(SUBSCRIBER_TOPIC, Image, image_callback)  # Subscribe to 'main_camera/image_raw' topic
-        rospy.spin()  # Keeps the program running until the node is shut down --> change this line here to stop continuous sub and posting
+        image_sub = rospy.Subscriber(subscriber_topic, Image, image_callback)  # Subscribe to 'main_camera/image_raw' topic
+        #rospy.spin()  # uncomment this line to continuously subscribe to new data uploaded by subscriber topic and process using image_callback
 
     except rospy.ROSException as e:
         EdgeServer_video_logger.error("ROSException in start_image_subscriber: %s", str(e))
 
 def main():
+
+    SUBSCRIBER_TOPIC = 'main_camera/image_raw'
+    PUBLISHER_TOPIC = 'EdgeServer_VideoTopic/image_raw'
+
     if not initialize_ros_node():
         return
 
@@ -61,7 +61,7 @@ def main():
     EdgeServer_image_pub = rospy.Publisher(PUBLISHER_TOPIC, Image, queue_size=10)  # Create a publisher for the 'EdgeServer_VideoTopic/image_raw' topic
     EdgeServer_video_logger.info("ROS publisher created for %s topic.", PUBLISHER_TOPIC)
 
-    start_image_subscriber()  # Start the image subscriber to process received frames
+    start_image_subscriber(SUBSCRIBER_TOPIC)  # Start the image subscriber to process received frames
 
 if __name__ == "__main__":
     EdgeServer_video_logger.info("Attempting to publish EdgeServer_VideoTopic as the main program (not as an imported program)")

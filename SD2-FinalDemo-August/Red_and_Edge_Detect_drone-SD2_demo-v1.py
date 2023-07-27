@@ -8,8 +8,6 @@ import drone_client as connect # make sure drone_client.py file is in the same d
 import Edge_Server_VideoTopic # make sure Edge_Server_VideoTopic.py file is in the same directory as where this program is run
 
 # Global variables:
-SUBSCRIBER_TOPIC = "main_camera/image_raw"
-PUBLISHER_TOPIC = 'red_and_edge_object_detection/image_raw'
 SEND_STOP = 0
 SEND_CONT_DRIVE = 1
 SEND_REDUCE_SPEED = 2
@@ -177,9 +175,9 @@ def image_callback(data):
     except Exception as e:
         red_and_edge_detect_logger.error("Error in image_callback: %s", str(e))
 
-def start_image_processing():
+def start_image_processing(subscriber_topic):
     try:
-        image_sub = rospy.Subscriber(SUBSCRIBER_TOPIC, Image, image_callback)
+        image_sub = rospy.Subscriber(subscriber_topic, Image, image_callback)
         rospy.spin()
 
     except rospy.ROSException as e:
@@ -187,6 +185,9 @@ def start_image_processing():
 
 def main():
     
+    SUBSCRIBER_TOPIC = "main_camera/image_raw"
+    PUBLISHER_TOPIC = 'red_and_edge_object_detection/image_raw'
+
     if not initialize_ros_node(): # initialize ros node for posting topic
         return
     if not connect_to_car_command_server(): # connect to car command server
@@ -196,7 +197,7 @@ def main():
     red_and_edge_image_pub = rospy.Publisher(PUBLISHER_TOPIC, Image, queue_size=10)
     red_and_edge_detect_logger.info("ROS publisher created for %s topic.", PUBLISHER_TOPIC)
 
-    start_image_processing()
+    start_image_processing(SUBSCRIBER_TOPIC)
 
 if __name__ == "__main__":
     main()
