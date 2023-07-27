@@ -1,3 +1,5 @@
+# This module is to be imported by the yoloShapeDetect program which runs darknet/yolov4
+
 import logging
 from socket import *
 

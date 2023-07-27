@@ -1,3 +1,5 @@
+# This module is to be run as a main module on a node with darknet (yolov4) installed
+
 import cv2
 import numpy as np
 from darknet import *
@@ -19,7 +21,7 @@ yoloShapeDetect_logger = logging.getLogger(__name__)
 # Configure logging to write to a log file and console
 yoloShapeDetect_logger.setLevel(logging.INFO)
 formatter = logging.Formatter("%(asctime)s - [%(name)s] - %(levelname)s - %(message)s")
-file_handler = logging.FileHandler("red_and_edge_object_detection_log.txt", mode="a") #open in append mode so log file is not reset
+file_handler = logging.FileHandler("yoloShapeDetect_log.txt", mode="a") #open in append mode so log file is not reset
 file_handler.setFormatter(formatter)
 stream_handler = logging.StreamHandler()
 stream_handler.setFormatter(formatter)
