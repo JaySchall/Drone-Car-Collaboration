@@ -60,7 +60,6 @@ def main():
     EdgeServer_image_pub = rospy.Publisher(PUBLISHER_TOPIC, Image, queue_size=10)  # Create a publisher for the 'EdgeServer_VideoTopic/image_raw' topic
     EdgeServer_video_logger.info("ROS publisher created for %s topic.", PUBLISHER_TOPIC)
 
-    start_image_subscriber(SUBSCRIBER_TOPIC)  # Start the image subscriber to process received frames
 
 if __name__ == "__main__":
     EdgeServer_video_logger.info("Attempting to initialize ROS node and publish EdgeServer_VideoTopic as the main program (not as an imported program)")
@@ -70,8 +69,11 @@ if __name__ == "__main__":
         pass
     else:
         main()  # Run the main function if this script is executed directly
+        start_image_subscriber(SUBSCRIBER_TOPIC)  # Start the image subscriber to process received frames
+
 else:
     EdgeServer_video_logger.info("%s module imported...Attempting to publish EdgeServer_VideoTopic", __name__)
     # Note: since the script was imported into a script that already initialized the ROS node, no need to init ROS node.
 
     main()  # still run the main function if this script is imported as a module
+    start_image_subscriber(SUBSCRIBER_TOPIC)  # Start the image subscriber to process received frames
