@@ -8,6 +8,11 @@ from sensor_msgs.msg import Image
 import logging
 
 
+# Global Variables
+SUBSCRIBER_TOPIC = 'main_camera/image_raw'
+PUBLISHER_TOPIC = 'EdgeServer_VideoTopic/image_raw'
+EdgeServer_image_pub = None
+
 # Clear log file (by opening in write mode) before reopening in append mode
 with open("red_and_edge_object_detection_log.txt", mode="w"):
     pass
@@ -52,11 +57,6 @@ def start_image_subscriber(subscriber_topic):
         EdgeServer_video_logger.error("ROSException in start_image_subscriber: %s", str(e))
 
 def main():
-
-    SUBSCRIBER_TOPIC = 'main_camera/image_raw'
-    PUBLISHER_TOPIC = 'EdgeServer_VideoTopic/image_raw'
-
-    global EdgeServer_image_pub
     EdgeServer_image_pub = rospy.Publisher(PUBLISHER_TOPIC, Image, queue_size=10)  # Create a publisher for the 'EdgeServer_VideoTopic/image_raw' topic
     EdgeServer_video_logger.info("ROS publisher created for %s topic.", PUBLISHER_TOPIC)
 

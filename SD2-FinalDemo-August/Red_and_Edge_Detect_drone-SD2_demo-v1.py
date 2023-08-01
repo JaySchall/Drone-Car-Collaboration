@@ -21,6 +21,9 @@ NUM_HEXAGONS = 0
 NUM_CIRCLES = 0
 NUM_STARS = 0
 RED_OBJ_FOUND = False
+SUBSCRIBER_TOPIC = "main_camera/image_raw"
+PUBLISHER_TOPIC = 'red_and_edge_object_detection/image_raw'
+
 
 # Create a logger instance
 red_and_edge_detect_logger = logging.getLogger(__name__)
@@ -185,9 +188,6 @@ def start_image_processing(subscriber_topic):
 
 def main():
     
-    SUBSCRIBER_TOPIC = "main_camera/image_raw"
-    PUBLISHER_TOPIC = 'red_and_edge_object_detection/image_raw'
-
     if not initialize_ros_node(): # initialize ros node for posting topic
         return
     if not connect_to_car_command_server(): # connect to car command server

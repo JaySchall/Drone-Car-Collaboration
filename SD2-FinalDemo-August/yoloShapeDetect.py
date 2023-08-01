@@ -13,6 +13,7 @@ SEND_REDUCE_SPEED = 2  # Reduce speed command
 SEND_TURN_LEFT = 3  # Turn left command
 SEND_TURN_RIGHT = 4  # Turn right command
 SEND_ALL_CLEAR = 5  # All clear command
+SUBSCRIBER_TOPIC = "EdgeServer_VideoTopic/image_raw"
 
 # Create a logger instance
 yoloShapeDetect_logger = logging.getLogger(__name__)
@@ -59,8 +60,6 @@ def darknet_helper(img, width, height, network, class_names):
     return detections, width_ratio, height_ratio
 
 def main():
-
-    SUBSCRIBER_TOPIC = "EdgeServer_VideoTopic/image_raw"
 
     # Connect to car command server
     if not connect_to_car_command_server():
