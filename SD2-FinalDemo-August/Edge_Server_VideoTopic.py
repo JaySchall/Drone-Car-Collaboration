@@ -25,6 +25,8 @@ stream_handler.setFormatter(formatter)
 EdgeServer_video_logger.addHandler(file_handler)
 EdgeServer_video_logger.addHandler(stream_handler)
 
+# note, the following initialization of ros node is not necessary if this file is imported into a python script that already initializes
+# a ros node for the current process. ROS only allows one ROS node per process.
 def initialize_ros_node():
     try:
         rospy.init_node('EdgeServer_VideoTopic')  # Initialize the ROS node with the name 'EdgeServer_VideoTopic'
@@ -54,9 +56,6 @@ def main():
     SUBSCRIBER_TOPIC = 'main_camera/image_raw'
     PUBLISHER_TOPIC = 'EdgeServer_VideoTopic/image_raw'
 
-    if not initialize_ros_node():
-        return
-
     global EdgeServer_image_pub
     EdgeServer_image_pub = rospy.Publisher(PUBLISHER_TOPIC, Image, queue_size=10)  # Create a publisher for the 'EdgeServer_VideoTopic/image_raw' topic
     EdgeServer_video_logger.info("ROS publisher created for %s topic.", PUBLISHER_TOPIC)
@@ -64,8 +63,15 @@ def main():
     start_image_subscriber(SUBSCRIBER_TOPIC)  # Start the image subscriber to process received frames
 
 if __name__ == "__main__":
-    EdgeServer_video_logger.info("Attempting to publish EdgeServer_VideoTopic as the main program (not as an imported program)")
-    main()  # Run the main function if this script is executed directly
+    EdgeServer_video_logger.info("Attempting to initialize ROS node and publish EdgeServer_VideoTopic as the main program (not as an imported program)")
+    if not initialize_ros_node():
+        # Note, the following initialization of ros node is not necessary if this file is imported into a 
+        # python script that already initializes a ROS node for the current process. ROS only allows one ROS node per process.
+        pass
+    else:
+        main()  # Run the main function if this script is executed directly
 else:
     EdgeServer_video_logger.info("%s module imported...Attempting to publish EdgeServer_VideoTopic", __name__)
+    # Note: since the script was imported into a script that already initialized the ROS node, no need to init ROS node.
+
     main()  # still run the main function if this script is imported as a module
