@@ -170,11 +170,17 @@ def image_callback(data):
             send_message_to_car(SEND_STOP)
         else:
             send_message_to_car(SEND_ALL_CLEAR)
-            # Now send image to edge_server_video_topic here:
-
-
+           
+        # Convert image back to format for posting to an image topic: 
         img_msg = bridge.cv2_to_imgmsg(cv_image_with_bboxes, encoding="bgr8")
 
+        # Send image to edge server video topic so that it can be obtained and processed by the car edge server
+        # if no red object found
+        if not RED_OBJ_FOUND:
+            Edge_Server_VideoTopic.EdgeServer_image_pub.publish(img_msg)
+
+        # Still publish image to red and edge video topic whether red object found or not, just to have a continuous stream
+        # that can be used for testing/viewing if our program is working as expected:
         red_and_edge_image_pub.publish(img_msg)
 
     except Exception as e:
