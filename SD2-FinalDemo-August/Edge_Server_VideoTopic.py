@@ -70,6 +70,7 @@ def start_image_subscriber(subscriber_topic):
         EdgeServer_video_logger.error("ROSException in start_image_subscriber: %s", str(e))
 
 def main():
+    global EdgeServer_image_pub
     EdgeServer_image_pub = rospy.Publisher(PUBLISHER_TOPIC, Image, queue_size=10)  # Create a publisher for the 'EdgeServer_VideoTopic/image_raw' topic
     EdgeServer_video_logger.info("ROS publisher created for %s topic.", PUBLISHER_TOPIC)
 
