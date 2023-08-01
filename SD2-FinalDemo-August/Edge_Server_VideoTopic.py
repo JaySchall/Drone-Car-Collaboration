@@ -3,6 +3,20 @@
 # so that the edge server only receives frames not processed by the drone for object detection.
 # This module should be imported by Red_and_Edge_detect program
 
+"""Special Note note on rospy.spin()
+
+In ROS (Robot Operating System) for Python (rospy), the rospy.spin() function 
+is used to keep your Python program running and to process incoming messages from subscribed topics, services, and actions.
+
+When you call rospy.spin(), it enters a loop that keeps your ROS node alive and responsive to incoming messages. It starts processing 
+the messages received from the subscribed topics and calls the corresponding callback functions to handle the data.
+
+Once you call rospy.spin(), any remaining code will not be executed, as processing is handed over to that function indefinitely.
+
+Also note: initialization of ros node is not necessary if a script is imported into a 
+python script that already initializes a ROS node for the current process. ROS only allows one ROS node per process.
+"""
+
 import rospy
 from sensor_msgs.msg import Image
 import logging
@@ -51,7 +65,6 @@ def image_callback(data):
 def start_image_subscriber(subscriber_topic):
     try:
         image_sub = rospy.Subscriber(subscriber_topic, Image, image_callback)  # Subscribe to 'main_camera/image_raw' topic
-        #rospy.spin()  # uncomment this line to continuously subscribe to new data uploaded by subscriber topic and process using image_callback
 
     except rospy.ROSException as e:
         EdgeServer_video_logger.error("ROSException in start_image_subscriber: %s", str(e))
@@ -70,10 +83,12 @@ if __name__ == "__main__":
     else:
         main()  # Run the main function if this script is executed directly
         start_image_subscriber(SUBSCRIBER_TOPIC)  # Start the image subscriber to process received frames
+        #rospy.spin()  # uncomment this line to continuously subscribe to new data uploaded by subscriber topic and process using image_callback
 
 else:
     EdgeServer_video_logger.info("%s module imported...Attempting to publish EdgeServer_VideoTopic", __name__)
     # Note: since the script was imported into a script that already initialized the ROS node, no need to init ROS node.
+    # ROS only allows one ROS node per process.
 
     main()  # still run the main function if this script is imported as a module
     start_image_subscriber(SUBSCRIBER_TOPIC)  # Start the image subscriber to process received frames

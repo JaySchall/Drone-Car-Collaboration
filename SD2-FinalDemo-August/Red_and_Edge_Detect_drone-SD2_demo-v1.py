@@ -170,6 +170,8 @@ def image_callback(data):
             send_message_to_car(SEND_STOP)
         else:
             send_message_to_car(SEND_ALL_CLEAR)
+            # Now send image to edge_server_video_topic here:
+
 
         img_msg = bridge.cv2_to_imgmsg(cv_image_with_bboxes, encoding="bgr8")
 
