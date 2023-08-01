@@ -86,7 +86,7 @@ if __name__ == "__main__":
         rospy.spin()  # uncomment this line to continuously subscribe to new data uploaded by subscriber topic and process using image_callback
 
 else:
-    EdgeServer_video_logger.info("%s module imported...Attempting to publish EdgeServer_VideoTopic", __name__)
+    EdgeServer_video_logger.info("%s module imported...ROS node should already be initiated...Attempting to publish EdgeServer_VideoTopic", __name__)
     # Note: since the script was imported into a script that already initialized the ROS node, no need to init ROS node.
     # ROS only allows one ROS node per process.
     main()  # still run the main function if this script is imported as a module
