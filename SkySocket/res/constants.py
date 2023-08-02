@@ -19,6 +19,11 @@ class ColorConstants:
     form_fg_color = [0.93,0.93,0.93,1]
     form_bg_color = [0.8, 0.8, 0.8, 1]
 
+    button_norm = [0.62, 0.62, 0.62, 62]
+    button_down = [0.5, 0.5, 0.5, 1]
+    button_dissabled = [0.7, 0.7, 0.7, 1]
+    button_down_dissabled = [0.6, 0.6, 0.6, 1]
+
 class StyleConstants:
     def_padding = dp(5)
     large_padding = dp(10)

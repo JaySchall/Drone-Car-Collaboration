@@ -14,6 +14,6 @@ class SimulationSettingsForm(SkyFormTable):
                                  pos_hint = StyleConstants.center_pos,
                                  min = 0,
                                  max = 100,
-                                 step= 1))
+                                 step= 1), height = 40)
         self.add_field(SkyCheckBox(sid = "sideChannel", label = 'Side Channel'))
         self.add_field(SkyCheckBox(sid = "Logging", label = 'Logging'))

@@ -22,6 +22,8 @@ Builder.load_string("""
     size_hint: 1, 1
     color: self.black
     text_size: self.size
+    font_size: sp(16)
+    valign: "center"
 """)
 
 class SkyFormLabel(Label):
@@ -38,13 +40,17 @@ class SkyFormTable(SkyVerticalLayout):
         for item in fields:
             self.add_field(item)
     
-    def add_field(self, field):
+    def add_field(self, field, **kwargs):
         self.form.add_field(field)
         row = BoxLayout(
             orientation='horizontal',
             size_hint = (1, None),
             height=self.row_height
         )
+
+        h = kwargs.pop("height", None)
+        if h is not None:
+            row.height = h
         row.add_widget(SkyFormLabel(text=field.label))
         if self.fill_width:
             row.add_widget(Label(size_hint=(1, 1)))

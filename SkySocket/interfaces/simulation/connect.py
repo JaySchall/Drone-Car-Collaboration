@@ -10,17 +10,28 @@ from kivy.clock import Clock
 
 Builder.load_string("""
 #: import SkyVerticalLayout widgets.layouts.SkyVerticalLayout
+#: import ColorConstants res.constants.ColorConstants
+
 <SimulationButton>:
     size_hint: 0.8, 0.8
+    background_normal: ""
+    background_down: ""
+    background_color: ColorConstants.button_norm
+    font_size: f"{(self.height-32)/3.2 + 20}dp"
     pos_hint: self.center_pos
 
 <StatusLabel>:
     color: self.black
+    size: self.texture_size
+    text_size: self.size
+    bold: True
     halign: 'center'
     valign: 'bottom'
 
 <StatusResult>:
     color: self.black
+    size: self.texture_size
+    text_size: self.size
     halign: 'center'
     valign: 'top'
 
@@ -38,6 +49,7 @@ Builder.load_string("""
         spacing: root.huge_padding
         SimulationButton:
             text: 'Connect'
+            id: connect
             on_release: root.on_connect()
         SimulationButton:
             text: 'Ping'
@@ -48,14 +60,18 @@ Builder.load_string("""
     SkyVerticalLayout:
         size_hint: 0.6, 1
         StatusLabel:
-            text: 'Connected'
+            text: 'Connected:'
+            font_size: (connect.font_size/3)*2
         StatusResult:
             id: connectlabel
+            font_size: (connect.font_size/3)*2
             text: root.connected_label
         StatusLabel:
-            text: 'Online'
+            text: 'Online:'
+            font_size: (connect.font_size/3)*2
         StatusResult:
             id: statuslabel
+            font_size: (connect.font_size/3)*2
             text: root.active_label
 """)
 
@@ -63,9 +79,16 @@ Builder.load_string("""
 class SimulationButton(Button):
     center_pos = StyleConstants.center_pos
 
+    def on_press(self):
+        self.background_color = ColorConstants.button_down
+     
+    def on_touch_up(self, *args):
+        self.background_color = ColorConstants.button_norm
+
 
 class StatusLabel(Label):
     black = ColorConstants.black
+    src = ObjectProperty()
 
 
 class StatusResult(Label):

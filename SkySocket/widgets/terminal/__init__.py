@@ -6,6 +6,8 @@ from res.constants import StyleConstants, ColorConstants
 Builder.load_string("""
 <SkyTerminal>:
     id: terminal_placeholder
+    text: "TERMINAL PLACEHOLDER"
+    bold: True
     size_hint: 1, 0.2
     pos_hint: self.center_pos
     padding: dp(40), dp(40)

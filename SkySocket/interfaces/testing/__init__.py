@@ -9,24 +9,30 @@ from kivy.properties import ObjectProperty
 from kivy.lang.builder import Builder
 
 Builder.load_string("""
+#: import ColorConstants res.constants.ColorConstants
+#: import StyleConstants res.constants.StyleConstants
+                    
 <SkyTestingTab>:
     text: 'Testing'
     SkyHorizontalLayout:
         canvas.before:
             Color:
-                rgba: root.tab_bg
+                rgba: ColorConstants.tab_bg_color
             Rectangle:
                 size: self.size
                 pos: self.pos
+        padding: StyleConstants.large_padding, StyleConstants.large_padding
+        spacing: StyleConstants.huge_padding
         SkyTerminal:
+            size_hint: 1, 1
         SkyVerticalLayout:
-            spacing: root.huge_padding
+            spacing: StyleConstants.huge_padding
             SkyVerticalLayout:
-                spacing: root.def_padding
-                padding: root.large_padding, root.large_padding
+                spacing: StyleConstants.def_padding
+                padding: StyleConstants.large_padding, StyleConstants.large_padding
                 canvas.before:
                     Color:
-                        rgba: root.form_bg
+                        rgba: ColorConstants.form_bg_color
                     Rectangle:
                         size: self.size
                         pos:self.pos
@@ -45,9 +51,3 @@ Builder.load_string("""
 class SkyTestingTab(SkyTabbedPannel):
     drone_connection = ObjectProperty()
     car_connection = ObjectProperty()
-
-    tab_bg = ColorConstants.tab_bg_color
-    form_bg = ColorConstants.form_bg_color
-    huge_padding = StyleConstants.huge_padding
-    large_padding = StyleConstants.large_padding
-    def_padding = StyleConstants.def_padding

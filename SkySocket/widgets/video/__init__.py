@@ -6,9 +6,11 @@ from res.constants import StyleConstants
 
 Builder.load_string("""
 <SkyVideoPlayer>:
-    id: video_placeholder
-    state: 'play'
-    size_hint: None, 0.8
+    id: video
+    state: 'play' if self.loaded else 'stop'
+    keep_ratio: True
+    allow_stretch: True
+    size_hint_min_y: self.video_length
     pos_hint: self.center_pos
     size: self.video_width, self.video_length
 """)

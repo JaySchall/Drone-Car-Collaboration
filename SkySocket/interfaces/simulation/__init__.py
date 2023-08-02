@@ -17,13 +17,16 @@ from kivy.lang.builder import Builder
 SESSION_NAME = 'python'
 
 Builder.load_string("""
+
 <SkySimulationTab>:
     text: 'Simulation'
     SkyHorizontalLayout:
+        padding: root.large_padding, root.large_padding
         SkyVerticalLayout:
             padding: root.def_padding, root.def_padding
             spacing: root.def_padding
             size_hint_min_x: root.video_width + root.large_padding
+            size_hint: 0.6, 1
             SkyVideoPlayer:
                 source: root.link
                 video_width: root.video_width
@@ -37,11 +40,14 @@ Builder.load_string("""
                 text: root.link
             SkyTerminal:
         SkyVerticalLayout:
-            padding: root.def_padding, root.def_padding
-            spacing: root.def_padding
+            padding: root.huge_padding, root.huge_padding
+            spacing: root.huge_padding
             size_hint_min_x: dp(350)
-            size_hint_max_x: dp(450)
+            size_hint_max_x: dp(600)
+            size_hint: 0.4, 1
             SkyVerticalLayout:
+                padding: root.huge_padding, root.huge_padding
+                spacing: root.huge_padding
                 canvas.before:
                     Color:
                         rgba: root.form_bg_color
@@ -81,6 +87,7 @@ class SkySimulationTab(SkyTabbedPannel):
     black = ColorConstants.black
     def_padding = StyleConstants.def_padding
     large_padding = StyleConstants.large_padding
+    huge_padding = StyleConstants.huge_padding
     video_width = StyleConstants.video_width
     video_height = StyleConstants.video_height
     green = ColorConstants.green
