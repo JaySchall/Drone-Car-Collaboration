@@ -12,6 +12,7 @@ from kivy.lang.builder import Builder
 
 Builder.load_string("""
 <ConnectForm>:
+                    
 <SSHConnectionForm>:
     spacing: root.def_padding
     padding: root.large_padding, root.large_padding
@@ -22,6 +23,8 @@ Builder.load_string("""
             size: self.size
             pos:self.pos
     SkyVerticalLayout:
+        padding: root.large_padding, root.large_padding
+        spacing: root.def_padding
         canvas.before:
             Color:
                 rgba: root.form_fg
@@ -30,39 +33,45 @@ Builder.load_string("""
                 pos:self.pos
         ConnectForm:
             id: conform
+            size_hint: 1, 0.4
         SkyHorizontalLayout:
-            size_hint: None, None
+            size_hint: 1, 0.2
             Spinner:
                 id: valuepull
-                size_hint: None, None
-                size: dp(120), dp(30)
+                size_hint: 0.35, 0.6
                 background_normal: ''
                 background_color: root.bg
                 color: root.black
-                pose_hint: {'x': 0}
+                pos_hint: {'center_y': 0.5}
+                font_size: sp((self.size[1]/5) + 12)
                 text: 'Manual'
                 values: 'Manual', 'Drone Default', 'Car Default'
+            Label:
+                size_hint: 0.30, 0.6
             Button:
                 text: 'CONNECT'
                 background_normal: ''
                 background_color: root.bg
                 color: root.black
-                size_hint: None, None
-                pos_hint: {'right': 0}
-                size: dp(120), dp(30)
+                size_hint: .35, 0.6
+                pos_hint: {'center_y': 0.5}
+                font_size: sp((self.size[1]/5) + 12)
                 on_release: root.connect(conform.form.get_values(), valuepull.text)
         TextInput:
             text_hint: 'Enter commands...'
+            size_hint: 1, 0.4
 """)
 
 class ConnectForm(SkyFormTable):
-    label_width = dp(150)
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.form = SkyForm()
-        self.add_field(SkyTextInput(sid = "user", label = "User", width = self.label_width))
-        self.add_field(SkyTextInput(sid = "ip", label = "IP", width = self.label_width))
-        self.add_field(SkyTextInput(sid = "password", label = "Password", password = True, width = self.label_width))
+        self.add_field(SkyTextInput(sid = "user", label = "User", size_hint = (0.66, None), height = dp(25),
+                                    pos_hint = {"center_y": 0.5}), size_hint = (1, 1))
+        self.add_field(SkyTextInput(sid = "ip", label = "IP", size_hint = (0.66, None), height = dp(25),
+                                    pos_hint = {"center_y": 0.5}), size_hint = (1, 1))
+        self.add_field(SkyTextInput(sid = "password", label = "Password", password = True,  height = dp(25),
+                                    size_hint = (0.66, None), pos_hint = {"center_y": 0.5}), size_hint = (1, 1))
 
 class SSHConnectionForm(SkyVerticalLayout):
     form_fg = ColorConstants.form_fg_color

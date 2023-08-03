@@ -24,11 +24,12 @@ Builder.load_string("""
         padding: StyleConstants.large_padding, StyleConstants.large_padding
         spacing: StyleConstants.huge_padding
         SkyTerminal:
-            size_hint: 1, 1
+            size_hint: 0.6, 1
         SkyVerticalLayout:
+            size_hint: 0.4, 1
             spacing: StyleConstants.huge_padding
             SkyVerticalLayout:
-                spacing: StyleConstants.def_padding
+                spacing: StyleConstants.large_padding
                 padding: StyleConstants.large_padding, StyleConstants.large_padding
                 canvas.before:
                     Color:

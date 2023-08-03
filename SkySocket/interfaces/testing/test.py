@@ -3,6 +3,7 @@ from widgets.layouts import SkyVerticalLayout
 from widgets.form import SkyForm
 from widgets.form.formtable import SkyFormTable
 from widgets.form.fields import SkyCheckBox, SkyTextInput, SkyBrowse
+from res.constants import StyleConstants
 
 from kivy.properties import ObjectProperty, StringProperty
 from kivy.metrics import dp, sp
@@ -11,6 +12,7 @@ from kivy.lang.builder import Builder
 
 Builder.load_string("""
 <IperfForm>:
+    size_hint: 1, 1
 
 <IperfTestForm>:
     canvas.before:
@@ -21,15 +23,20 @@ Builder.load_string("""
             pos:self.pos
     IperfForm:
         id: ipf
-    Button:
-        text: root.button_label
-        background_color: root.bg
-        background_normal: ''
-        color: root.black
-        size_hint: None, None
-        size: dp(200), dp(20)
-        pos_hint: {'center': 0.5, 'center': 0.5}
-        on_release: root.iperf_test(ipf.form.get_values())
+    AnchorLayout:
+        anchor_x: "center"
+        anchor_y: "center"
+        size_hint: 1, 0.28
+        Button:
+            text: root.button_label
+            background_color: root.bg
+            background_normal: ''
+            color: root.black
+            size_hint: 0.4, 0.75
+            min_size_hint_x: dp(120)
+            pos_hint: {'center': 0.5, 'center': 0.5}
+            font_size: sp((self.size[1]/5) + 12)
+            on_release: root.iperf_test(ipf.form.get_values())
 """)
 
 
@@ -71,8 +78,9 @@ class IperfForm(SkyFormTable):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.form = SkyForm()
-        self.add_field(SkyCheckBox(sid = "verbose", label = "Verbose"))
-        self.add_field(SkyCheckBox(sid = "server", label = "Drone as server"))
-        self.add_field(SkyTextInput(sid = "port", label = "Port", input_filter = "int", width = self.label_width))
-        self.add_field(SkyCheckBox(sid = "logfile", label = "Logfile"))
+        self.add_field(SkyCheckBox(sid = "verbose", label = "Verbose", size_hint = (None, 1)), size_hint = (1, 1))
+        self.add_field(SkyCheckBox(sid = "server", label = "Drone as server", size_hint = (None, 1)), size_hint = (1, 1))
+        self.add_field(SkyTextInput(sid = "port", label = "Port", input_filter = "int", height = dp(25),
+                                     size_hint = (0.66, 0), pos_hint = {"center_y": 0.5}), size_hint = (1, 1))
+        self.add_field(SkyCheckBox(sid = "logfile", label = "Logfile", size_hint = (None, 1)), size_hint = (1, 1))
             

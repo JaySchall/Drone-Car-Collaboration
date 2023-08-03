@@ -17,3 +17,6 @@ class SimulationSettingsForm(SkyFormTable):
                                  step= 1), height = 40)
         self.add_field(SkyCheckBox(sid = "sideChannel", label = 'Side Channel'))
         self.add_field(SkyCheckBox(sid = "Logging", label = 'Logging'))
+        offloading_label = self.children[-1].children[-1]
+        offloading_label.size_hint = (1, 0.5)
+        offloading_label.pos_hint = {"center_y": 0.5}

@@ -2,11 +2,22 @@ from res.constants import ColorConstants, StyleConstants
 from widgets.tab import SkyTabbedPannel
 from interfaces.settings.settingsform import SettingsForm
 
+from kivy.uix.button import Button
 from kivy.properties import ObjectProperty
 from kivy.metrics import dp
 from kivy.lang.builder import Builder
 
 Builder.load_string("""
+#: import ColorConstants res.constants.ColorConstants
+                    
+<SettingsButton>:                        
+    size_hint: None, None
+    size: dp(100), dp(35)
+    bold: True
+    background_normal: ""
+    background_down: ""
+    background_color: ColorConstants.button_norm                     
+
 <SkySettingsTab>:
     text: 'Testing'
     AnchorLayout:
@@ -22,7 +33,7 @@ Builder.load_string("""
         SkyVerticalLayout:
             size_hint: None, None
             height: self.minimum_height
-            width: dp(350)
+            width: dp(500)
             padding: root.def_padding, root.def_padding
             pos_hint: {"top": 1, "left": 0}
             canvas.before:
@@ -50,18 +61,23 @@ Builder.load_string("""
                     orientation: 'rl-bt'
                     size_hint: 1, None
                     height: self.minimum_height
-                    Button:
-                        size_hint: None, None
-                        size: root.button_size
-                        text: "Defaults"
-                        on_release: root.defaults()
-                    Button:
-                        size_hint: None, None
-                        size: root.button_size
+                    spacing: root.def_padding
+                    SettingsButton:
                         text: "Apply"
                         on_release: root.apply(setform.form.get_values())
+                    SettingsButton:
+                        text: "Defaults"
+                        on_release: root.defaults()
                         
 """)
+
+
+class SettingsButton(Button):
+    def on_press(self):
+        self.background_color = ColorConstants.button_down
+     
+    def on_touch_up(self, *args):
+        self.background_color = ColorConstants.button_norm
 
 
 class SkySettingsTab(SkyTabbedPannel):
@@ -71,7 +87,6 @@ class SkySettingsTab(SkyTabbedPannel):
     form_bg = ColorConstants.form_bg_color
     form_fg = ColorConstants.form_fg_color
     tab_bg = ColorConstants.tab_bg_color
-    button_size = (dp(75), dp(25))
 
     def apply(self, values):
         form = self.ids["setform"].form

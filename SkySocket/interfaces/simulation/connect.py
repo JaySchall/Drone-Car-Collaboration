@@ -17,7 +17,7 @@ Builder.load_string("""
     background_normal: ""
     background_down: ""
     background_color: ColorConstants.button_norm
-    font_size: f"{(self.height-32)/3.2 + 20}dp"
+    font_size: sp(self.height/3.2 + 10)
     pos_hint: self.center_pos
 
 <StatusLabel>:

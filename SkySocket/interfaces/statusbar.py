@@ -13,14 +13,14 @@ Builder.load_string("""
     size: dp(20), dp(20)
 
 <SkyLabel>:
-    size_hint: None, None
+    size_hint: None, 1
     color: self.black    
-    size: self.texture_size[0], dp(25)
+    width: self.texture_size[0]
+    font_size: sp((self.size[1]/5) + 12)
     valign: "middle"
 
 <SkyStatusBar>:
-    size_hint: 1, None
-    height: dp(25)
+    size_hint: 1, 0.05
     spacing: self.spacing_size    
     canvas.before:
         Color:
@@ -42,7 +42,7 @@ Builder.load_string("""
     Label:
         size_hint: 0.9, None
     SkyLabel:
-        text: "Car Status"
+        text: "Car Status:"
     SkyLabel:
         text: root.car_status
     Spacer:

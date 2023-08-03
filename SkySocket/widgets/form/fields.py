@@ -30,7 +30,8 @@ Builder.load_string("""
 <SkyCheckBox>:
     id: self.uid
     size_hint: None, None
-    size: dp(25), dp(25)
+    height: dp(20)
+    width: self.height
     on_release: self.value_property = self.state
 
 <SkySlider>:
