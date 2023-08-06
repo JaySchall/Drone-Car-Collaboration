@@ -1,44 +1,50 @@
 #:kivy 2.2.0
-#:set WHITE [1, 1, 1, 1]
+#: import ColorConstants res.constants.ColorConstants
+#: import SizeConstants res.constants.SizeConstants
+#: import SkySettingsTab interfaces.settings.SkySettingsTab
+#: import SkySimulationTab interfaces.simulation.SkySimulationTab
+#: import SkyStatusBar interfaces.statusbar.SkyStatusBar
+#: import SkyTabbedPanel widgets.tab.SkyTabbedPanel
+#: import SkyTestingTab interfaces.testing.SkyTestingTab
+#: import StyleConstants res.constants.StyleConstants
 
 <MainWindow>:
-    orientation: 'vertical'
+    orientation: "vertical"
     SkyStatusBar:
-        drone_connection: root.drone
         car_connection: root.car
-        start_status: simulationtab
+        drone_connection: root.drone
+        start_status: simulation_tab
     Label:
-        size_hint: 1, None
         height: dp(10)
+        size_hint: 1, None
         canvas.before:
             Color:
-                rgba: WHITE
+                rgba: ColorConstants.white
             Rectangle:
-                size: self.size
                 pos: self.pos
+                size: self.size
     TabbedPanel:
-        id: tabpanel
-        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+        id: tab_panel
         do_default_tab: False
-        strip_border: [0,0,0,0]
-        tab_height: dp(30)
-        tab_width: dp(150)
+        pos_hint: StyleConstants.center_pos
+        strip_border: ColorConstants.transparent
+        tab_height: SizeConstants.tab_height
+        tab_width: SizeConstants.tab_width
         canvas.before:
             Color:
-                rgba: WHITE
+                rgba: ColorConstants.white
             Rectangle:
-                size: self.size
                 pos: self.pos
+                size: self.size
+        
         SkySimulationTab:
-            id: simulationtab
-            link: root.settings.video_source
+            id: simulation_tab
+            car_connection: root.car
+            drone_connection: root.drone
             settings: root.settings
-            drone_connection: root.drone
-            car_connection: root.car
-            
+            video_source: root.settings.video_source
         SkyTestingTab:
+            car_connection: root.car  
             drone_connection: root.drone
-            car_connection: root.car
-                
         SkySettingsTab:
             settings: root.settings

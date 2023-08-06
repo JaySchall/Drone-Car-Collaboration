@@ -1,19 +1,25 @@
-from kivy.uix.tabbedpanel import TabbedPanelItem
-from kivy.lang.builder import Builder
+"""
+Defines standard panel styling.
+"""
 
-from res.constants import ColorConstants
+from kivy.lang.builder import Builder
+from kivy.uix.tabbedpanel import TabbedPanelItem
 
 Builder.load_string("""
-<SkyTabbedPannel>:
-    color: self.black
+#: import ColorConstants res.constants.ColorConstants
+
+<SkyTabbedPanel>:
+    color: ColorConstants.black
     canvas.before:
         Color:
-            rgba: self.bg_color
+            rgba: ColorConstants.form_bg_color
         Rectangle:
-            size: self.size
             pos: self.pos  
+            size: self.size
 """)
 
-class SkyTabbedPannel(TabbedPanelItem):
-    black = ColorConstants.black
-    bg_color = ColorConstants.form_bg_color
+
+class SkyTabbedPanel(TabbedPanelItem):
+    """See TabbedPanelItem documentation from Kivy for more information."""
+    
+    pass

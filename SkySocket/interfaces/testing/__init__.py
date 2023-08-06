@@ -1,53 +1,61 @@
-from res.constants import ColorConstants, StyleConstants
-from widgets.tab import SkyTabbedPannel
-from widgets.terminal import SkyTerminal
-from widgets.layouts import SkyHorizontalLayout, SkyVerticalLayout
-from interfaces.testing.test import IperfForm
-from interfaces.testing.connection import SSHConnectionForm
+"""A tab for testing connection bandwidth and running SSH commands."""
 
-from kivy.properties import ObjectProperty 
 from kivy.lang.builder import Builder
+from kivy.properties import ObjectProperty 
+
+from interfaces.testing.connection import SSHConnectionForm
+from interfaces.testing.test import IperfForm
+from widgets.tab import SkyTabbedPanel
+from widgets.terminal import SkyTerminal
 
 Builder.load_string("""
+#: import ColorConstants res.constants.ColorConstants
+#: import StyleConstants res.constants.StyleConstants
+                    
 <SkyTestingTab>:
-    text: 'Testing'
+    text: "Testing"
     SkyHorizontalLayout:
         canvas.before:
             Color:
-                rgba: root.tab_bg
+                rgba: ColorConstants.tab_bg_color
             Rectangle:
-                size: self.size
                 pos: self.pos
+                size: self.size
+        padding: StyleConstants.large_padding, StyleConstants.large_padding
+        spacing: StyleConstants.huge_padding
         SkyTerminal:
+            size_hint: 0.6, 1
         SkyVerticalLayout:
-            spacing: root.huge_padding
+            size_hint: 0.4, 1
+            spacing: StyleConstants.huge_padding
             SkyVerticalLayout:
-                spacing: root.def_padding
-                padding: root.large_padding, root.large_padding
+                padding: StyleConstants.large_padding, StyleConstants.large_padding
+                spacing: StyleConstants.large_padding
                 canvas.before:
                     Color:
-                        rgba: root.form_bg
+                        rgba: ColorConstants.form_bg_color
                     Rectangle:
-                        size: self.size
                         pos:self.pos
+                        size: self.size
                 IperfTestForm:
-                    button_label: 'Run Drone Test'
                     connection: root.drone_connection
+                    form_name: "Drone"
                 IperfTestForm:
-                    button_label: "Run Car Test"
                     connection: root.car_connection
+                    form_name: "Car"
             SSHConnectionForm:
                 car_connection: root.car_connection
                 drone_connection: root.drone_connection
-
 """)
 
-class SkyTestingTab(SkyTabbedPannel):
-    drone_connection = ObjectProperty()
-    car_connection = ObjectProperty()
 
-    tab_bg = ColorConstants.tab_bg_color
-    form_bg = ColorConstants.form_bg_color
-    huge_padding = StyleConstants.huge_padding
-    large_padding = StyleConstants.large_padding
-    def_padding = StyleConstants.def_padding
+class SkyTestingTab(SkyTabbedPanel):
+    """
+    The layout for the testing tab.
+    
+    Attributes:
+        car_connection: Car's SSHConnection object.
+        drone_connection: Drone's SSHConnection object."""
+
+    car_connection = ObjectProperty()
+    drone_connection = ObjectProperty()
