@@ -1,98 +1,103 @@
-from res.constants import ColorConstants, StyleConstants
-from widgets.tab import SkyTabbedPannel
-from interfaces.settings.settingsform import SettingsForm
+"""A settings panel to allow for users to change the default parameters."""
 
-from kivy.uix.button import Button
-from kivy.properties import ObjectProperty
-from kivy.metrics import dp
 from kivy.lang.builder import Builder
+from kivy.properties import ObjectProperty
+
+from interfaces.settings.settingsform import SettingsForm
+from widgets.button import SkyButton
+from widgets.tab import SkyTabbedPanel
 
 Builder.load_string("""
 #: import ColorConstants res.constants.ColorConstants
+#: import SizeConstants res.constants.SizeConstants
+#: import StyleConstants res.constants.StyleConstants
                     
-<SettingsButton>:                        
-    size_hint: None, None
-    size: dp(100), dp(35)
-    bold: True
-    background_normal: ""
-    background_down: ""
-    background_color: ColorConstants.button_norm                     
+<SettingsButton>:
+    bold: True                 
 
 <SkySettingsTab>:
-    text: 'Testing'
+    text: "Settings"
     AnchorLayout:
-        padding: root.def_padding, root.def_padding
-        anchor_x: 'left'
-        anchor_y: 'top'
+        anchor_x: "left"
+        anchor_y: "top"
+        padding: StyleConstants.def_padding, StyleConstants.def_padding
         canvas.before:
             Color:
-                rgba: root.tab_bg
+                rgba: ColorConstants.tab_bg_color
             Rectangle:
-                size: self.size
                 pos: self.pos
+                size: self.size
         SkyVerticalLayout:
-            size_hint: None, None
             height: self.minimum_height
-            width: dp(500)
-            padding: root.def_padding, root.def_padding
+            padding: StyleConstants.def_padding, StyleConstants.def_padding
             pos_hint: {"top": 1, "left": 0}
+            size_hint: None, None
+            width: SizeConstants.settings_width
             canvas.before:
                 Color:
-                    rgba: root.form_bg
+                    rgba: ColorConstants.form_bg_color
                 Rectangle:
-                    size: self.size
                     pos: self.pos
+                    size: self.size
             SkyVerticalLayout:
-                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
-                padding: root.def_padding, root.def_padding
-                spacing: root.def_padding
-                size_hint: 1, None
                 height: self.minimum_height
+                padding: StyleConstants.def_padding, StyleConstants.def_padding
+                pos_hint: StyleConstants.center_pos
+                size_hint: 1, None
+                spacing: StyleConstants.def_padding
                 canvas.before:
                     Color:
-                        rgba: root.form_fg
+                        rgba: ColorConstants.form_fg_color
                     Rectangle:
-                        size: self.size
                         pos: self.pos
+                        size: self.size
                 SettingsForm:
                     id: setform
                     settings: root.settings
                 StackLayout:
-                    orientation: 'rl-bt'
-                    size_hint: 1, None
                     height: self.minimum_height
-                    spacing: root.def_padding
+                    orientation: "rl-bt"
+                    size_hint: 1, None
+                    spacing: StyleConstants.def_padding
                     SettingsButton:
                         text: "Apply"
                         on_release: root.apply(setform.form.get_values())
                     SettingsButton:
                         text: "Defaults"
                         on_release: root.defaults()
-                        
 """)
 
 
-class SettingsButton(Button):
-    def on_press(self):
-        self.background_color = ColorConstants.button_down
-     
-    def on_touch_up(self, *args):
-        self.background_color = ColorConstants.button_norm
+class SettingsButton(SkyButton):
+    """Stylized button for settings"""
+
+    pass
 
 
-class SkySettingsTab(SkyTabbedPannel):
-    def_padding = StyleConstants.def_padding
+class SkySettingsTab(SkyTabbedPanel):
+    """
+    The layout and button logic for the settings menu.
+    
+    Attributes:
+        settings: SkyVariables object to apply and read settings from.
+    """
+
     settings = ObjectProperty()
 
-    form_bg = ColorConstants.form_bg_color
-    form_fg = ColorConstants.form_fg_color
-    tab_bg = ColorConstants.tab_bg_color
-
     def apply(self, values):
-        form = self.ids["setform"].form
+        """
+        Validates the form and writes the values to the config file.
+        
+        Args:
+            values: A dictionary of field-value pairs of the requested setttings.
+        """
+
+        form = self.ids.setform.form
         if form.validate():
             return
         self.settings.set_values(values)
 
     def defaults(self, *args):
+        """Resets all settings to default."""
+
         self.settings.on_default()

@@ -1,42 +1,51 @@
-from kivy.properties import StringProperty, ObjectProperty, ColorProperty
-from kivy.lang.builder import Builder
-from kivy.uix.label import Label
-from kivy.metrics import dp
-from kivy.clock import Clock
+"""StatusBar definition and supporting widgets."""
 
+from kivy.lang.builder import Builder
+from kivy.properties import ColorProperty
+from kivy.properties import ObjectProperty
+from kivy.properties import StringProperty
+from kivy.uix.label import Label
+
+from res.constants import ColorConstants
 from widgets.layouts import SkyHorizontalLayout
-from res.constants import StyleConstants, ColorConstants
+
+SESSION_NAME = "python"
 
 Builder.load_string("""
+#: import calculate_size res.constants.calculate_size
+#: import ColorConstants res.constants.ColorConstants
+#: import SizeConstants res.constants.SizeConstants
+#: import StyleConstants res.constants.StyleConstants
+                    
 <Spacer>:
+    size: SizeConstants.spacer_size, SizeConstants.spacer_size
     size_hint: None, None
-    size: dp(20), dp(20)
 
 <SkyLabel>:
+    color: ColorConstants.black    
+    font_size: sp(calculate_size(self.size[1]))
     size_hint: None, 1
-    color: self.black    
-    width: self.texture_size[0]
-    font_size: sp((self.size[1]/5) + 12)
     valign: "middle"
+    width: self.texture_size[0]
 
 <SkyStatusBar>:
     size_hint: 1, 0.05
-    spacing: self.spacing_size    
+    spacing: StyleConstants.def_padding    
     canvas.before:
         Color:
             rgba: self.bg_color
         Rectangle:
-            size: self.size
             pos: self.pos  
+            size: self.size
     Spacer:
     SkyLabel:
-        text: 'Drone Status:'
+        text: "Drone Status:"
     SkyLabel:
         text: root.drone_status
     Label:
         size_hint: 0.1, None
     SkyLabel:
-        text: 'Battery:'
+        text: "Battery:"
     SkyLabel:
         text: root.battery_life
     Label:
@@ -48,38 +57,65 @@ Builder.load_string("""
     Spacer:
 """)
 
+
 class Spacer(Label):
+    """A dummy label to take up space between other labels."""
+
     pass
 
+
 class SkyLabel(Label):
-    black = ColorConstants.black
+    """A preconfigured label for use in the SkyStatusBar."""
+
+    pass
+
 
 class SkyStatusBar(SkyHorizontalLayout):
-    spacing_size = StyleConstants.def_padding
-    bg_color = ColorProperty()
-    drone_connection = ObjectProperty()
-    car_connection = ObjectProperty()
-    start_status = ObjectProperty()
+    """
+    A bar at the top of the GUI that provides connection and hardware status.
 
+    Attributes:
+        bg_color: Holds the color the whole status bar is.
+        car_connection: The car SSHConnection object.
+        drone_connection: The drone SSHConnection object.
+        battery_life: A string holding the current battery life or - if none.
+        car_status: A string holding the current status of the car.
+        drone_status: A string holding the current status fo the drone.
+        start_status: The simulation tab.
+    """
+
+    bg_color = ColorProperty(ColorConstants.red)
+    car_connection = ObjectProperty()
+    drone_connection = ObjectProperty()
+    
+    battery_life = StringProperty("-")
     car_status = StringProperty("NOT CONNECTED")
     drone_status = StringProperty("NOT CONNECTED")
-    battery_life = StringProperty("-")
+    start_status = ObjectProperty()
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.bg_color = ColorConstants.red        
-        Clock.schedule_once(self._init, 1)
+    def on_kv_post(self, base_widget):
+        """Initial bindings post kivy startup."""
 
-    def _init(self, *args):
         self.drone_connection.bind(connected=self._drone_update)
         self.drone_connection.bind(online=self._drone_update)
         self.car_connection.bind(connected=self._car_update)
         self.car_connection.bind(online=self._car_update)
+        self.bind(car_status=self._update)
+        self.bind(drone_status=self._update)
+        
+        return super().on_kv_post(base_widget)
 
-    def _drone_update(self, dt, *args):
+    def _drone_update(self, *args):
+        """
+        Reassesses the drone status if an IP comes online and updates StatusBar.
+        
+        dt and args are both passed via the automatic method call and aren't
+        used for this method.
+        """
+
         temp_drone = StringProperty()
         if self.drone_connection.online:
-            if self.drone_connection.is_running():
+            if self.drone_connection.is_running(SESSION_NAME):
                 temp_drone = "ACTIVE"
             elif self.drone_connection.connected:
                 temp_drone = "CONNECTED"
@@ -88,11 +124,17 @@ class SkyStatusBar(SkyHorizontalLayout):
         else:
             temp_drone = "NOT CONNECTED"
         self.drone_status = temp_drone
-        self._update()
 
-    def _car_update(self, dt, *args):
+    def _car_update(self, *args):
+        """
+        Reassesses the car status if an IP comes online and updates StatusBar.
+        
+        dt and args are both passed via the automatic method call and aren't
+        used for this method.
+        """
+
         if self.car_connection.online:
-            if self.car_connection.is_running():
+            if self.car_connection.is_running(SESSION_NAME):
                 temp_car = "ACTIVE"
             elif self.car_connection.connected:
                 temp_car = "CONNECTED"
@@ -101,11 +143,12 @@ class SkyStatusBar(SkyHorizontalLayout):
         else:
             temp_car = "NOT CONNECTED"
         self.car_status = temp_car
-        self._update()
 
-    def _update(self):
+    def _update(self, *args):
+        """Checks to see if bg_color needs to be updated."""
+
         if self.car_status == "NOT CONNECTED" or self.drone_status == "NOT CONNECTED":
-            self.start_status._dissable_button()
+            self.start_status._disable_button()
             self.bg_color = ColorConstants.red
         elif self.car_status == "ONLINE" or self.drone_status == "ONLINE":
             self.bg_color = ColorConstants.orange

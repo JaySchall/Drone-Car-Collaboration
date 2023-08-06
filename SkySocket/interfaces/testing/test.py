@@ -1,86 +1,131 @@
-from res.constants import ColorConstants
-from widgets.layouts import SkyVerticalLayout
-from widgets.form import SkyForm
-from widgets.form.formtable import SkyFormTable
-from widgets.form.fields import SkyCheckBox, SkyTextInput, SkyBrowse
-from res.constants import StyleConstants
+"""
+The logic and forms to run an iPerf3 bandwidth test.
 
-from kivy.properties import ObjectProperty, StringProperty
-from kivy.metrics import dp, sp
+This has not been fully implemented. The file retrieval/output, threading, and
+the actual test commands has not been touched. Only user input has been created 
+and tested.
+"""
 
 from kivy.lang.builder import Builder
+from kivy.properties import ObjectProperty
+from kivy.properties import StringProperty
+
+from widgets.form import SkyForm
+from widgets.form.fields import SkyCheckBox
+from widgets.form.fields import SkyTextInput
+from widgets.form.formtable import SkyFormTable
+from widgets.layouts import SkyVerticalLayout
 
 Builder.load_string("""
+#: import calculate_size res.constants.calculate_size
+#: import ColorConstants res.constants.ColorConstants
+#: import StyleConstants res.constants.StyleConstants
+
 <IperfForm>:
     size_hint: 1, 1
 
 <IperfTestForm>:
     canvas.before:
         Color:
-            rgba: self.form_fg
+            rgba: ColorConstants.form_fg_color
         Rectangle:
-            size: self.size
             pos:self.pos
+            size: self.size
     IperfForm:
         id: ipf
+        form_name: root.form_name
     AnchorLayout:
         anchor_x: "center"
         anchor_y: "center"
         size_hint: 1, 0.28
         Button:
-            text: root.button_label
-            background_color: root.bg
-            background_normal: ''
-            color: root.black
+            background_color: ColorConstants.tab_bg_color
+            background_normal: ""
+            color: ColorConstants.black
+            font_size: sp(calculate_size(self.size[1]))
+            min_size_hint_x: SizeConstants.min_start
+            pos_hint: StyleConstants.center_pos
             size_hint: 0.4, 0.75
-            min_size_hint_x: dp(120)
-            pos_hint: {'center': 0.5, 'center': 0.5}
-            font_size: sp((self.size[1]/5) + 12)
+            text: f"Run {root.form_name} Test"
             on_release: root.iperf_test(ipf.form.get_values())
 """)
 
 
 class IperfTestForm(SkyVerticalLayout):
-    form_fg = ColorConstants.form_fg_color
-    bg = ColorConstants.tab_bg_color
-    black = ColorConstants.black
+    """
+    The form for layout and logic for running an iPerf3 test.
+    
+    Attributes:
+        connection: The SSHConnection object relevant to this form.
+        form_name: The device the form is for.
+    """
 
     connection = ObjectProperty()
-    button_label = StringProperty()
+    form_name = StringProperty()
 
     def iperf_test(self, flags):
-        server_args = ['iperf3', '-s']
-        client_args = ['iperf3', '-c', '-t', '30']
-        if flags['port']:
-            client_args.append('-p')
-            client_args.append(flags['port'])
-            server_args.append('-p')
-            server_args.append(flags['port'])
-        if flags['verbose']:
-            client_args.append('-V')
-            server_args.append('-V')
-        if flags['server']:
-            if flags['logfile']:
-                server_args.append('--logfile')
-                server_args.append('iperf3_TCP_server.txt')
+        """
+        Called on user test request. Creates commands and starts threads.
+        
+        Args:
+            flags: A dictionary of flag-value pairs.
+        """
+
+        # Default base commands for the server and client
+        server_args = ["iperf3", "-s"]
+        client_args = ["iperf3", "-c", "-t", "30"]
+
+        if flags["port"]:
+            client_args.append("-p")
+            client_args.append(flags["port"])
+            server_args.append("-p")
+            server_args.append(flags["port"])
+        if flags["verbose"]:
+            client_args.append("-V")
+            server_args.append("-V")
+        if flags["server"]:
+            if flags["logfile"]:
+                server_args.append("--logfile")
+                server_args.append("iperf3_TCP_server.txt")
         else:
-            if flags['logfile']:
-                client_args.append('--logfile')
-                client_args.append('iperf3_TCP_client.txt')
-        #IMPL threaded call to run both commands. after one ends, terminate the other
+            if flags["logfile"]:
+                client_args.append("--logfile")
+                client_args.append("iperf3_TCP_client.txt")
+
+        # TODO: threaded call to run both commands. After one ends, terminate 
+        # the other. One thread for computer side (server or client depending
+        # on the "as server", input).
         print(" ".join(server_args))
         print(" ".join(client_args))
 
 
 class IperfForm(SkyFormTable):
-    returned = StringProperty()
-    label_width = dp(150)
+    """
+    The FormTable for the user to set the test flags.
+    
+    Attributes:
+        form_name: The device this form is for (car or drone).
+    """
+    
+    form_name = StringProperty()
+
     def __init__(self, **kwargs):
+        """Creates and configures table."""
+
         super().__init__(**kwargs)
         self.form = SkyForm()
-        self.add_field(SkyCheckBox(sid = "verbose", label = "Verbose", size_hint = (None, 1)), size_hint = (1, 1))
-        self.add_field(SkyCheckBox(sid = "server", label = "Drone as server", size_hint = (None, 1)), size_hint = (1, 1))
-        self.add_field(SkyTextInput(sid = "port", label = "Port", input_filter = "int", height = dp(25),
-                                     size_hint = (0.66, 0), pos_hint = {"center_y": 0.5}), size_hint = (1, 1))
-        self.add_field(SkyCheckBox(sid = "logfile", label = "Logfile", size_hint = (None, 1)), size_hint = (1, 1))
+        self.add_field(SkyCheckBox(sid="verbose", label="Verbose",
+                                   size_hint=(None, 1)),
+                                   size_hint=(1, 1))
+        self.add_field(SkyCheckBox(sid="server", label=f"{self.form_name} as server",
+                                   size_hint=(None, 1)),
+                                   size_hint=(1, 1))
+        self.add_field(SkyTextInput(sid="port", label="Port",
+                                    input_filter="int",
+                                    pos_hint={"center_y": 0.5},
+                                    size_hint=(0.66, 0)),
+                                    size_hint=(1, 1))
+        self.add_field(SkyCheckBox(sid="logfile", label="Logfile", 
+                                   size_hint=(None, 1)), 
+                                   size_hint=(1, 1))
             
