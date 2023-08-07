@@ -3,7 +3,7 @@
 # so that the edge server only receives frames not processed by the drone for object detection.
 # This module should be imported by Red_and_Edge_detect program
 
-"""Special Note note on rospy.spin()
+"""Special Note on rospy.spin()
 
 In ROS (Robot Operating System) for Python (rospy), the rospy.spin() function 
 is used to keep your Python program running and to process incoming messages from subscribed topics, services, and actions.
