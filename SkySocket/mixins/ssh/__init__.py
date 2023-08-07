@@ -131,8 +131,8 @@ class SSHConnection(EventDispatcher):
         Returns:
             bool: If the session is running on the remote host or not.
         """
-
-        if sname in self.get_tmux_sessions():
+        returned = self.get_tmux_sessions()
+        if sname in str(returned):
             return True
         
         return False

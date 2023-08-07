@@ -2,9 +2,10 @@
 
 from kivy.lang.builder import Builder
 from kivy.properties import ObjectProperty
+from kivy.uix.button import Button
 
 from interfaces.settings.settingsform import SettingsForm
-from widgets.button import SkyButton
+from res.constants import ColorConstants
 from widgets.tab import SkyTabbedPanel
 
 Builder.load_string("""
@@ -13,7 +14,12 @@ Builder.load_string("""
 #: import StyleConstants res.constants.StyleConstants
                     
 <SettingsButton>:
-    bold: True                 
+    background_color: ColorConstants.button_norm    
+    background_down: ""       
+    background_normal: ""       
+    bold: True
+    size: SizeConstants.button_size
+    size_hint: None, None        
 
 <SkySettingsTab>:
     text: "Settings"
@@ -68,10 +74,20 @@ Builder.load_string("""
 """)
 
 
-class SettingsButton(SkyButton):
+class SettingsButton(Button):
     """Stylized button for settings"""
 
-    pass
+    def on_press(self, *args):
+        """Change button color when pressed."""
+
+        super().on_press()
+        self.background_color = ColorConstants.button_down
+     
+    def on_touch_up(self, *args):
+        """Change button color when mouse releases."""
+
+        super().on_touch_up(*args)
+        self.background_color = ColorConstants.button_norm
 
 
 class SkySettingsTab(SkyTabbedPanel):
