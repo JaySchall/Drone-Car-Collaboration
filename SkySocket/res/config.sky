@@ -7,7 +7,7 @@ car_file_directory = python_files/SD2-FinalDemo-August/
 car_file_name = car_command_server.py
 
 [ssh]
-drone_username = ip
+drone_username = pi
 drone_ip = 192.168.11.1
 drone_password = raspberry
 car_username = pi

@@ -78,7 +78,7 @@ class SkySocketApp(App):
         """
 
         Window.bind(on_request_close=self.on_request_close)
-        Window.bind(on_pre_resize = self._bind_size)
+        Window.bind(on_pre_resize=self._bind_size)
         self.main_window = MainWindow()
         return self.main_window
     

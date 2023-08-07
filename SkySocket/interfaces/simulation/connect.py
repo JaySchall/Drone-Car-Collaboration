@@ -3,15 +3,19 @@
 from kivy.lang.builder import Builder
 from kivy.properties import StringProperty
 from kivy.properties import ObjectProperty
+from kivy.uix.button import Button
 from kivy.uix.label import Label
 
-from widgets.button import SkyButton
+from res.constants import ColorConstants
 from widgets.layouts import SkyHorizontalLayout
 
 Builder.load_string("""
 #: import ColorConstants res.constants.ColorConstants
 
 <SimulationButton>:
+    background_color: ColorConstants.button_norm    
+    background_down: ""       
+    background_normal: ""
     font_size: sp(self.height/3.2 + 10)
     pos_hint: StyleConstants.center_pos
     size_hint: 0.8, 0.8
@@ -72,10 +76,19 @@ Builder.load_string("""
 """)
 
 
-class SimulationButton(SkyButton):
+class SimulationButton(Button):
     """Buttons for connection form."""
 
-    pass
+    def on_press(self, *args):
+        """Change button color when pressed."""
+        super().on_press()
+        self.background_color = ColorConstants.button_down
+     
+    def on_touch_up(self, *args):
+        """Change button color when mouse releases."""
+
+        super().on_touch_up(*args)
+        self.background_color = ColorConstants.button_norm
 
 
 class StatusLabel(Label):
@@ -129,17 +142,17 @@ class SkyConnectForm(SkyHorizontalLayout):
         elif not self.connection.online and self.active_label == "TRUE":
             self.active_label = "FALSE"
 
-    def on_ping(self):
+    def on_ping(self, *arg):
         """Pings the forms IP to see if it's online."""
 
         self.connection.on_ping()
 
-    def on_connect(self):
+    def on_connect(self, *args):
         """Attempts to establish an SSH connection with the hardware."""
         
         self.connection.reconnect()
 
-    def on_restart(self):
+    def on_restart(self, *args):
         """Restarts the hardware."""
         
         self.connection.cmd("sudo shutdown -r now")
