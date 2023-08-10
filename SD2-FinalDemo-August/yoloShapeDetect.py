@@ -43,7 +43,7 @@ def connect_to_car_command_server():
 
 def send_message_to_car(command):
     file_logger.info("Sending message %s to car [0=stop, 1=cont_drive, 2=red_speed, 3=L, 4=R, 5=clear]", command)
-    if command is 0:
+    if command == 0:
         console_logger.warning("Sending message %s to car [0=stop, 1=cont_drive, 2=red_speed, 3=L, 4=R, 5=clear]", command) 
     connect.message_car(command)
 

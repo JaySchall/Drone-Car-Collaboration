@@ -65,7 +65,7 @@ def initialize_ros_node():
 
 def send_message_to_car(command):
     file_logger.info("Sending message %s to car [0=stop, 1=cont_drive, 2=red_speed, 3=L, 4=R, 5=clear]", command)
-    if command is STOP:
+    if command == STOP:
         console_logger.warning("Sending message %s to car [0=stop, 1=cont_drive, 2=red_speed, 3=L, 4=R, 5=clear]", command) 
     connect.message_car(command)
 

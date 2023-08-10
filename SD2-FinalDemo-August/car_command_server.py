@@ -147,8 +147,9 @@ def main():
             connection_socket, addr = SERVER_SOCKET.accept()  # TCP Connection Created
             file_logger.info("Connection established with: %s", addr)
             print("Connection established with: %s", addr)
-            file_logger.info('Car now driving at %s...', SPEED)
-            print('Car now driving at %s...', SPEED)
+            if connected_clients == NUM_CLIENTS_ALLOWED:
+                file_logger.info('Now connected to drone and edge serve - Car now driving at %s...', SPEED)
+                print('Now connected to drone and edge serve - Car now driving at %s...', SPEED)
 
             # Each client thread will run the handle_client_connection thread, 
             # as this program will spawn a child thread for each client.
