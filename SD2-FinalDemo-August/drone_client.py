@@ -60,16 +60,16 @@ def establish_socket_connection():
     try:
         CLIENT_SOCKET.connect((SERVER_NAME, SERVER_PORT))  # Establish connection when the program begins
         file_logger.info("Connected to server: %s on port: %s", SERVER_NAME, SERVER_PORT)
-        print("Connected to server: %s on port: %s", SERVER_NAME, SERVER_PORT)
+        print(f"Connected to server: {SERVER_NAME} on port: {SERVER_PORT}")
     except ConnectionRefusedError as e:
         file_logger.error("Error connecting to server: %s", str(e))
         close_socket()
     # Debug messages to indicate the connection status
     if CLIENT_SOCKET.fileno() != -1:
         file_logger.info("Socket connection is active (socket file descriptor = %s).", CLIENT_SOCKET.fileno())
-        print("Socket connection is active (socket file descriptor = %s).", CLIENT_SOCKET.fileno())
+        print(f"Socket connection is active (socket file descriptor = {CLIENT_SOCKET.fileno()}).")
         return True
     else:
         file_logger.info("Socket connection is closed (socket file descriptor = %s).", CLIENT_SOCKET.fileno())
-        print("Socket connection is closed (socket file descriptor = %s).", CLIENT_SOCKET.fileno())
+        print(f"Socket connection is closed (socket file descriptor = {CLIENT_SOCKET.fileno()}).")
         return False

@@ -219,7 +219,7 @@ def main():
     global red_and_edge_image_pub
     red_and_edge_image_pub = rospy.Publisher(PUBLISHER_TOPIC, Image, queue_size=10)
     file_logger.info("ROS publisher created for %s topic.", PUBLISHER_TOPIC)
-    print("ROS publisher created for %s topic.", PUBLISHER_TOPIC)
+    print("ROS publisher created for %s topic." % PUBLISHER_TOPIC)
 
     start_image_processing(SUBSCRIBER_TOPIC)
 

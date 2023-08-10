@@ -44,7 +44,7 @@ def warning(command, client_addr):
         if SPEED != 0:  # Slow car down by half
             SPEED = SPEED / 2
             file_logger.info("Client %s: Slowing down car. New speed: %s", client_addr, SPEED)
-            console_logger.info("Client %s: Slowing down car. New speed: %s", client_addr, SPEED)
+            console_logger.warning("Client %s: Slowing down car. New speed: %s", client_addr, SPEED)
             px.forward(SPEED)
     elif command == TURN_LEFT:
         raise NotImplementedError("Left turn not implemented yet")  # Turn car left
@@ -126,7 +126,7 @@ def handle_client_connection(connection_socket, client_addr):
 
     connection_socket.close()
     file_logger.info("Connection closed with client (%s)", client_addr)
-    print("Connection closed with client (%s)", client_addr)
+    print("Connection closed with client (%s)" % client_addr)
 
 def main():
     SERVER_SOCKET = socket(AF_INET, SOCK_STREAM)  # Server socket creation
@@ -134,7 +134,7 @@ def main():
     SERVER_SOCKET.listen(NUM_CLIENTS_ALLOWED)  # Maximum number of queued connections
 
     file_logger.info('Car now listening on %s:%s', SERVER_NAME, SERVER_PORT)
-    print('Car now listening on %s:%s', SERVER_NAME, SERVER_PORT)
+    print('Car now listening on %s:%s' % (SERVER_NAME, SERVER_PORT))
 
     connected_clients = 0  # Counter for connected clients
     connection_threads = [] # Thread IDs stored in this list
@@ -146,10 +146,10 @@ def main():
             print("Waiting for incoming client connections...")
             connection_socket, addr = SERVER_SOCKET.accept()  # TCP Connection Created
             file_logger.info("Connection established with: %s", addr)
-            print("Connection established with: %s", addr)
+            print("Connection established with: %s" % addr)
             if connected_clients == NUM_CLIENTS_ALLOWED:
                 file_logger.info('Now connected to drone and edge serve - Car now driving at %s...', SPEED)
-                print('Now connected to drone and edge serve - Car now driving at %s...', SPEED)
+                print('Now connected to drone and edge serve - Car now driving at %s...' % SPEED)
 
             # Each client thread will run the handle_client_connection thread, 
             # as this program will spawn a child thread for each client.
