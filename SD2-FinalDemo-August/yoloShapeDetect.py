@@ -15,28 +15,36 @@ SEND_TURN_RIGHT = 4  # Turn right command
 SEND_ALL_CLEAR = 5  # All clear command
 SUBSCRIBER_TOPIC = "EdgeServer_VideoTopic/image_raw"
 
-# Create a logger instance
-yoloShapeDetect_logger = logging.getLogger(__name__)
+# Create a logger instance for file logging
+file_logger = logging.getLogger(__name__ + '--file_logger')
+file_logger.setLevel(logging.INFO)
+file_formatter = logging.Formatter("%(asctime)s - [%(name)s] - %(levelname)s - %(message)s")
+file_handler = logging.FileHandler("yoloShapeDetect_log.txt", mode="a") #open in append mode so file is not reset
+file_handler.setFormatter(file_formatter)
+file_logger.addHandler(file_handler)
 
-# Configure logging to write to a log file and console
-yoloShapeDetect_logger.setLevel(logging.INFO)
-formatter = logging.Formatter("%(asctime)s - [%(name)s] - %(levelname)s - %(message)s")
-file_handler = logging.FileHandler("yoloShapeDetect_log.txt", mode="a") #open in append mode so log file is not reset
-file_handler.setFormatter(formatter)
-stream_handler = logging.StreamHandler()
-stream_handler.setFormatter(formatter)
-yoloShapeDetect_logger.addHandler(file_handler)
-yoloShapeDetect_logger.addHandler(stream_handler)
+# Create a logger instance for console logging
+console_logger = logging.getLogger(__name__ + '--console_logger')
+console_logger.setLevel(logging.WARNING)  # Console logger set to capture WARNING and higher messages
+console_formatter = logging.Formatter("%(asctime)s - [%(name)s] - %(levelname)s - %(message)s")
+console_handler = logging.StreamHandler()
+console_handler.setFormatter(console_formatter)
+console_logger.addHandler(console_handler)
+
 
 def connect_to_car_command_server():
-    yoloShapeDetect_logger.info("Trying to establish connection with car command server...")
+    file_logger.info("Trying to establish connection with car command server...")
+    print("Trying to establish connection with car command server...")  
     if not connect.establish_socket_connection():
-        yoloShapeDetect_logger.info("Failed to establish connection with the car command server.")
+        file_logger.info("Failed to establish connection with the car command server.")
+        print("Failed to establish connection with the car command server.") 
         return False
     return True
 
 def send_message_to_car(command):
-    yoloShapeDetect_logger.info("Sending message %s to car [0=stop, 1=cont_drive, 2=red_speed, 3=L, 4=R, 5=clear]", command)
+    file_logger.info("Sending message %s to car [0=stop, 1=cont_drive, 2=red_speed, 3=L, 4=R, 5=clear]", command)
+    if command is 0:
+        console_logger.warning("Sending message %s to car [0=stop, 1=cont_drive, 2=red_speed, 3=L, 4=R, 5=clear]", command) 
     connect.message_car(command)
 
 def darknet_helper(img, width, height, network, class_names):
@@ -77,7 +85,8 @@ def main():
     cap = cv2.VideoCapture(video_url)
 
     if not cap.isOpened():
-        yoloShapeDetect_logger.error("Failed to open the video stream.")
+        file_logger.error("Failed to open the video stream.")
+        console_logger.error("Failed to open the video stream.")
         return
 
     # Initialize object detected variable to false
@@ -90,7 +99,8 @@ def main():
 
         # If the frame was not successfully read, then we have reached the end of the stream
         if not ret:
-            yoloShapeDetect_logger.error("Failed to read video stream; end of stream reached or stream/video error.")
+            file_logger.error("Failed to read video stream; end of stream reached or stream/video error.")
+            console_logger.error("Failed to read video stream; end of stream reached or stream/video error.")
             break
 
         # Set obj_detected to false here which is used to determine if a command should be sent to stop the car

@@ -31,63 +31,70 @@ EdgeServer_image_pub = None
 with open("red_and_edge_object_detection_log.txt", mode="w"):
     pass
 
-# Create a logger instance
-EdgeServer_video_logger = logging.getLogger(__name__)
+# Create a logger instance for file logging
+file_logger = logging.getLogger(__name__ + '--file_logger')
+file_logger.setLevel(logging.INFO)
+file_formatter = logging.Formatter("%(asctime)s - [%(name)s] - %(levelname)s - %(message)s")
+file_handler = logging.FileHandler("red_and_edge_object_detection_log.txt", mode="a")  # Now open in append mode
+file_handler.setFormatter(file_formatter)
+file_logger.addHandler(file_handler)
 
-# Configure logging to write to a log file and console
-EdgeServer_video_logger.setLevel(logging.INFO)
-formatter = logging.Formatter("%(asctime)s - [%(name)s] - %(levelname)s - %(message)s")
-file_handler = logging.FileHandler("red_and_edge_object_detection_log.txt", mode="a") # now open in append mode
-file_handler.setFormatter(formatter)
-stream_handler = logging.StreamHandler()
-stream_handler.setFormatter(formatter)
-EdgeServer_video_logger.addHandler(file_handler)
-EdgeServer_video_logger.addHandler(stream_handler)
+# Create a logger instance for console logging
+console_logger = logging.getLogger(__name__ + '--console_logger')
+console_logger.setLevel(logging.INFO)  # Adjust console logger level as needed
+console_formatter = logging.Formatter("%(asctime)s - [%(name)s] - %(levelname)s - %(message)s")
+console_handler = logging.StreamHandler()
+console_handler.setFormatter(console_formatter)
+console_logger.addHandler(console_handler)
 
 # note, the following initialization of ros node is not necessary if this file is imported into a python script that already initializes
 # a ros node for the current process. ROS only allows one ROS node per process.
 def initialize_ros_node():
     try:
-        rospy.init_node('EdgeServer_VideoTopic')  # Initialize the ROS node with the name 'EdgeServer_VideoTopic'
-        EdgeServer_video_logger.info("ROS node 'EdgeServer_VideoTopic' initialized.")
+        rospy.init_node('EdgeServer_VideoTopic')
+        file_logger.info("ROS node 'EdgeServer_VideoTopic' initialized.")
+        console_logger.info("ROS node 'EdgeServer_VideoTopic' initialized.")  # Console logger output
         return True
     except rospy.ROSInitException as e:
-        EdgeServer_video_logger.error("Failed to initialize ROS EdgeServer_VideoTopic node: %s", str(e))
+        file_logger.error("Failed to initialize ROS EdgeServer_VideoTopic node: %s", str(e))
+        console_logger.error("Failed to initialize ROS EdgeServer_VideoTopic node: %s", str(e))  # Console logger output
         return False
 
 def image_callback(data):
     try:
-        EdgeServer_image_pub.publish(data)  # Publish the received image data to the 'EdgeServer_VideoTopic/image_raw' topic
+        EdgeServer_image_pub.publish(data)
 
     except Exception as e:
-        EdgeServer_video_logger.error("Error in image_callback: %s", str(e))
+        file_logger.error("Error in image_callback: %s", str(e))
+        console_logger.error("Error in image_callback: %s", str(e))  # Console logger output
 
 def start_image_subscriber(subscriber_topic):
     try:
-        image_sub = rospy.Subscriber(subscriber_topic, Image, image_callback)  # Subscribe to 'main_camera/image_raw' topic
+        image_sub = rospy.Subscriber(subscriber_topic, Image, image_callback)
 
     except rospy.ROSException as e:
-        EdgeServer_video_logger.error("ROSException in start_image_subscriber: %s", str(e))
+        file_logger.error("ROSException in start_image_subscriber: %s", str(e))
+        console_logger.error("ROSException in start_image_subscriber: %s", str(e))  # Console logger output
 
 def main():
     global EdgeServer_image_pub
-    EdgeServer_image_pub = rospy.Publisher(PUBLISHER_TOPIC, Image, queue_size=10)  # Create a publisher for the 'EdgeServer_VideoTopic/image_raw' topic
-    EdgeServer_video_logger.info("ROS publisher created for %s topic.", PUBLISHER_TOPIC)
-
+    EdgeServer_image_pub = rospy.Publisher(PUBLISHER_TOPIC, Image, queue_size=10)
+    file_logger.info("ROS publisher created for %s topic.", PUBLISHER_TOPIC)
+    console_logger.info("ROS publisher created for %s topic.", PUBLISHER_TOPIC)  # Console logger output
 
 if __name__ == "__main__":
-    EdgeServer_video_logger.info("Attempting to initialize ROS node and publish EdgeServer_VideoTopic as the main program (not as an imported program)")
+    file_logger.info("Attempting to initialize ROS node and publish EdgeServer_VideoTopic as the main program (not as an imported program)")
+    console_logger.info("Attempting to initialize ROS node and publish EdgeServer_VideoTopic as the main program (not as an imported program)")  # Console logger output
     if not initialize_ros_node():
-        # Note, the following initialization of ros node is not necessary if this file is imported into a 
-        # python script that already initializes a ROS node for the current process. ROS only allows one ROS node per process.
         pass
     else:
-        main()  # Run the main function if this script is executed directly
-        start_image_subscriber(SUBSCRIBER_TOPIC)  # Start the image subscriber to process received frames
-        rospy.spin()  # uncomment this line to continuously subscribe to new data uploaded by subscriber topic and process using image_callback
-
+        main()
+        start_image_subscriber(SUBSCRIBER_TOPIC)
+        file_logger.info("Subscribed to %s topic and processing received frames.", SUBSCRIBER_TOPIC)
+        console_logger.info("Subscribed to %s topic and processing received frames.", SUBSCRIBER_TOPIC)  # Console logger output
+        rospy.spin()
 else:
-    EdgeServer_video_logger.info("%s module imported...ROS node should already be initiated...Attempting to publish EdgeServer_VideoTopic", __name__)
-    # Note: since the script was imported into a script that already initialized the ROS node, no need to init ROS node.
-    # ROS only allows one ROS node per process.
-    main()  # still run the main function if this script is imported as a module
+    file_logger.info("%s module imported...ROS node should already be initiated...Attempting to publish EdgeServer_VideoTopic", __name__)
+    console_logger.info("%s module imported...ROS node should already be initiated...Attempting to publish EdgeServer_VideoTopic", __name__)  # Console logger output
+    main()
+

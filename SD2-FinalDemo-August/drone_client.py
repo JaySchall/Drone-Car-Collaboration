@@ -11,18 +11,22 @@ CLIENT_SOCKET = socket(AF_INET, SOCK_STREAM)  # Client Socket Creation
 with open("red_and_edge_object_detection_log.txt", mode="w"):
     pass
 
-# Create a logger instance
-drone_client_logger = logging.getLogger(__name__)
+# Create a logger instance for file logging
+file_logger = logging.getLogger(__name__ + '.file_logger')
+file_logger.setLevel(logging.INFO) # Write to log file with INFO and higher messages
+file_formatter = logging.Formatter("%(asctime)s - [%(name)s] - %(levelname)s - %(message)s")
+file_handler = logging.FileHandler("red_and_edge_object_detection_log.txt", mode="a")  # Open in append mode so file is not reset
+file_handler.setFormatter(file_formatter)
+file_logger.addHandler(file_handler)
 
-# Configure logging to write to a log file and console
-drone_client_logger.setLevel(logging.INFO)
-formatter = logging.Formatter("%(asctime)s - [%(name)s] - %(levelname)s - %(message)s")
-file_handler = logging.FileHandler("red_and_edge_object_detection_log.txt", mode="a") # now open in append mode
-file_handler.setFormatter(formatter)
-stream_handler = logging.StreamHandler()
-stream_handler.setFormatter(formatter)
-drone_client_logger.addHandler(file_handler)
-drone_client_logger.addHandler(stream_handler)
+# Create a logger instance for console logging
+console_logger = logging.getLogger(__name__ + '.console_logger')
+console_logger.setLevel(logging.WARNING)  # Console logger set to capture WARNING and higher messages
+console_formatter = logging.Formatter("%(asctime)s - [%(name)s] - %(levelname)s - %(message)s")
+console_handler = logging.StreamHandler()
+console_handler.setFormatter(console_formatter)
+console_logger.addHandler(console_handler)
+
 
 ''' 
 Send a message to the car using the following protocol:
@@ -36,29 +40,36 @@ Send a message to the car using the following protocol:
 '''
 
 def message_car(var):
-    drone_client_logger.info("Sending message: %s", var)
+    file_logger.info("Sending message: %s", var)
     try:
         CLIENT_SOCKET.send(str(var).encode())  # Convert var to string and then encode it
-        drone_client_logger.info("Message sent successfully!")
+        file_logger.info("Message sent successfully!")
+        console_logger.info("Message sent successfully!")
+        
     except Exception as e:
-        drone_client_logger.error("Error sending message: %s", str(e))
+        file_logger.error("Error sending message: %s", str(e))
+        console_logger.error("Error sending message: %s", str(e))
+        
         
 # QUIT Protocol
 def close_socket():
     CLIENT_SOCKET.close()
-    drone_client_logger.info("Socket closed.")
+    file_logger.info("Socket closed.")
 
 def establish_socket_connection():
     try:
         CLIENT_SOCKET.connect((SERVER_NAME, SERVER_PORT))  # Establish connection when the program begins
-        drone_client_logger.info("Connected to server: %s on port: %s", SERVER_NAME, SERVER_PORT)
+        file_logger.info("Connected to server: %s on port: %s", SERVER_NAME, SERVER_PORT)
+        print("Connected to server: %s on port: %s", SERVER_NAME, SERVER_PORT)
     except ConnectionRefusedError as e:
-        drone_client_logger.error("Error connecting to server: %s", str(e))
+        file_logger.error("Error connecting to server: %s", str(e))
         close_socket()
     # Debug messages to indicate the connection status
     if CLIENT_SOCKET.fileno() != -1:
-        drone_client_logger.info("Socket connection is active (socket file descriptor = %s).", CLIENT_SOCKET.fileno())
+        file_logger.info("Socket connection is active (socket file descriptor = %s).", CLIENT_SOCKET.fileno())
+        print("Socket connection is active (socket file descriptor = %s).", CLIENT_SOCKET.fileno())
         return True
     else:
-        drone_client_logger.info("Socket connection is closed (socket file descriptor = %s).", CLIENT_SOCKET.fileno())
+        file_logger.info("Socket connection is closed (socket file descriptor = %s).", CLIENT_SOCKET.fileno())
+        print("Socket connection is closed (socket file descriptor = %s).", CLIENT_SOCKET.fileno())
         return False

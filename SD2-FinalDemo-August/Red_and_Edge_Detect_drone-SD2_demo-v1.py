@@ -1,3 +1,4 @@
+from pickle import STOP
 import rospy
 import cv2
 import numpy as np
@@ -25,39 +26,49 @@ SUBSCRIBER_TOPIC = "main_camera/image_raw"
 PUBLISHER_TOPIC = 'red_and_edge_object_detection/image_raw'
 
 
-# Create a logger instance
-red_and_edge_detect_logger = logging.getLogger(__name__)
+# Create a logger instance for file logging
+file_logger = logging.getLogger(__name__ + '--file_logger')
+file_logger.setLevel(logging.INFO)
+file_formatter = logging.Formatter("%(asctime)s - [%(name)s] - %(levelname)s - %(message)s")
+file_handler = logging.FileHandler("red_and_edge_object_detection_log.txt", mode="a") #open in append mode so file is not reset
+file_handler.setFormatter(file_formatter)
+file_logger.addHandler(file_handler)
 
-# Configure logging to write to a log file and console
-red_and_edge_detect_logger.setLevel(logging.INFO)
-formatter = logging.Formatter("%(asctime)s - [%(name)s] - %(levelname)s - %(message)s")
-file_handler = logging.FileHandler("red_and_edge_object_detection_log.txt", mode="a") #open in append mode so log file is not reset
-file_handler.setFormatter(formatter)
-stream_handler = logging.StreamHandler()
-stream_handler.setFormatter(formatter)
-red_and_edge_detect_logger.addHandler(file_handler)
-red_and_edge_detect_logger.addHandler(stream_handler)
+# Create a logger instance for console logging
+console_logger = logging.getLogger(__name__ + '--console_logger')
+console_logger.setLevel(logging.WARNING)  # Console logger set to capture WARNING and higher messages
+console_formatter = logging.Formatter("%(asctime)s - [%(name)s] - %(levelname)s - %(message)s")
+console_handler = logging.StreamHandler()
+console_handler.setFormatter(console_formatter)
+console_logger.addHandler(console_handler)
 
 
 def connect_to_car_command_server():
-    red_and_edge_detect_logger.info("Trying to establish connection with car command server...")
+    file_logger.info("Trying to establish connection with car command server...")
+    print("Trying to establish connection with car command server...")  
     if not connect.establish_socket_connection():
-        red_and_edge_detect_logger.info("Failed to establish connection with the car command server.")
+        file_logger.info("Failed to establish connection with the car command server.")
+        print("Failed to establish connection with the car command server.") 
         return False
     return True
 
 def initialize_ros_node():
     try:
         rospy.init_node('red_and_edge_object_detection')
-        red_and_edge_detect_logger.info("ROS node 'red_and_edge_object_detection' initialized.")
+        file_logger.info("ROS node 'red_and_edge_object_detection' initialized.")
+        print("ROS node 'red_and_edge_object_detection' initialized.")  
         return True
     except rospy.ROSInitException as e:
-        red_and_edge_detect_logger.error("Failed to initialize red_and_edge_object_detection ROS node: %s", str(e))
+        file_logger.error("Failed to initialize red_and_edge_object_detection ROS node: %s", str(e))
+        console_logger.error("Failed to initialize red_and_edge_object_detection ROS node: %s", str(e))  
         return False
 
 def send_message_to_car(command):
-    red_and_edge_detect_logger.info("Sending message %s to car [0=stop, 1=cont_drive, 2=red_speed, 3=L, 4=R, 5=clear]", command)
+    file_logger.info("Sending message %s to car [0=stop, 1=cont_drive, 2=red_speed, 3=L, 4=R, 5=clear]", command)
+    if command is STOP:
+        console_logger.warning("Sending message %s to car [0=stop, 1=cont_drive, 2=red_speed, 3=L, 4=R, 5=clear]", command) 
     connect.message_car(command)
+
 
 def detect_red(cv_image):
     hsv = cv2.cvtColor(cv_image, cv2.COLOR_BGR2HSV)
@@ -184,7 +195,9 @@ def image_callback(data):
         red_and_edge_image_pub.publish(img_msg)
 
     except Exception as e:
-        red_and_edge_detect_logger.error("Error in image_callback: %s", str(e))
+        file_logger.error("Error in image_callback: %s", str(e))
+        console_logger.error("Error in image_callback: %s", str(e))
+        
 
 def start_image_processing(subscriber_topic):
     try:
@@ -192,7 +205,9 @@ def start_image_processing(subscriber_topic):
         rospy.spin()
 
     except rospy.ROSException as e:
-        red_and_edge_detect_logger.error("ROSException in start_image_processing: %s", str(e))
+        file_logger.error("ROSException in start_image_processing: %s", str(e))
+        console_logger.error("ROSException in start_image_processing: %s", str(e))
+        
 
 def main():
     
@@ -203,7 +218,8 @@ def main():
 
     global red_and_edge_image_pub
     red_and_edge_image_pub = rospy.Publisher(PUBLISHER_TOPIC, Image, queue_size=10)
-    red_and_edge_detect_logger.info("ROS publisher created for %s topic.", PUBLISHER_TOPIC)
+    file_logger.info("ROS publisher created for %s topic.", PUBLISHER_TOPIC)
+    print("ROS publisher created for %s topic.", PUBLISHER_TOPIC)
 
     start_image_processing(SUBSCRIBER_TOPIC)
 
