@@ -26,7 +26,7 @@ px = Picarx()
 file_logger = logging.getLogger(__name__ + '--file_logger')
 file_logger.setLevel(logging.INFO)
 file_formatter = logging.Formatter("%(asctime)s - [%(name)s] - %(levelname)s - %(message)s")
-file_handler = logging.FileHandler("red_and_edge_object_detection_log.txt", mode="w")
+file_handler = logging.FileHandler("car_command_server_log.txt", mode="w")
 file_handler.setFormatter(file_formatter)
 file_logger.addHandler(file_handler)
 
