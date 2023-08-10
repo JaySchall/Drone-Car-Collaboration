@@ -209,3 +209,21 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+#Special Note on rospy.init and rospy.spin functions:
+"""
+# Initialization: When you create a ROS node using rospy.init_node('node_name'), you set up a node with a specific name.
+
+# Subscriptions, Publications, and Services: Within this node, you can define various activities,
+# such as subscribing to topics, publishing messages, and providing or using services.
+
+# Event Loop: When you call rospy.spin(), you essentially start the event loop of the ROS node.
+# This loop continuously checks for incoming events like new messages on subscribed topics or service calls.
+
+# Event Handling: Whenever an event is received, such as a new message on a subscribed topic,
+# the corresponding callback function associated with that event is executed.
+
+# Continual Operation: The rospy.spin() function does not exit on its own.
+# It keeps the node alive and responsive to events.
+# This is essential for maintaining communication and interaction with other nodes in a ROS system.
+"""
