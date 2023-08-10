@@ -7,6 +7,8 @@ import threading
 # Global variables
 SERVER_NAME = "192.168.11.133"  # Server IP (car)
 SERVER_PORT = 10600  # Server Port (Predefined)
+DRONE_IP_ADDRESS = "192.168.11.1"
+CAR_IP_ADDRESS = "192.168.11.133"
 SPEED = 1  # Global speed variable
 DEFAULT_SPEED = 1  # Default cruising speed
 NUM_CLIENTS_ALLOWED = 2 # Max number of clients allowed to connect to server
@@ -142,15 +144,15 @@ def main():
 
     while connected_clients < NUM_CLIENTS_ALLOWED:
         try:
-            file_logger.info("Waiting for incoming client connections...")
-            print("Waiting for incoming client connections...")
+            file_logger.info("Waiting for incoming client connections...(current number of established connections: %s)", connected_clients)
+            print("Waiting for incoming client connections...(current number of established connections: %s)" % connected_clients)
             connection_socket, addr = SERVER_SOCKET.accept()  # TCP Connection Created
             file_logger.info("Connection established with: %s", addr)
             print("Connection established with: %s" % addr)
             if connected_clients == NUM_CLIENTS_ALLOWED:
-                file_logger.info('Now connected to drone and edge serve - Car now driving at %s...', SPEED)
+                file_logger.info('Now connected to drone and edge server - Car now driving at %s...', SPEED)
                 print('Now connected to drone and edge serve - Car now driving at %s...' % SPEED)
-
+           
             # Each client thread will run the handle_client_connection thread, 
             # as this program will spawn a child thread for each client.
             client_thread = threading.Thread(target=handle_client_connection, args=(connection_socket, addr))
