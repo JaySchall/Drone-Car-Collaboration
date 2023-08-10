@@ -7,8 +7,6 @@ import threading
 # Global variables
 SERVER_NAME = "192.168.11.133"  # Server IP (car)
 SERVER_PORT = 10600  # Server Port (Predefined)
-DRONE_IP_ADDRESS = "192.168.11.1"
-CAR_IP_ADDRESS = "192.168.11.133"
 SPEED = 1  # Global speed variable
 DEFAULT_SPEED = 1  # Default cruising speed
 NUM_CLIENTS_ALLOWED = 2 # Max number of clients allowed to connect to server
