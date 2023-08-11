@@ -144,8 +144,13 @@ def main():
         try:
             file_logger.info("Waiting for incoming client connections...(current number of established connections: %s)", connected_clients)
             print("Waiting for incoming client connections...(current number of established connections: %s)" % connected_clients)
-            connection_socket, addr = SERVER_SOCKET.accept()  # TCP Connection Created - note that addr is a tuple of (IP,PORTNUM)
-            file_logger.info("Connection established with: %s:%s", addr)
+            
+            #This program will hang after calling SERVER_SOCKET.accept() until connection is requested and accepted:
+            connection_socket, addr = SERVER_SOCKET.accept()  # TCP Connection Created - note that addr is a tuple of (IP,PORT_NUM)
+            connected_clients += 1  # Increment the counter each time a client is connected
+            
+            #After connection, program continues:
+            file_logger.info("Connection established with: %s:%s", addr[0], addr[1])
             print("Connection established with: %s:%s" % addr)
             if connected_clients == NUM_CLIENTS_ALLOWED:
                 file_logger.info('Now connected to drone and edge server - Car now driving at %s...', SPEED)
@@ -156,8 +161,6 @@ def main():
             client_thread = threading.Thread(target=handle_client_connection, args=(connection_socket, addr))
             client_thread.start()
             connection_threads.append(client_thread)
-
-            connected_clients += 1  # Increment the counter for each connected client
 
         except Exception as e:
             file_logger.error("Error occurred during client connection: %s", str(e))
