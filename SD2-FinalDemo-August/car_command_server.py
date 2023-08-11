@@ -204,8 +204,7 @@ def main():
             # When both clients (drone and edge server) are connected to car command server, car can now begin driving
             if NUM_CLIENTS_CONNECTED == NUM_CLIENTS_REQUIRED:
                 ALL_CLIENTS_CONNECTED.set() # set this so that client threads can start sending messages.
-                px.forward(DEFAULT_SPEED)
-                break
+                px.forward(DEFAULT_SPEED) #begin driving now that require3d number of client command nodes connected
 
         time.sleep(1)  # Wait for 1 second before checking for the next client connection
 
