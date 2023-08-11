@@ -10,6 +10,10 @@ SERVER_PORT = 10600  # Server Port (Predefined)
 SPEED = 1  # Global speed variable
 DEFAULT_SPEED = 1  # Default cruising speed
 NUM_CLIENTS_ALLOWED = 2 # Max number of clients allowed to connect to server
+NUM_CLIENTS_CONNECTED = 0 # for multithreading and recovery purposes - track num of connected clients
+ALL_CLIENTS_CONNECTED = threading.Event() # use this to track if all client threads still have a server connection
+CLIENTS_LOCK = threading.lock() # use this to lock sections of code that access the num_clients_connected global variable
+
 
 #Car commands
 STOP = 0  # Stop Car command
@@ -67,31 +71,40 @@ def continueDriving():
     px.forward(SPEED)
 
 def handle_client_connection(connection_socket, client_addr):
-    global SPEED, DEFAULT_SPEED
+    global SPEED, DEFAULT_SPEED, NUM_CLIENTS_CONNECTED
 
     stop_command_received = False
     stop_timer_start = None
     stop_timer_duration = 5  # Number of seconds to drop packets after receiving a stop command
+   
+    # Acquire the lock to safely increment the number of connected clients  
+    with CLIENTS_LOCK:
+        NUM_CLIENTS_CONNECTED += 1
+    # Wait until all clients are connected
+    while not ALL_CLIENTS_CONNECTED.is_set():
+        time.sleep(1)  # Wait until all clients are connected
 
-    while True:
+    while ALL_CLIENTS_CONNECTED.is_set():
+        # implement ignore timer for when stop command was received:
         if stop_command_received:
             elapsed_time = time.time() - stop_timer_start
             time_left = stop_timer_duration - elapsed_time
             if elapsed_time < stop_timer_duration:
-                file_logger.warning("STOP command received from CLIENT: (%s); now stopping and ignoring drone messages for %s seconds; Time left: %s",
+                file_logger.warning("STOP command received from CLIENT: (%s); stopping and ignoring command messages (except for STOP messages) for %s seconds; Time left: %s",
                              client_addr, stop_timer_duration, time_left)
-                console_logger.warning("STOP command received from CLIENT: (%s); now stopping and ignoring drone messages for %s seconds; Time left: %s",
+                console_logger.warning("STOP command received from CLIENT: (%s); stopping and ignoring command messages (except for STOP messages) for %s seconds; Time left: %s",
                              client_addr, stop_timer_duration, time_left)
             else:
                 stop_command_received = False
                 stop_timer_start = None
                 continueDriving()  # Continue to normal driving
-
+        
+        # Now, receive a packet:
         try:
             packet = connection_socket.recv(1).decode()  # Receives command from a client (buffer size set to 1 byte --> recv(1))
 
             if stop_command_received:
-                if int(packet) == STOP:
+                if int(packet) == STOP: # still process new STOP command packets so that timer will be restarted
                     stop_command_received = True
                     stop_timer_start = time.time()
                     obstruction()  # Make a call to stop the car
@@ -136,23 +149,23 @@ def main():
     file_logger.info('Car now listening on %s:%s', SERVER_NAME, SERVER_PORT)
     print('Car now listening on %s:%s' % (SERVER_NAME, SERVER_PORT))
 
-    connected_clients = 0  # Counter for connected clients
+    NUM_CLIENTS_CONNECTED # Counter for connected clients
     connection_threads = [] # Thread IDs stored in this list
    
 
-    while connected_clients < NUM_CLIENTS_ALLOWED:
+    while NUM_CLIENTS_CONNECTED < NUM_CLIENTS_ALLOWED:
         try:
-            file_logger.info("Waiting for incoming client connections...(current number of established connections: %s)", connected_clients)
-            print("Waiting for incoming client connections...(current number of established connections: %s)" % connected_clients)
+            file_logger.info("Waiting for incoming client connections...(current number of established connections: %s)", NUM_CLIENTS_CONNECTED)
+            print("Waiting for incoming client connections...(current number of established connections: %s)" % NUM_CLIENTS_CONNECTED)
             
             #This program will hang after calling SERVER_SOCKET.accept() until connection is requested and accepted:
             connection_socket, addr = SERVER_SOCKET.accept()  # TCP Connection Created - note that addr is a tuple of (IP,PORT_NUM)
-            connected_clients += 1  # Increment the counter each time a client is connected
+            NUM_CLIENTS_CONNECTED += 1  # Increment the counter each time a client is connected
             
             #After connection, program continues:
             file_logger.info("Connection established with: %s:%s", addr[0], addr[1])
             print("Connection established with: %s:%s" % addr)
-            if connected_clients == NUM_CLIENTS_ALLOWED:
+            if NUM_CLIENTS_CONNECTED == NUM_CLIENTS_ALLOWED:
                 file_logger.info('Now connected to drone and edge server - Car now driving at %s...', SPEED)
                 print('Now connected to drone and edge serve - Car now driving at %s...' % SPEED)
            
@@ -166,10 +179,12 @@ def main():
             file_logger.error("Error occurred during client connection: %s", str(e))
             console_logger.error("Error occurred during client connection: %s", str(e))
         
-        # When both clients (drone and edge server) are connected to car command server, car can now begin driving
-        if connected_clients == NUM_CLIENTS_ALLOWED:
-            px.forward(SPEED)
-            break
+        with CLIENTS_LOCK:
+            # When both clients (drone and edge server) are connected to car command server, car can now begin driving
+            if NUM_CLIENTS_CONNECTED == NUM_CLIENTS_ALLOWED:
+                ALL_CLIENTS_CONNECTED.set() # set this so that client threads can start sending messages.
+                px.forward(SPEED)
+                break
 
         time.sleep(1)  # Wait for 1 second before checking for the next client connection
 
