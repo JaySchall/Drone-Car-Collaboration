@@ -106,6 +106,7 @@ def handle_client_connection(connection_socket, client_addr):
                 else:
                     stop_command_received = False
                     stop_timer_start = None
+                    #continueDriving() # now continue to normal driving - uncomment this line if you want auto-response without needing to receive contDriving command.
         
             # Now, receive a packet:
             try:
@@ -204,7 +205,7 @@ def main():
             # When both clients (drone and edge server) are connected to car command server, car can now begin driving
             if NUM_CLIENTS_CONNECTED == NUM_CLIENTS_REQUIRED:
                 ALL_CLIENTS_CONNECTED.set() # set this so that client threads can start sending messages.
-                px.forward(SPEED)
+                px.forward(DEFAULT_SPEED)
                 break
 
         time.sleep(1)  # Wait for 1 second before checking for the next client connection

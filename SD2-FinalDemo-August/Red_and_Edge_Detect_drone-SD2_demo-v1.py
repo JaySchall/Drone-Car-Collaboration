@@ -15,6 +15,7 @@ SEND_REDUCE_SPEED = 2
 SEND_TURN_LEFT = 3
 SEND_TURN_RIGHT = 4
 SEND_ALL_CLEAR = 5
+LAST_COMMAND_SENT = None
 SHAPE_APPEARANCE_THRESHOLD = 1
 NUM_TRIANGLES = 0
 NUM_SQUARES = 0
@@ -65,7 +66,7 @@ def initialize_ros_node():
 
 def send_message_to_car(command):
     file_logger.info("Sending message %s to car [0=stop, 1=cont_drive, 2=red_speed, 3=L, 4=R, 5=clear]", command)
-    if command == STOP:
+    if command == SEND_STOP:
         console_logger.warning("Sending message %s to car [0=stop, 1=cont_drive, 2=red_speed, 3=L, 4=R, 5=clear]", command) 
     connect.message_car(command)
 
@@ -167,7 +168,7 @@ def draw_bounding_boxes(cv_image, mask, min_area=1000, max_area=10000):
     return cv_image  # Return the modified image with bounding boxes
 
 def image_callback(data):
-    global RED_OBJ_FOUND
+    global RED_OBJ_FOUND, LAST_COMMAND_SENT
     bridge = CvBridge()
 
     try:
@@ -177,10 +178,16 @@ def image_callback(data):
 
         cv_image_with_bboxes = draw_bounding_boxes(cv_image, mask)
 
+        # Logic used to determine what message needs to be sent to the car (this can be easily moved closer to when red object was found, if desired):
         if RED_OBJ_FOUND:
             send_message_to_car(SEND_STOP)
+            LAST_COMMAND_SENT = SEND_STOP
+        elif LAST_COMMAND_SENT == SEND_STOP:
+            send_message_to_car(SEND_CONT_DRIVE)
+            LAST_COMMAND_SENT = SEND_CONT_DRIVE
         else:
             send_message_to_car(SEND_ALL_CLEAR)
+            LAST_COMMAND_SENT = SEND_ALL_CLEAR
            
         # Convert image back to format for posting to an image topic: 
         img_msg = bridge.cv2_to_imgmsg(cv_image_with_bboxes, encoding="bgr8")

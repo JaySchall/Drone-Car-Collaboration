@@ -13,6 +13,8 @@ SEND_REDUCE_SPEED = 2  # Reduce speed command
 SEND_TURN_LEFT = 3  # Turn left command
 SEND_TURN_RIGHT = 4  # Turn right command
 SEND_ALL_CLEAR = 5  # All clear command
+OBJ_DETECTED = False # track if object was detected
+LAST_COMMAND_SENT = None # track last command sent
 SUBSCRIBER_TOPIC = "EdgeServer_VideoTopic/image_raw"
 
 # Create a logger instance for file logging
@@ -68,7 +70,7 @@ def darknet_helper(img, width, height, network, class_names):
     return detections, width_ratio, height_ratio
 
 def main():
-
+    global OBJ_DETECTED
     # Connect to car command server
     if not connect_to_car_command_server():
         return
@@ -90,7 +92,7 @@ def main():
         return
 
     # Initialize object detected variable to false
-    obj_detected = False
+    OBJ_DETECTED = False
 
     # Read and display video frames until the user presses 'q'
     while True:
@@ -104,7 +106,7 @@ def main():
             break
 
         # Set obj_detected to false here which is used to determine if a command should be sent to stop the car
-        obj_detected = False
+        OBJ_DETECTED = False
 
         # Darknet detection and display
         detections, width_ratio, height_ratio = darknet_helper(frame, width, height, network, class_names)
@@ -116,13 +118,18 @@ def main():
                         (left, top - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.5,
                         class_colors[label], 2)
             # Set obj_detected to true - for loop entered; at least one object was detected in the frame (detections list != empty)
-            obj_detected = True
+            OBJ_DETECTED = True
 
-        # If obj_detected is true, send stop to car; otherwise, send continue driving
-        if obj_detected:
-            send_message_to_car(SEND_STOP)  # Stop the car
+         # Logic used to determine what message needs to be sent to the car (this can be easily moved closer to when object was found, if desired):
+        if OBJ_DETECTED:
+            send_message_to_car(SEND_STOP)
+            LAST_COMMAND_SENT = SEND_STOP
+        elif LAST_COMMAND_SENT == SEND_STOP:
+            send_message_to_car(SEND_CONT_DRIVE)
+            LAST_COMMAND_SENT = SEND_CONT_DRIVE
         else:
-            send_message_to_car(SEND_ALL_CLEAR)  # Continue driving
+            send_message_to_car(SEND_ALL_CLEAR)
+            LAST_COMMAND_SENT = SEND_ALL_CLEAR
 
         # Increase size of frame displayed
         new_width = 3 * frame.shape[1]  # Triple the original width
