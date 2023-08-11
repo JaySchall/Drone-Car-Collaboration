@@ -158,7 +158,7 @@ def handle_client_connection(connection_socket, client_addr):
         # Close the client socket and perform cleanup
         connection_socket.close()
         file_logger.info("Connection closed with client (%s)", client_addr)
-        print("Connection closed with client (%s)" % client_addr)
+        print("Connection closed with client", client_addr)
 
 def main():
     global NUM_CLIENTS_CONNECTED

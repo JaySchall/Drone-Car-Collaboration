@@ -12,7 +12,7 @@ with open("red_and_edge_object_detection_log.txt", mode="w"):
     pass
 
 # Create a logger instance for file logging
-file_logger = logging.getLogger(__name__ + '.file_logger')
+file_logger = logging.getLogger(__name__ + '--file_logger')
 file_logger.setLevel(logging.INFO) # Write to log file with INFO and higher messages
 file_formatter = logging.Formatter("%(asctime)s - [%(name)s] - %(levelname)s - %(message)s")
 file_handler = logging.FileHandler("red_and_edge_object_detection_log.txt", mode="a")  # Open in append mode so file is not reset
@@ -20,7 +20,7 @@ file_handler.setFormatter(file_formatter)
 file_logger.addHandler(file_handler)
 
 # Create a logger instance for console logging
-console_logger = logging.getLogger(__name__ + '.console_logger')
+console_logger = logging.getLogger(__name__ + '--console_logger')
 console_logger.setLevel(logging.WARNING)  # Console logger set to capture WARNING and higher messages
 console_formatter = logging.Formatter("%(asctime)s - [%(name)s] - %(levelname)s - %(message)s")
 console_handler = logging.StreamHandler()
