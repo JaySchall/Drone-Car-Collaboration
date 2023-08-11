@@ -64,11 +64,11 @@ def establish_socket_connection():
     # Debug messages to indicate the connection status
     if CLIENT_SOCKET.fileno() != -1:
         file_logger.info("Socket connection is active (socket file descriptor = %s).", CLIENT_SOCKET.fileno())
-        print("Socket connection is active (socket file descriptor = %s).", CLIENT_SOCKET.fileno())
+        print("Socket connection is active (socket file descriptor = %s)." % CLIENT_SOCKET.fileno())
         return True
     else:
         file_logger.info("Socket connection is closed (socket file descriptor = %s).", CLIENT_SOCKET.fileno())
-        print("Socket connection is closed (socket file descriptor = %s).", CLIENT_SOCKET.fileno())
+        print("Socket connection is closed (socket file descriptor = %s)." % CLIENT_SOCKET.fileno())
         return False
 
 

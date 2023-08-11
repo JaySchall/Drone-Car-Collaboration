@@ -13,7 +13,7 @@ NUM_CLIENTS_ALLOWED = 2 # Max number of clients allowed to connect to server
 NUM_CLIENTS_REQUIRED = 2 # Max number of clients required to connect to server
 NUM_CLIENTS_CONNECTED = 0 # for multithreading and recovery purposes - track num of connected clients
 ALL_CLIENTS_CONNECTED = threading.Event() # use this to track if all client threads still have a server connection
-CLIENTS_LOCK = threading.lock() # use this to lock sections of code that access the num_clients_connected global variable
+CLIENTS_LOCK = threading.Lock() # use this to lock sections of code that access the num_clients_connected global variable
 
 
 #Car commands
@@ -86,9 +86,6 @@ def handle_client_connection(connection_socket, client_addr):
     stop_timer_duration = 5  # Number of seconds to drop packets after receiving a stop command
    
     try:
-        # Acquire the lock to safely increment the number of connected clients  
-        with CLIENTS_LOCK:
-            NUM_CLIENTS_CONNECTED += 1
         # Wait until all clients are connected
         while not ALL_CLIENTS_CONNECTED.is_set():
             time.sleep(1)  # Wait until all clients are connected
@@ -164,6 +161,7 @@ def handle_client_connection(connection_socket, client_addr):
         print("Connection closed with client (%s)" % client_addr)
 
 def main():
+    global NUM_CLIENTS_CONNECTED
     SERVER_SOCKET = socket(AF_INET, SOCK_STREAM)  # Server socket creation
     SERVER_SOCKET.bind((SERVER_NAME, SERVER_PORT))
     SERVER_SOCKET.listen(NUM_CLIENTS_ALLOWED)  # Maximum number of queued connections
@@ -171,9 +169,7 @@ def main():
     file_logger.info('Car now listening on %s:%s', SERVER_NAME, SERVER_PORT)
     print('Car now listening on %s:%s' % (SERVER_NAME, SERVER_PORT))
 
-    NUM_CLIENTS_CONNECTED # Counter for connected clients
     connection_threads = [] # Thread IDs stored in this list
-   
 
     while NUM_CLIENTS_CONNECTED < NUM_CLIENTS_REQUIRED:
         try:
@@ -182,14 +178,17 @@ def main():
             
             #This program will hang after calling SERVER_SOCKET.accept() until connection is requested and accepted:
             connection_socket, addr = SERVER_SOCKET.accept()  # TCP Connection Created - note that addr is a tuple of (IP,PORT_NUM)
-            NUM_CLIENTS_CONNECTED += 1  # Increment the counter each time a client is connected
+            
+            # Acquire the lock to safely increment the number of connected clients  
+            with CLIENTS_LOCK:
+                NUM_CLIENTS_CONNECTED += 1
             
             #After connection, program continues:
             file_logger.info("Connection established with: %s:%s", addr[0], addr[1])
             print("Connection established with: %s:%s" % addr)
             if NUM_CLIENTS_CONNECTED == NUM_CLIENTS_REQUIRED:
                 file_logger.info('Now connected to drone and edge server - Car now driving at %s...', SPEED)
-                print('Now connected to drone and edge serve - Car now driving at %s...' % SPEED)
+                print('Now connected to drone and edge server - Car now driving at speed %s...' % SPEED)
            
             # Each client thread will run the handle_client_connection thread, 
             # as this program will spawn a child thread for each client.
