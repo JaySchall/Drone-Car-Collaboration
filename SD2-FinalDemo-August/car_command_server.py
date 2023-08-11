@@ -144,9 +144,9 @@ def main():
         try:
             file_logger.info("Waiting for incoming client connections...(current number of established connections: %s)", connected_clients)
             print("Waiting for incoming client connections...(current number of established connections: %s)" % connected_clients)
-            connection_socket, addr = SERVER_SOCKET.accept()  # TCP Connection Created
-            file_logger.info("Connection established with: %s", addr)
-            print("Connection established with: %s" % addr)
+            connection_socket, addr = SERVER_SOCKET.accept()  # TCP Connection Created - note that addr is a tuple of (IP,PORTNUM)
+            file_logger.info("Connection established with: %s:%s", addr)
+            print("Connection established with: %s:%s" % addr)
             if connected_clients == NUM_CLIENTS_ALLOWED:
                 file_logger.info('Now connected to drone and edge server - Car now driving at %s...', SPEED)
                 print('Now connected to drone and edge serve - Car now driving at %s...' % SPEED)
