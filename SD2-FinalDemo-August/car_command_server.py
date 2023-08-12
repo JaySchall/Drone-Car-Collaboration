@@ -81,10 +81,6 @@ def continueDriving():
 
 def handle_client_connection(connection_socket, client_addr):
     global SPEED, DEFAULT_SPEED, NUM_CLIENTS_CONNECTED
-
-    stop_command_received = False
-    stop_timer_start = None
-    stop_timer_duration = 5  # Number of seconds to drop packets after receiving a stop command
    
     try:
         # Wait until all clients are connected
@@ -92,52 +88,22 @@ def handle_client_connection(connection_socket, client_addr):
             time.sleep(1)  # Wait until all clients are connected
 
         while ALL_CLIENTS_CONNECTED.is_set():
-            # implement ignore timer for when stop command was received:
-            if stop_command_received:
-                elapsed_time = time.time() - stop_timer_start
-                time_left = stop_timer_duration - elapsed_time
-                if elapsed_time < stop_timer_duration:
-                    file_logger.warning("STOP command received from CLIENT: (%s); stopping and ignoring command messages (except for STOP messages) for %s seconds; Time left: %s",
-                                 client_addr, stop_timer_duration, time_left)
-                    console_logger.warning("STOP command received from CLIENT: (%s); stopping and ignoring command messages (except for STOP messages) for %s seconds; Time left: %s",
-                                 client_addr, stop_timer_duration, time_left)
-                else:
-                    stop_command_received = False
-                    stop_timer_start = None
-                    #continueDriving() # now continue to normal driving - uncomment this line if you want auto-response without needing to receive contDriving command.
         
-            # Now, receive a packet:
+        # Now, receive a packet:
             try:
                 packet = connection_socket.recv(1).decode()  # Receives command from a client (buffer size set to 1 byte --> recv(1))
-
-                if stop_command_received:
-                    if int(packet) == STOP: # still process new STOP command packets so that timer will be restarted
-                        stop_command_received = True
-                        stop_timer_start = time.time() # restart timer
-                        obstruction()  # Make a call to stop the car
-                        file_logger.info("Received and PROCESSING packet from CLIENT: (%s), [0=stop,1=cont_drive,2=red_speed,3=L, 4=R,5=clear]: %s",
-                                     client_addr, int(packet))
-                        console_logger.info("Received and PROCESSING packet from CLIENT: (%s), [0=stop,1=cont_drive,2=red_speed,3=L, 4=R,5=clear]: %s",
-                                     client_addr, int(packet))
-                    else:
-                        file_logger.info("Received AND IGNORED packet from CLIENT: (%s), [0=stop,1=cont_drive,2=red_speed,3=L, 4=R,5=clear]: %s",
-                                     client_addr, int(packet))
-                        continue  # Continue to the start of the while loop and do not process the packet
+                file_logger.info("Received and PROCESSING packet from CLIENT: (%s), [0=stop,1=cont_drive,2=red_speed,3=L, 4=R,5=clear]: %s",
+                                client_addr, int(packet))
+                console_logger.info("Received and PROCESSING packet from CLIENT: (%s), [0=stop,1=cont_drive,2=red_speed,3=L, 4=R,5=clear]: %s",
+                                client_addr, int(packet))
+                if int(packet) == STOP:
+                    obstruction()  # Make a call to stop the car
+                elif int(packet) == ALL_CLEAR:
+                    continue  # No actions necessary
+                elif int(packet) == CONT_DRIVE:
+                    continueDriving()  # Continue to normal driving
                 else:
-                    file_logger.info("Received and PROCESSING packet from CLIENT: (%s), [0=stop,1=cont_drive,2=red_speed,3=L, 4=R,5=clear]: %s",
-                                 client_addr, int(packet))
-                    console_logger.info("Received and PROCESSING packet from CLIENT: (%s), [0=stop,1=cont_drive,2=red_speed,3=L, 4=R,5=clear]: %s",
-                                 client_addr, int(packet))
-                    if int(packet) == STOP:
-                        stop_command_received = True
-                        stop_timer_start = time.time() # restart timer
-                        obstruction()  # Make a call to stop the car
-                    elif int(packet) == ALL_CLEAR:
-                        continue  # No actions necessary
-                    elif int(packet) == CONT_DRIVE:
-                        continueDriving()  # Continue to normal driving
-                    else:
-                        warning(int(packet), client_addr)  # Adjust speed or direction
+                    warning(int(packet), client_addr)  # Adjust speed or direction
 
             except Exception as e:
                 file_logger.error("Error occurred during client (%s) connection: %s", client_addr, str(e))
