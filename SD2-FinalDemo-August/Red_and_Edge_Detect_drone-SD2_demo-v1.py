@@ -26,11 +26,8 @@ NUM_STARS = 0
 RED_OBJ_FOUND = False
 SUBSCRIBER_TOPIC = "main_camera/image_raw"
 PUBLISHER_TOPIC = 'red_and_edge_object_detection/image_raw'
-#RED_OBJ_DETECTED_EVENT = threading.Event()  # Event to signal detection of a red object
 MESSAGE_CAR_THREAD_RUNNING = threading.Event() 
 LAST_COMMAND_SENT = None
-#MESSAGE_CAR_LOCK = threading.Lock()  # Lock for MESSAGE_CAR_THREAD_RUNNING
-#LAST_COMMAND_SENT_LOCK = threading.Lock()  # Lock for LAST_COMMAND_SENT
 
 
 # Create a logger instance for file logging
@@ -70,11 +67,12 @@ def initialize_ros_node():
         console_logger.error("Failed to initialize red_and_edge_object_detection ROS node: %s", str(e))  
         return False
 
-def send_message_to_car_thread(command):
+def send_message_to_car_thread():
     
     while True:
         MESSAGE_CAR_THREAD_RUNNING.wait() # send thread to sleep (spin) --> wait for main thread to wake this thread
         
+        command = LAST_COMMAND_SENT
         file_logger.info("Sending message %s to car [0=stop, 1=cont_drive, 2=red_speed, 3=L, 4=R, 5=clear]", command)
         if command == SEND_STOP:
             console_logger.warning("Sending message %s to car [0=stop, 1=cont_drive, 2=red_speed, 3=L, 4=R, 5=clear]", command)
@@ -191,26 +189,27 @@ def image_callback(data):
         cv_image_with_bboxes = draw_bounding_boxes(cv_image, mask)
 
         # Logic used to determine what message needs to be sent to the car (this can be easily moved closer to when red object was found, if desired):
-            
+            # For each case, we will make sure that the send_message thread is not already running in order to reduce spamming.
+
             # send a stop if a red object found and stop was not last message sent (prevents sending consecutive stop commands)
-        if RED_OBJ_FOUND and (LAST_COMMAND_SENT != SEND_STOP):
-            threading.Thread(target=send_message_to_car_thread, args=(SEND_STOP)).start() # start a thread that will send stop command
+        if RED_OBJ_FOUND and (LAST_COMMAND_SENT != SEND_STOP) and not MESSAGE_CAR_THREAD_RUNNING.is_set():
             LAST_COMMAND_SENT = SEND_STOP
+            MESSAGE_CAR_THREAD_RUNNING.set() # trigger send_message to car event thread to send stop command to car
                 
             # continue --> (prevents sneding consecutive stop commands)
         elif RED_OBJ_FOUND and (LAST_COMMAND_SENT == SEND_STOP):
             pass
             
             # command car to recover and continue driving if no object found and last command it received was a STOP command
-        elif not RED_OBJ_FOUND and (LAST_COMMAND_SENT == SEND_STOP):
-            threading.Thread(target=send_message_to_car_thread, args=(SEND_CONT_DRIVE)).start() # start a thread that will send contDrive
+        elif not RED_OBJ_FOUND and (LAST_COMMAND_SENT == SEND_STOP) and not MESSAGE_CAR_THREAD_RUNNING.is_set():
             LAST_COMMAND_SENT = SEND_CONT_DRIVE
+            MESSAGE_CAR_THREAD_RUNNING.set() # trigger send_message to car event thread to send cont drive command to car
                 
             #otherwise, inform car the all clear (use addtional if statement to prevent sending consecutive all clear commands)
         else:
-            if LAST_COMMAND_SENT != SEND_ALL_CLEAR:
-                threading.Thread(target=send_message_to_car_thread, args=(SEND_ALL_CLEAR)).start() # start a thread that will send all clear
+            if LAST_COMMAND_SENT != SEND_ALL_CLEAR and not MESSAGE_CAR_THREAD_RUNNING.is_set():
                 LAST_COMMAND_SENT = SEND_ALL_CLEAR
+                MESSAGE_CAR_THREAD_RUNNING.set() # trigger send_message to car event thread to send all clear to car
             else:
                 pass
            
@@ -250,8 +249,7 @@ def main():
         return
     
     # Start thread that will wait to be awakened to send a message to the car:
-    threading.Thread(target=send_message_to_car_thread, args=(SEND_ALL_CLEAR)).start()
-    MESSAGE_CAR_THREAD_RUNNING.set() # initial wake of thread to process SEND_ALL_CLEAR message sent
+    threading.Thread(target=send_message_to_car_thread).start()
 
     global red_and_edge_image_pub
     red_and_edge_image_pub = rospy.Publisher(PUBLISHER_TOPIC, Image, queue_size=10)
