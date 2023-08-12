@@ -276,8 +276,8 @@ def main():
     start_image_processing(SUBSCRIBER_TOPIC)
 
     # Join connection thread with main thread before exiting (smoother exiting)
-    MESSAGE_CAR_THREAD_RUNNING.set()    # wake thread
-    SEND_MESSAGES = False               # tell thread not to process anymore messages
+    SEND_MESSAGES = False               # set to false so thread will not to process anymore messages
+    MESSAGE_CAR_THREAD_RUNNING.set()    # wake thread so it can terminate when it checks send messages boolean
     connect.close_socket()              # close socket
     messaging_thread.join()
  
