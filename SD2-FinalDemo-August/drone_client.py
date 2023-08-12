@@ -2,6 +2,7 @@ import logging
 from socket import *
 import time
 
+CONNECTED_TO_SERVER = False     # Track connection status of drone to the car
 SERVER_NAME = "192.168.11.133"  # Server IP (User-defined)
 SERVER_PORT = 10600             # Server Port (Predefined)
 CLIENT_SOCKET = socket(AF_INET, SOCK_STREAM)  # Client Socket Creation 
@@ -40,6 +41,8 @@ Send a message to the car using the following protocol:
 '''
 
 def message_car(var):
+    global CONNECTED_TO_SERVER
+    
     file_logger.info("Sending message: %s", var)
     try:
         CLIENT_SOCKET.send(str(var).encode())  # Convert var to string and then encode it
@@ -49,6 +52,8 @@ def message_car(var):
     except Exception as e:
         file_logger.error("Error sending message: %s", str(e))
         console_logger.error("Error sending message: %s", str(e))
+        close_socket() # close the socket so that future reestablishment can be attempted...
+        CONNECTED_TO_SERVER = False
         
         
 # QUIT Protocol
@@ -57,19 +62,26 @@ def close_socket():
     file_logger.info("Socket closed.")
 
 def establish_socket_connection():
-    try:
-        CLIENT_SOCKET.connect((SERVER_NAME, SERVER_PORT))  # Establish connection when the program begins
-        file_logger.info("Connected to server: %s on port: %s", SERVER_NAME, SERVER_PORT)
-        print(f"Connected to server: {SERVER_NAME} on port: {SERVER_PORT}")
-    except ConnectionRefusedError as e:
-        file_logger.error("Error connecting to server: %s", str(e))
-        close_socket()
-    # Debug messages to indicate the connection status
-    if CLIENT_SOCKET.fileno() != -1:
-        file_logger.info("Socket connection is active (socket file descriptor = %s).", CLIENT_SOCKET.fileno())
-        print(f"Socket connection is active (socket file descriptor = {CLIENT_SOCKET.fileno()}).")
-        return True
+    global CONNECTED_TO_SERVER
+    
+    if not CONNECTED_TO_SERVER: # try to establish connection only if not already connected
+        try:
+            CLIENT_SOCKET.connect((SERVER_NAME, SERVER_PORT))  # Establish connection
+            
+            file_logger.info("Connected to server: %s on port: %s", SERVER_NAME, SERVER_PORT)
+            print(f"Connected to server: {SERVER_NAME} on port: {SERVER_PORT}")
+            
+            file_logger.info("Socket connection is active (socket file descriptor = %s).", CLIENT_SOCKET.fileno())
+            print(f"Socket connection is active (socket file descriptor = {CLIENT_SOCKET.fileno()}).")
+            
+            CONNECTED_TO_SERVER = True
+            return True
+        except socket.error as e:
+            file_logger.error("Error connecting to server: %s", str(e))
+            console_logger.error("Error connecting to server: %s", str(e))
+            file_logger.info("Socket connection is closed (socket file descriptor = %s).", CLIENT_SOCKET.fileno())
+            console_logger.info("Socket connection is closed (socket file descriptor = %s).", CLIENT_SOCKET.fileno())
+            close_socket()
+            return False
     else:
-        file_logger.info("Socket connection is closed (socket file descriptor = %s).", CLIENT_SOCKET.fileno())
-        print(f"Socket connection is closed (socket file descriptor = {CLIENT_SOCKET.fileno()}).")
-        return False
+        return True # already connected to server; no action necessary

@@ -48,11 +48,11 @@ console_logger.addHandler(console_handler)
 
 
 def connect_to_car_command_server():
-    file_logger.info("Trying to establish connection with car command server...")
-    print("Trying to establish connection with car command server...")  
+    file_logger.warning("Trying to establish connection with car command server...")
+    console_logger.warning("Trying to establish connection with car command server...")
     if not connect.establish_socket_connection():
-        file_logger.info("Failed to establish connection with the car command server.")
-        print("Failed to establish connection with the car command server.") 
+        file_logger.warning("Failed to establish connection with the car command server.")
+        console_logger.warning("Failed to establish connection with the car command server.")
         return False
     return True
 
@@ -72,11 +72,18 @@ def send_message_to_car_thread():
     while True:
         MESSAGE_CAR_THREAD_RUNNING.wait() # send thread to sleep (spin) --> wait for main thread to wake this thread
         
-        command = LAST_COMMAND_SENT
-        file_logger.info("Sending message %s to car [0=stop, 1=cont_drive, 2=red_speed, 3=L, 4=R, 5=clear]", command)
-        if command == SEND_STOP:
-            console_logger.warning("Sending message %s to car [0=stop, 1=cont_drive, 2=red_speed, 3=L, 4=R, 5=clear]", command)
-        connect.message_car(command)
+        if not connect_to_car_command_server(): # check connection status and reestablish if necessary.
+            file_logger.info("Reestablished connection with car command server...")
+            console_logger.info("Reestablished connection with car command server...")
+        else:
+            command = LAST_COMMAND_SENT
+            if command == SEND_STOP:
+                file_logger.warning("Sending message %s to car [0=stop, 1=cont_drive, 2=red_speed, 3=L, 4=R, 5=clear]", command)
+                console_logger.warning("Sending message %s to car [0=stop, 1=cont_drive, 2=red_speed, 3=L, 4=R, 5=clear]", command)
+            else:
+                file_logger.info("Sending message %s to car [0=stop, 1=cont_drive, 2=red_speed, 3=L, 4=R, 5=clear]", command)
+                console_logger.info("Sending message %s to car [0=stop, 1=cont_drive, 2=red_speed, 3=L, 4=R, 5=clear]", command)
+            connect.message_car(command) # send the message
 
         MESSAGE_CAR_THREAD_RUNNING.clear() # clear flag so main thread knows it can now send another message.
 
