@@ -14,6 +14,7 @@ NUM_CLIENTS_REQUIRED = 2 # Max number of clients required to connect to server
 NUM_CLIENTS_CONNECTED = 0 # for multithreading and recovery purposes - track num of connected clients
 ALL_CLIENTS_CONNECTED = threading.Event() # use this to track if all client threads still have a server connection
 CLIENTS_LOCK = threading.Lock() # use this to lock sections of code that access the num_clients_connected global variable
+LAST_COMMAND_RECEIVED = None # track the last packet received
 
 
 #Car commands
@@ -195,7 +196,7 @@ def main():
                         ALL_CLIENTS_CONNECTED.set() # set this so that client threads can start sending messages.
                         file_logger.info('Now connected to drone and edge server - Car now driving at %s...', SPEED)
                         print('Now connected to drone and edge server - Car now driving at speed %s...' % SPEED)
-                        #px.forward(DEFAULT_SPEED) #begin driving now that required number of client command nodes connected
+                        px.forward(DEFAULT_SPEED) #begin driving now that required number of client command nodes connected
             else:
                 time.sleep(1)  # Wait for 1 second before checking for the next client connection
 
