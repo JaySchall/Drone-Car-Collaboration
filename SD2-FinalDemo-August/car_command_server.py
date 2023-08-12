@@ -1,5 +1,5 @@
 import logging
-from socket import *
+import socket
 from picarx import Picarx
 import time
 import threading
@@ -126,7 +126,7 @@ def handle_client_connection_thread(connection_socket, client_addr):
 
 def main():
     global NUM_CLIENTS_CONNECTED
-    SERVER_SOCKET = socket(AF_INET, SOCK_STREAM)  # Server socket creation
+    SERVER_SOCKET = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  # Server socket creation
     SERVER_SOCKET.bind((SERVER_NAME, SERVER_PORT))
     SERVER_SOCKET.listen(NUM_CLIENTS_ALLOWED)  # Maximum number of queued connections
 
@@ -163,7 +163,6 @@ def main():
                         px.forward(SPEED) #begin driving now that required number of client command nodes connected
             else:
                 time.sleep(1)  # Wait for 1 second before checking for the next client connection
-
 
         except Exception as e:
             file_logger.error("Error occurred during client connection: %s", str(e))

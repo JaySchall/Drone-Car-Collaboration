@@ -1,11 +1,11 @@
 import logging
-from socket import *
+import socket
 import time
 
 CONNECTED_TO_SERVER = False     # Track connection status of drone to the car
 SERVER_NAME = "192.168.11.133"  # Server IP (User-defined)
 SERVER_PORT = 10600             # Server Port (Predefined)
-CLIENT_SOCKET = socket(AF_INET, SOCK_STREAM)  # Client Socket Creation 
+CLIENT_SOCKET = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  # Client Socket Creation 
 # Client Socket Creation (for second argument: SOCK_DGRAM=UDP, SOCK_STREAM=TCP)
 
 # Clear log file (by opening in write mode) before reopening in append mode

@@ -26,9 +26,10 @@ NUM_STARS = 0
 RED_OBJ_FOUND = False
 SUBSCRIBER_TOPIC = "main_camera/image_raw"
 PUBLISHER_TOPIC = 'red_and_edge_object_detection/image_raw'
-MESSAGE_CAR_THREAD_RUNNING = threading.Event() 
+ # use these to prevent spamming messages to car, and also to stop the messaging thread:
+MESSAGE_CAR_THREAD_RUNNING = threading.Event()
 LAST_COMMAND_SENT = None
-
+SEND_MESSAGES = True
 
 # Create a logger instance for file logging
 file_logger = logging.getLogger(__name__ + '--file_logger')
@@ -68,11 +69,16 @@ def initialize_ros_node():
         return False
 
 def send_message_to_car_thread():
-    
     while True:
         MESSAGE_CAR_THREAD_RUNNING.wait() # send thread to sleep (spin) --> wait for main thread to wake this thread
         
-        if not connect.CONNECTED_TO_SERVER: # make sure connection is active before attempting to send message.
+        # upon waking, first make sure request from main thread to terminate this thread has not been issued via SEND_MESSAGES boolean
+        if not SEND_MESSAGES:
+            file_logger.warning("SEND_MESSAGES == FALSE --> Terminating Messaging Thread...")
+            console_logger.warning("SEND_MESSAGES == FALSE --> Terminating Messaging Thread...")
+            break
+        
+        elif not connect.CONNECTED_TO_SERVER: # make sure connection is active before attempting to send message.
             file_logger.warning("No connection with car command server; need to reestablsh connection...")
             console_logger.warning("No connection with car command server; need to reestablsh connection...")
             if not connect_to_car_command_server(): # try to reestablish connection
@@ -258,8 +264,9 @@ def main():
     if not connect_to_car_command_server(): # connect to car command server
         return
     
-    # Start thread that will wait to be awakened to send a message to the car:
-    threading.Thread(target=send_message_to_car_thread).start()
+    # Create and start thread that will wait to be awakened to send a message to the car:
+    messaging_thread = threading.Thread(target=send_message_to_car_thread)
+    messaging_thread.start()
 
     global red_and_edge_image_pub
     red_and_edge_image_pub = rospy.Publisher(PUBLISHER_TOPIC, Image, queue_size=10)
@@ -267,6 +274,12 @@ def main():
     print("ROS publisher created for %s topic." % PUBLISHER_TOPIC)
 
     start_image_processing(SUBSCRIBER_TOPIC)
+
+    # Join connection thread with main thread before exiting (smoother exiting)
+    SEND_MESSAGES = False
+    connect.close_socket()
+    messaging_thread.join()
+ 
 
 if __name__ == "__main__":
     main()

@@ -1,11 +1,11 @@
 # This module is to be imported by the yoloShapeDetect program which runs darknet/yolov4
 
 import logging
-from socket import *
+import socket
 
 SERVER_NAME = "192.168.11.133"  # Server IP (User-defined)
 SERVER_PORT = 10600             # Server Port (Predefined)
-CLIENT_SOCKET = socket(AF_INET, SOCK_STREAM)  # Client Socket Creation 
+CLIENT_SOCKET = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  # Client Socket Creation 
 
 # Clear log file before reopening in append mode
 with open("yoloShapeDetect_log.txt", "w"):
