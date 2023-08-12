@@ -79,7 +79,7 @@ def continueDriving():
     console_logger.info("Continuing driving. Speed set to: %s", SPEED)
     px.forward(SPEED)
 
-def handle_client_connection(connection_socket, client_addr):
+def handle_client_connection_thread(connection_socket, client_addr):
     global SPEED, DEFAULT_SPEED, NUM_CLIENTS_CONNECTED
    
     try:
@@ -87,31 +87,28 @@ def handle_client_connection(connection_socket, client_addr):
         while not ALL_CLIENTS_CONNECTED.is_set():
             time.sleep(1)  # Wait until all clients are connected
 
-        while ALL_CLIENTS_CONNECTED.is_set():
+        while ALL_CLIENTS_CONNECTED.is_set(): # continue to receive packets from this client socket connection while all client sockets are connected.
         
-        # Now, receive a packet:
-            try:
-                packet = connection_socket.recv(1).decode()  # Receives command from a client (buffer size set to 1 byte --> recv(1))
-                file_logger.info("Received and PROCESSING packet from CLIENT: (%s), [0=stop,1=cont_drive,2=red_speed,3=L, 4=R,5=clear]: %s",
-                                client_addr, int(packet))
-                console_logger.info("Received and PROCESSING packet from CLIENT: (%s), [0=stop,1=cont_drive,2=red_speed,3=L, 4=R,5=clear]: %s",
-                                client_addr, int(packet))
-                if int(packet) == STOP:
-                    obstruction()  # Make a call to stop the car
-                elif int(packet) == ALL_CLEAR:
-                    continue  # No actions necessary
-                elif int(packet) == CONT_DRIVE:
-                    continueDriving()  # Continue to normal driving
-                else:
-                    warning(int(packet), client_addr)  # Adjust speed or direction
-                
-            except Exception as e:
-                file_logger.error("Error occurred during client (%s) connection: %s", client_addr, str(e))
-                console_logger.error("Error occurred during client (%s) connection: %s", client_addr, str(e))
-                break
-    except Exception as e:
+            # Now, receive a packet:
+            packet = connection_socket.recv(1).decode()  # Receives command from a client (buffer size set to 1 byte --> recv(1))
+            file_logger.info("Received and PROCESSING packet from CLIENT: (%s), [0=stop,1=cont_drive,2=red_speed,3=L, 4=R,5=clear]: %s",
+                            client_addr, int(packet))
+            console_logger.info("Received and PROCESSING packet from CLIENT: (%s), [0=stop,1=cont_drive,2=red_speed,3=L, 4=R,5=clear]: %s",
+                            client_addr, int(packet))
+            if int(packet) == STOP:
+                obstruction()  # Make a call to stop the car
+            elif int(packet) == ALL_CLEAR:
+                continue  # No actions necessary
+            elif int(packet) == CONT_DRIVE:
+                continueDriving()  # Continue to normal driving
+            else:
+                warning(int(packet), client_addr)  # Adjust speed or direction
+
+    except socket.error as e:
         file_logger.error("Error occurred during client (%s) connection: %s", client_addr, str(e))
         console_logger.error("Error occurred during client (%s) connection: %s", client_addr, str(e))
+        
+    #Now, we have left the while loop due to error or not all sockets connected; need to decerement the number of clients connected:
     finally:
         # Ensure the lock is acquired to safely decrement the number of connected clients
         with CLIENTS_LOCK:
@@ -151,7 +148,7 @@ def main():
                 
                 # Each client thread will run the handle_client_connection thread, 
                 # as this program will spawn a child thread for each client.
-                client_thread = threading.Thread(target=handle_client_connection, args=(connection_socket, addr))
+                client_thread = threading.Thread(target=handle_client_connection_thread, args=(connection_socket, addr))
                 client_thread.start()
                 connection_threads.append(client_thread)
                 
