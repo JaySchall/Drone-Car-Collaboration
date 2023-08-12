@@ -15,7 +15,7 @@ NUM_CLIENTS_CONNECTED = 0 # for multithreading and recovery purposes - track num
 ALL_CLIENTS_CONNECTED = threading.Event() # use this to track if all client threads still have a server connection
 CLIENTS_LOCK = threading.Lock() # use this to lock sections of code that access the num_clients_connected global variable
 LAST_COMMAND_RECEIVED = None # track the last packet received
-
+EXIT_PROGRAM = False # use this to control exiting program, including terminating threads
 
 #Car commands
 STOP = 0  # Stop Car command
@@ -84,10 +84,10 @@ def handle_client_connection_thread(connection_socket, client_addr):
    
     try:
         # Wait until all clients are connected
-        while not ALL_CLIENTS_CONNECTED.is_set():
+        while not ALL_CLIENTS_CONNECTED.is_set() and not EXIT_PROGRAM:
             time.sleep(1)  # Wait until all clients are connected
 
-        while ALL_CLIENTS_CONNECTED.is_set(): # continue to receive packets from this client socket connection while all client sockets are connected.
+        while ALL_CLIENTS_CONNECTED.is_set() and not EXIT_PROGRAM: # continue to receive packets from this client socket connection while all client sockets are connected.
         
             # Now, receive a packet:
             packet = connection_socket.recv(1).decode()  # Receives command from a client (buffer size set to 1 byte --> recv(1))
@@ -125,7 +125,7 @@ def handle_client_connection_thread(connection_socket, client_addr):
             print("Connection closed with client", client_addr)
 
 def main():
-    global NUM_CLIENTS_CONNECTED
+    global NUM_CLIENTS_CONNECTED, EXIT_PROGRAM
     SERVER_SOCKET = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  # Server socket creation
     SERVER_SOCKET.bind((SERVER_NAME, SERVER_PORT))
     SERVER_SOCKET.listen(NUM_CLIENTS_ALLOWED)  # Maximum number of queued connections
@@ -166,6 +166,7 @@ def main():
         except KeyboardInterrupt:
             print("\nCTRL + C detected from user input. Exiting the program...")
             file_logger.error("\nCTRL + C detected from user input. Exiting the program...")
+            EXIT_PROGRAM = True
             break
         except Exception as e:
             file_logger.error("Error occurred during client connection: %s", str(e))
