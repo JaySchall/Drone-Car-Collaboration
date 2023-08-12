@@ -165,7 +165,7 @@ def main():
                 time.sleep(1)  # Wait for 1 second before checking for the next client connection
         except KeyboardInterrupt:
             print("\nCTRL + C detected from user input. Exiting the program...")
-            file_logger.error("\nCTRL + C detected from user input. Exiting the program...", str(e))
+            file_logger.error("\nCTRL + C detected from user input. Exiting the program...")
             break
         except Exception as e:
             file_logger.error("Error occurred during client connection: %s", str(e))
