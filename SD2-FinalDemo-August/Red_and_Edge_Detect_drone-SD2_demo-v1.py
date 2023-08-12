@@ -72,7 +72,6 @@ def initialize_ros_node():
 def send_message_to_car_thread():
     while SEND_MESSAGES:
         MESSAGE_CAR_THREAD_RUNNING.wait() # send thread to sleep (spin) --> wait for main thread to wake this thread
-
         
         if not connect.CONNECTED_TO_SERVER: # make sure connection is active before attempting to send message.
             file_logger.warning("No connection with car command server; need to reestablsh connection...")
