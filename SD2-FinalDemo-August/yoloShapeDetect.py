@@ -27,7 +27,7 @@ file_logger.addHandler(file_handler)
 
 # Create a logger instance for console logging
 console_logger = logging.getLogger(__name__ + '--console_logger')
-console_logger.setLevel(logging.WARNING)  # Console logger set to capture WARNING and higher messages
+console_logger.setLevel(logging.INFO)  # Console logger set to capture WARNING and higher messages
 console_formatter = logging.Formatter("%(asctime)s - [%(name)s] - %(levelname)s - %(message)s")
 console_handler = logging.StreamHandler()
 console_handler.setFormatter(console_formatter)
