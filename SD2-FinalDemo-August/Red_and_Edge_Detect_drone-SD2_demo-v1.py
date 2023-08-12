@@ -193,7 +193,7 @@ def draw_bounding_boxes(cv_image, mask, min_area=1000, max_area=10000):
 
     return cv_image  # Return the modified image with bounding boxes
 
-def image_callback(data):
+def image_callback(data): # this function is ran on a rospy-generated thread upon receiving a new message from teh subscribed topics on this ros node.
     global RED_OBJ_FOUND, LAST_COMMAND_SENT
     bridge = CvBridge()
 
@@ -276,8 +276,9 @@ def main():
     start_image_processing(SUBSCRIBER_TOPIC)
 
     # Join connection thread with main thread before exiting (smoother exiting)
-    SEND_MESSAGES = False
-    connect.close_socket()
+    MESSAGE_CAR_THREAD_RUNNING.set()    # wake thread
+    SEND_MESSAGES = False               # tell thread not to process anymore messages
+    connect.close_socket()              # close socket
     messaging_thread.join()
  
 
