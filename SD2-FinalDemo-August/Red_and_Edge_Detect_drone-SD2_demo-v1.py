@@ -72,9 +72,12 @@ def send_message_to_car_thread():
     while True:
         MESSAGE_CAR_THREAD_RUNNING.wait() # send thread to sleep (spin) --> wait for main thread to wake this thread
         
-        if not connect_to_car_command_server(): # check connection status and reestablish if necessary.
-            file_logger.info("Reestablished connection with car command server...")
-            console_logger.info("Reestablished connection with car command server...")
+        if not connect.CONNECTED_TO_SERVER: # make sure connection is active before attempting to send message.
+            file_logger.info("No connection with car command server; need to reestablsh connection...")
+            console_logger.info("No connection with car command server; need to reestablsh connection...")
+            if not connect_to_car_command_server(): # try to reestablish connection
+                file_logger.info("Connection reestablishment failed: No connection with car command server...")
+                console_logger.info("Connection reestablishment failed: No connection with car command server...")
         else:
             command = LAST_COMMAND_SENT
             if command == SEND_STOP:
