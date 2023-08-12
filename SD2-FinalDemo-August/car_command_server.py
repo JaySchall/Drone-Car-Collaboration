@@ -104,7 +104,7 @@ def handle_client_connection(connection_socket, client_addr):
                     continueDriving()  # Continue to normal driving
                 else:
                     warning(int(packet), client_addr)  # Adjust speed or direction
-
+                
             except Exception as e:
                 file_logger.error("Error occurred during client (%s) connection: %s", client_addr, str(e))
                 console_logger.error("Error occurred during client (%s) connection: %s", client_addr, str(e))
@@ -160,9 +160,10 @@ def main():
                     NUM_CLIENTS_CONNECTED += 1
                     if NUM_CLIENTS_CONNECTED == NUM_CLIENTS_REQUIRED:
                         ALL_CLIENTS_CONNECTED.set() # set this so that client threads can start sending messages.
+                        SPEED = DEFAULT_SPEED # reset speed to default speed
                         file_logger.info('Now connected to drone and edge server - Car now driving at %s...', SPEED)
                         print('Now connected to drone and edge server - Car now driving at speed %s...' % SPEED)
-                        px.forward(DEFAULT_SPEED) #begin driving now that required number of client command nodes connected
+                        px.forward(SPEED) #begin driving now that required number of client command nodes connected
             else:
                 time.sleep(1)  # Wait for 1 second before checking for the next client connection
 
