@@ -155,10 +155,10 @@ def handle_client_connection(connection_socket, client_addr):
                 ALL_CLIENTS_CONNECTED.clear() # set to false
                 connection_lost_stop_car(client_addr) # stop car
 
-        # Close the client socket and perform cleanup
-        connection_socket.close()
-        file_logger.info("Connection closed with client (%s)", client_addr)
-        print("Connection closed with client", client_addr)
+            # Close the client socket and perform cleanup
+            connection_socket.close()
+            file_logger.info("Connection closed with client (%s)", client_addr)
+            print("Connection closed with client", client_addr)
 
 def main():
     global NUM_CLIENTS_CONNECTED
@@ -171,42 +171,39 @@ def main():
 
     connection_threads = [] # Thread IDs stored in this list
 
-    while NUM_CLIENTS_CONNECTED < NUM_CLIENTS_REQUIRED:
+    while True:
         try:
-            file_logger.info("Waiting for incoming client connections...(current number of established connections: %s)", NUM_CLIENTS_CONNECTED)
-            print("Waiting for incoming client connections...(current number of established connections: %s)" % NUM_CLIENTS_CONNECTED)
+            if not ALL_CLIENTS_CONNECTED.is_set():
+                file_logger.info("Waiting for incoming client connections...(current number of established connections: %s)", NUM_CLIENTS_CONNECTED)
+                print("Waiting for incoming client connections...(current number of established connections: %s)" % NUM_CLIENTS_CONNECTED)
             
-            #This program will hang after calling SERVER_SOCKET.accept() until connection is requested and accepted:
-            connection_socket, addr = SERVER_SOCKET.accept()  # TCP Connection Created - note that addr is a tuple of (IP,PORT_NUM)
-            
-            # Acquire the lock to safely increment the number of connected clients  
-            with CLIENTS_LOCK:
-                NUM_CLIENTS_CONNECTED += 1
-            
-            #After connection, program continues:
-            file_logger.info("Connection established with: %s:%s", addr[0], addr[1])
-            print("Connection established with: %s:%s" % addr)
-            if NUM_CLIENTS_CONNECTED == NUM_CLIENTS_REQUIRED:
-                file_logger.info('Now connected to drone and edge server - Car now driving at %s...', SPEED)
-                print('Now connected to drone and edge server - Car now driving at speed %s...' % SPEED)
-           
-            # Each client thread will run the handle_client_connection thread, 
-            # as this program will spawn a child thread for each client.
-            client_thread = threading.Thread(target=handle_client_connection, args=(connection_socket, addr))
-            client_thread.start()
-            connection_threads.append(client_thread)
+                #This program will hang after calling SERVER_SOCKET.accept() until connection is requested and accepted:
+                connection_socket, addr = SERVER_SOCKET.accept()  # TCP Connection Created - note that addr is a tuple of (IP,PORT_NUM)
+                file_logger.info("Connection established with: %s:%s", addr[0], addr[1])
+                print("Connection established with: %s:%s" % addr)
+                
+                # Each client thread will run the handle_client_connection thread, 
+                # as this program will spawn a child thread for each client.
+                client_thread = threading.Thread(target=handle_client_connection, args=(connection_socket, addr))
+                client_thread.start()
+                connection_threads.append(client_thread)
+                
+                # Acquire the lock to safely increment the number of connected clients, then check if num client req is sufficient to start driving
+                with CLIENTS_LOCK:
+                    NUM_CLIENTS_CONNECTED += 1
+                    if NUM_CLIENTS_CONNECTED == NUM_CLIENTS_REQUIRED:
+                        ALL_CLIENTS_CONNECTED.set() # set this so that client threads can start sending messages.
+                        file_logger.info('Now connected to drone and edge server - Car now driving at %s...', SPEED)
+                        print('Now connected to drone and edge server - Car now driving at speed %s...' % SPEED)
+                        #px.forward(DEFAULT_SPEED) #begin driving now that required number of client command nodes connected
+            else:
+                time.sleep(1)  # Wait for 1 second before checking for the next client connection
+
 
         except Exception as e:
             file_logger.error("Error occurred during client connection: %s", str(e))
             console_logger.error("Error occurred during client connection: %s", str(e))
-        
-        with CLIENTS_LOCK:
-            # When both clients (drone and edge server) are connected to car command server, car can now begin driving
-            if NUM_CLIENTS_CONNECTED == NUM_CLIENTS_REQUIRED:
-                ALL_CLIENTS_CONNECTED.set() # set this so that client threads can start sending messages.
-                px.forward(DEFAULT_SPEED) #begin driving now that require3d number of client command nodes connected
 
-        time.sleep(1)  # Wait for 1 second before checking for the next client connection
 
     # Join all client socket connection threads before exiting program so that all threads are terminated first
     for thread in connection_threads:

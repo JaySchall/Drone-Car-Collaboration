@@ -56,7 +56,7 @@ def establish_socket_connection():
     try:
         CLIENT_SOCKET.connect((SERVER_NAME, SERVER_PORT))
         file_logger.info("Connected to server: %s on port: %s", SERVER_NAME, SERVER_PORT)
-        print("Connected to server: %s on port: %s", SERVER_NAME, SERVER_PORT)
+        print("Connected to server: %s on port: %s" % (SERVER_NAME, SERVER_PORT))
     except ConnectionRefusedError as e:
         file_logger.error("Error connecting to server: %s", str(e))
         console_logger.error("Error connecting to server: %s", str(e))
