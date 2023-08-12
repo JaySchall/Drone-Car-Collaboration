@@ -163,7 +163,10 @@ def main():
                         px.forward(SPEED) #begin driving now that required number of client command nodes connected
             else:
                 time.sleep(1)  # Wait for 1 second before checking for the next client connection
-
+        except KeyboardInterrupt:
+            print("\nCTRL + C detected from user input. Exiting the program...")
+            file_logger.error("\nCTRL + C detected from user input. Exiting the program...", str(e))
+            break
         except Exception as e:
             file_logger.error("Error occurred during client connection: %s", str(e))
             console_logger.error("Error occurred during client connection: %s", str(e))
@@ -173,7 +176,7 @@ def main():
     for thread in connection_threads:
         thread.join()
 
-    SERVER_SOCKET.close()
+    SERVER_SOCKET.close() # close socket before exiting program
 
 if __name__ == "__main__":
     main()
