@@ -51,8 +51,8 @@ def connect_to_car_command_server():
     file_logger.warning("Trying to establish connection with car command server...")
     console_logger.warning("Trying to establish connection with car command server...")
     if not connect.establish_socket_connection():
-        file_logger.warning("Failed to establish connection with the car command server.")
-        console_logger.warning("Failed to establish connection with the car command server.")
+        file_logger.error("Failed to establish connection with the car command server.")
+        console_logger.error("Failed to establish connection with the car command server.")
         return False
     return True
 
