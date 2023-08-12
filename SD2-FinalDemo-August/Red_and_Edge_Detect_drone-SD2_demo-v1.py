@@ -7,6 +7,8 @@ from cv_bridge import CvBridge
 import logging
 import drone_client as connect # make sure drone_client.py file is in the same directory as where this program is run
 import Edge_Server_VideoTopic # make sure Edge_Server_VideoTopic.py file is in the same directory as where this program is run
+import threading
+
 
 # Global variables:
 SEND_STOP = 0
@@ -15,7 +17,6 @@ SEND_REDUCE_SPEED = 2
 SEND_TURN_LEFT = 3
 SEND_TURN_RIGHT = 4
 SEND_ALL_CLEAR = 5
-LAST_COMMAND_SENT = None
 SHAPE_APPEARANCE_THRESHOLD = 1
 NUM_TRIANGLES = 0
 NUM_SQUARES = 0
@@ -25,6 +26,11 @@ NUM_STARS = 0
 RED_OBJ_FOUND = False
 SUBSCRIBER_TOPIC = "main_camera/image_raw"
 PUBLISHER_TOPIC = 'red_and_edge_object_detection/image_raw'
+#RED_OBJ_DETECTED_EVENT = threading.Event()  # Event to signal detection of a red object
+MESSAGE_CAR_THREAD_RUNNING = threading.Event() 
+LAST_COMMAND_SENT = None
+#MESSAGE_CAR_LOCK = threading.Lock()  # Lock for MESSAGE_CAR_THREAD_RUNNING
+#LAST_COMMAND_SENT_LOCK = threading.Lock()  # Lock for LAST_COMMAND_SENT
 
 
 # Create a logger instance for file logging
@@ -64,11 +70,17 @@ def initialize_ros_node():
         console_logger.error("Failed to initialize red_and_edge_object_detection ROS node: %s", str(e))  
         return False
 
-def send_message_to_car(command):
-    file_logger.info("Sending message %s to car [0=stop, 1=cont_drive, 2=red_speed, 3=L, 4=R, 5=clear]", command)
-    if command == SEND_STOP:
-        console_logger.warning("Sending message %s to car [0=stop, 1=cont_drive, 2=red_speed, 3=L, 4=R, 5=clear]", command) 
-    connect.message_car(command)
+def send_message_to_car_thread(command):
+    
+    while True:
+        MESSAGE_CAR_THREAD_RUNNING.wait() # send thread to sleep (spin) --> wait for main thread to wake this thread
+        
+        file_logger.info("Sending message %s to car [0=stop, 1=cont_drive, 2=red_speed, 3=L, 4=R, 5=clear]", command)
+        if command == SEND_STOP:
+            console_logger.warning("Sending message %s to car [0=stop, 1=cont_drive, 2=red_speed, 3=L, 4=R, 5=clear]", command)
+        connect.message_car(command)
+
+        MESSAGE_CAR_THREAD_RUNNING.clear() # clear flag so main thread knows it can now send another message.
 
 
 def detect_red(cv_image):
@@ -179,15 +191,28 @@ def image_callback(data):
         cv_image_with_bboxes = draw_bounding_boxes(cv_image, mask)
 
         # Logic used to determine what message needs to be sent to the car (this can be easily moved closer to when red object was found, if desired):
-        if RED_OBJ_FOUND:
-            send_message_to_car(SEND_STOP)
+            
+            # send a stop if a red object found and stop was not last message sent (prevents sending consecutive stop commands)
+        if RED_OBJ_FOUND and (LAST_COMMAND_SENT != SEND_STOP):
+            threading.Thread(target=send_message_to_car_thread, args=(SEND_STOP)).start() # start a thread that will send stop command
             LAST_COMMAND_SENT = SEND_STOP
-        elif LAST_COMMAND_SENT == SEND_STOP:
-            send_message_to_car(SEND_CONT_DRIVE)
+                
+            # continue --> (prevents sneding consecutive stop commands)
+        elif RED_OBJ_FOUND and (LAST_COMMAND_SENT == SEND_STOP):
+            pass
+            
+            # command car to recover and continue driving if no object found and last command it received was a STOP command
+        elif not RED_OBJ_FOUND and (LAST_COMMAND_SENT == SEND_STOP):
+            threading.Thread(target=send_message_to_car_thread, args=(SEND_CONT_DRIVE)).start() # start a thread that will send contDrive
             LAST_COMMAND_SENT = SEND_CONT_DRIVE
+                
+            #otherwise, inform car the all clear (use addtional if statement to prevent sending consecutive all clear commands)
         else:
-            send_message_to_car(SEND_ALL_CLEAR)
-            LAST_COMMAND_SENT = SEND_ALL_CLEAR
+            if LAST_COMMAND_SENT != SEND_ALL_CLEAR:
+                threading.Thread(target=send_message_to_car_thread, args=(SEND_ALL_CLEAR)).start() # start a thread that will send all clear
+                LAST_COMMAND_SENT = SEND_ALL_CLEAR
+            else:
+                pass
            
         # Convert image back to format for posting to an image topic: 
         img_msg = bridge.cv2_to_imgmsg(cv_image_with_bboxes, encoding="bgr8")
@@ -218,10 +243,15 @@ def start_image_processing(subscriber_topic):
 
 def main():
     
+    # Start ros node and connect to car command server:
     if not initialize_ros_node(): # initialize ros node for posting topic
         return
     if not connect_to_car_command_server(): # connect to car command server
         return
+    
+    # Start thread that will wait to be awakened to send a message to the car:
+    threading.Thread(target=send_message_to_car_thread, args=(SEND_ALL_CLEAR)).start()
+    MESSAGE_CAR_THREAD_RUNNING.set() # initial wake of thread to process SEND_ALL_CLEAR message sent
 
     global red_and_edge_image_pub
     red_and_edge_image_pub = rospy.Publisher(PUBLISHER_TOPIC, Image, queue_size=10)
