@@ -291,7 +291,7 @@ def exit_program():
  
 
 def main():
-    
+    global MESSAGING_THREAD
     # Start ros node and connect to car command server:
     if not initialize_ros_node(): # initialize ros node for posting topic
         return
