@@ -1,9 +1,9 @@
 [paths]
 log_directory = ./logs
 results_directory = ./results
-drone_file_directory = python_files/SD2-FinalDemo-August/
+drone_file_directory = ./python_files/SD2-FinalDemo-August/
 drone_file_name = Red_and_Edge_Detect_drone-SD2_demo-v1.py
-car_file_directory = python_files/SD2-FinalDemo-August/
+car_file_directory = ./python_files/SD2-FinalDemo-August/
 car_file_name = car_command_server.py
 
 [ssh]

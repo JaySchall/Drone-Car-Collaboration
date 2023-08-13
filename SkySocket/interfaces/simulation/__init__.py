@@ -176,10 +176,11 @@ class SkySimulationTab(SkyTabbedPanel):
         # These are run in tmux sessions to avoid SSH sessions hanging the
         # entire program.
         self.car_connection.create_task(SESSION_NAME, f"python3 {self.settings.car_file_directory}{self.settings.car_file_name}")
-        
+        print(f"python3 {self.settings.car_file_directory}{self.settings.car_file_name}")
         sleep(2)
         
         self.drone_connection.create_task(SESSION_NAME, f"python3 {self.settings.drone_file_directory}{self.settings.drone_file_name}")
+        print(f"python3 {self.settings.drone_file_directory}{self.settings.drone_file_name}")
         
         # TODO: Create methods to automate data collection
         # self._data_collect()

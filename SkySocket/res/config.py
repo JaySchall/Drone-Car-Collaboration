@@ -15,7 +15,7 @@ import os
 
 from kivy.event import EventDispatcher
 
-CONFIG_PATH = os.path.join("res", "config.sky")
+CONFIG_PATH = os.path.join("SkySocket", "res", "config.sky")
 
 
 class SkyDefaults:
