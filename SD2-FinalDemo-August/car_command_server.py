@@ -154,6 +154,7 @@ def main():
                 # Each client thread will run the handle_client_connection thread, 
                 # as this program will spawn a child thread for each client.
                 client_thread = threading.Thread(target=handle_client_connection_thread, args=(connection_socket, addr))
+                client_thread.setDaemon(True) # make daemon thread so when main exits, this thread will terminate and not make main wait.
                 client_thread.start()
                 connection_threads.append(client_thread)
                 
@@ -177,12 +178,14 @@ def main():
             file_logger.error("Error occurred during client connection: %s", str(e))
             console_logger.error("Error occurred during client connection: %s", str(e))
 
+    # close socket before exiting program
+    SERVER_SOCKET.close() 
 
     # Join all client socket connection threads before exiting program so that all threads are terminated first
     for thread in connection_threads:
-        thread.join()
+        if not thread.isDaemon(): # we only need to join non-daemon threads, since daemon threads will exit and not make the main thread wait.
+            thread.join()
 
-    SERVER_SOCKET.close() # close socket before exiting program
 
 if __name__ == "__main__":
     main()

@@ -267,7 +267,6 @@ def start_image_processing(subscriber_topic):
         rospy_spin_thread = threading.Thread(target=rospy.spin) # create ros thread so main thread is not blocked
         rospy_spin_thread.start()   # start rospy.spin() to receive and process messages from subscribed topic
         
-        rospy.spin()
     except KeyboardInterrupt:
         print("\nCTRL + C detected from user input. Exiting the program...")
         file_logger.error("\nCTRL + C detected from user input. Exiting the program...", str(e))
