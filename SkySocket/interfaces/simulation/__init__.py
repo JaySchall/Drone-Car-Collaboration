@@ -16,6 +16,7 @@ from kivy.properties import StringProperty
 
 from interfaces.simulation.connect import SkyConnectForm
 from interfaces.simulation.settings import SimulationSettingsForm
+from res.constants import ColorConstants
 from widgets.tab import SkyTabbedPanel
 from widgets.video import SkyVideoPlayer
 
@@ -134,7 +135,7 @@ class SkySimulationTab(SkyTabbedPanel):
         """Enables the start button to initialize a simulation."""
 
         temp_ref = self.ids.startbutton
-        temp_ref.background_color = self.green
+        temp_ref.background_color = ColorConstants.green
         temp_ref.text = "START"
         temp_ref.disabled = False
 
@@ -143,7 +144,7 @@ class SkySimulationTab(SkyTabbedPanel):
         """Enables the start button to become a stop button for a simulation."""
 
         temp_ref = self.ids.startbutton
-        temp_ref.background_color = self.red
+        temp_ref.background_color = ColorConstants.red
         temp_ref.text = "STOP"
         temp_ref.disabled = False
 
@@ -153,7 +154,7 @@ class SkySimulationTab(SkyTabbedPanel):
 
         temp_ref = self.ids.startbutton
         temp_ref.disabled = True
-        temp_ref.background_color = self.green
+        temp_ref.background_color = ColorConstants.green
         temp_ref.text = "START"
 
     def _start_run(self):
@@ -174,8 +175,8 @@ class SkySimulationTab(SkyTabbedPanel):
         # Create sessions called SESSION_NAME running target scripts
         # These are run in tmux sessions to avoid SSH sessions hanging the
         # entire program.
-        self.car_connection.create_task(SESSION_NAME, f"python3 {self.settings.get_path('car_file_directory')}{self.settings.get_path('car_file_name')}")
-        self.drone_connection.create_task(SESSION_NAME, f"python3 {self.settings.get_path('drone_file_directory')}{self.settings.get_path('drone_file_name')}")
+        self.car_connection.create_task(SESSION_NAME, f"python3 {self.settings.car_file_directory}{self.settings.car_file_name}")
+        self.drone_connection.create_task(SESSION_NAME, f"python3 {self.settings.drone_file_directory}{self.settings.drone_file_name}")
         
         # TODO: Create methods to automate data collection
         # self._data_collect()

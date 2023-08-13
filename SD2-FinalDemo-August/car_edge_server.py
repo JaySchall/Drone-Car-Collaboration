@@ -1,28 +1,31 @@
 # This module is to be imported by the yoloShapeDetect program which runs darknet/yolov4
 
 import logging
-from socket import *
+import socket
 
 SERVER_NAME = "192.168.11.133"  # Server IP (User-defined)
 SERVER_PORT = 10600             # Server Port (Predefined)
-CLIENT_SOCKET = socket(AF_INET, SOCK_STREAM)  # Client Socket Creation 
-
-# Create a logger instance
-edge_server_logger = logging.getLogger(__name__)
+CLIENT_SOCKET = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  # Client Socket Creation 
 
 # Clear log file before reopening in append mode
 with open("yoloShapeDetect_log.txt", "w"):
     pass
 
-# Configure logging to write to a log file and console
-edge_server_logger.setLevel(logging.INFO)
+# Create a logger instance for file logging
+file_logger = logging.getLogger(__name__ + '--file_logger')
+file_logger.setLevel(logging.INFO)
 formatter = logging.Formatter("%(asctime)s - [%(name)s] - %(levelname)s - %(message)s")
 file_handler = logging.FileHandler("yoloShapeDetect_log.txt")
 file_handler.setFormatter(formatter)
-stream_handler = logging.StreamHandler()
-stream_handler.setFormatter(formatter)
-edge_server_logger.addHandler(file_handler)
-edge_server_logger.addHandler(stream_handler)
+file_logger.addHandler(file_handler)
+
+# Create a logger instance for console logging
+console_logger = logging.getLogger(__name__ + '--console_logger')
+console_logger.setLevel(logging.INFO)  # Adjust console logger level as needed
+formatter = logging.Formatter("%(asctime)s - [%(name)s] - %(levelname)s - %(message)s")
+console_handler = logging.StreamHandler()
+console_handler.setFormatter(formatter)
+console_logger.addHandler(console_handler)
 
 ''' 
 Send a message to the car using the following protocol:
@@ -34,31 +37,38 @@ Send a message to the car using the following protocol:
 5 = All clear (no perceived threats or recovery actions necessary; no changes)
 '''
 def message_car(var):
-    edge_server_logger.info("Sending message: %s", var)
+    file_logger.info("Sending message: %s", var)
     try:
         CLIENT_SOCKET.send(str(var).encode())  # Convert var to string and then encode it
-        edge_server_logger.info("Message sent successfully!")
+        file_logger.info("Message sent successfully!")
+        console_logger.info("Message sent successfully!")
     except Exception as e:
-        edge_server_logger.error("Error sending message: %s", str(e))
+        file_logger.error("Error sending message: %s", str(e))
+        console_logger.error("Error sending message: %s", str(e))
 
 # QUIT Protocol
 def close_socket():
     CLIENT_SOCKET.close()
-    edge_server_logger.info("Socket closed.")
+    file_logger.info("Socket closed.")
+    print("Socket closed.")
 
 def establish_socket_connection():
     try:
         CLIENT_SOCKET.connect((SERVER_NAME, SERVER_PORT))
-        edge_server_logger.info("Connected to server: %s on port: %s", SERVER_NAME, SERVER_PORT)
+        file_logger.info("Connected to server: %s on port: %s", SERVER_NAME, SERVER_PORT)
+        print("Connected to server: %s on port: %s" % (SERVER_NAME, SERVER_PORT))
     except ConnectionRefusedError as e:
-        edge_server_logger.error("Error connecting to server: %s", str(e))
+        file_logger.error("Error connecting to server: %s", str(e))
+        console_logger.error("Error connecting to server: %s", str(e))
         close_socket()
     # Debug messages to indicate the connection status
     if CLIENT_SOCKET.fileno() != -1:
-        edge_server_logger.info("Socket connection is active (socket file descriptor = %s).", CLIENT_SOCKET.fileno())
+        file_logger.info("Socket connection is active (socket file descriptor = %s).", CLIENT_SOCKET.fileno())
+        print("Socket connection is active (socket file descriptor = %s)." % CLIENT_SOCKET.fileno())
         return True
     else:
-        edge_server_logger.info("Socket connection is closed (socket file descriptor = %s).", CLIENT_SOCKET.fileno())
+        file_logger.info("Socket connection is closed (socket file descriptor = %s).", CLIENT_SOCKET.fileno())
+        print("Socket connection is closed (socket file descriptor = %s)." % CLIENT_SOCKET.fileno())
         return False
 
 
