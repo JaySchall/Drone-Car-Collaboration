@@ -70,31 +70,40 @@ def initialize_ros_node():
         return False
 
 def send_message_to_car_thread():
-    while SEND_MESSAGES:
-        MESSAGE_CAR_THREAD_RUNNING.wait() # send thread to sleep (spin) --> wait for main thread to wake this thread
+    try:
+        while SEND_MESSAGES:
+            MESSAGE_CAR_THREAD_RUNNING.wait() # send thread to sleep (spin) --> wait for main thread to wake this thread
         
-        if not connect.CONNECTED_TO_SERVER: # make sure connection is active before attempting to send message.
-            file_logger.warning("No connection with car command server; need to reestablsh connection...")
-            console_logger.warning("No connection with car command server; need to reestablsh connection...")
-            if not connect_to_car_command_server(): # try to reestablish connection
-                file_logger.error("Connection reestablishment failed: No connection with car command server...")
-                console_logger.error("Connection reestablishment failed: No connection with car command server...")
-        else:
-            command = LAST_COMMAND_SENT
-            if command == SEND_STOP:
-                file_logger.warning("Sending message %s to car [0=stop, 1=cont_drive, 2=red_speed, 3=L, 4=R, 5=clear]", command)
-                console_logger.warning("Sending message %s to car [0=stop, 1=cont_drive, 2=red_speed, 3=L, 4=R, 5=clear]", command)
+            if not connect.CONNECTED_TO_SERVER: # make sure connection is active before attempting to send message.
+                file_logger.warning("No connection with car command server; need to reestablsh connection...")
+                console_logger.warning("No connection with car command server; need to reestablsh connection...")
+                if not connect_to_car_command_server(): # try to reestablish connection
+                    file_logger.error("Connection reestablishment failed: No connection with car command server...")
+                    console_logger.error("Connection reestablishment failed: No connection with car command server...")
             else:
-                file_logger.info("Sending message %s to car [0=stop, 1=cont_drive, 2=red_speed, 3=L, 4=R, 5=clear]", command)
-                console_logger.info("Sending message %s to car [0=stop, 1=cont_drive, 2=red_speed, 3=L, 4=R, 5=clear]", command)
-            connect.message_car(command) # send the message
+                command = LAST_COMMAND_SENT
+                if command == SEND_STOP:
+                    file_logger.warning("Sending message %s to car [0=stop, 1=cont_drive, 2=red_speed, 3=L, 4=R, 5=clear]", command)
+                    console_logger.warning("Sending message %s to car [0=stop, 1=cont_drive, 2=red_speed, 3=L, 4=R, 5=clear]", command)
+                else:
+                    file_logger.info("Sending message %s to car [0=stop, 1=cont_drive, 2=red_speed, 3=L, 4=R, 5=clear]", command)
+                    console_logger.info("Sending message %s to car [0=stop, 1=cont_drive, 2=red_speed, 3=L, 4=R, 5=clear]", command)
+                connect.message_car(command) # send the message
 
-        MESSAGE_CAR_THREAD_RUNNING.clear() # clear flag so main thread knows it can now send another message.
+            MESSAGE_CAR_THREAD_RUNNING.clear() # clear flag so main thread knows it can now send another message.
         
-    # SEND_MESSAGES == False; thus exiting this thread.
-    file_logger.warning("SEND_MESSAGES == FALSE --> Terminating Messaging Thread...")
-    console_logger.warning("SEND_MESSAGES == FALSE --> Terminating Messaging Thread...")
-
+        # SEND_MESSAGES == False; thus exiting this thread.
+        file_logger.warning("SEND_MESSAGES == FALSE --> Terminating Messaging Thread...")
+        console_logger.warning("SEND_MESSAGES == FALSE --> Terminating Messaging Thread...")
+    except KeyboardInterrupt:
+        print("\nCTRL + C detected from user input. Exiting the program...")
+        file_logger.error("\nCTRL + C detected from user input. Exiting the program...", str(e))
+        exit_program()
+    except Exception as e:
+        file_logger.error("Error in image_callback: %s", str(e))
+        console_logger.error("Error in image_callback: %s", str(e))
+        exit_program()
+        
 
 def detect_red(cv_image):
     hsv = cv2.cvtColor(cv_image, cv2.COLOR_BGR2HSV)
@@ -239,10 +248,14 @@ def image_callback(data): # this function is ran on a rospy-generated thread upo
         # Still publish image to red and edge video topic whether red object found or not, just to have a continuous stream
         # that can be used for testing/viewing if our program is working as expected:
         red_and_edge_image_pub.publish(img_msg)
-
+    except KeyboardInterrupt:
+        print("\nCTRL + C detected from user input. Exiting the program...")
+        file_logger.error("\nCTRL + C detected from user input. Exiting the program...", str(e))
+        exit_program()
     except Exception as e:
         file_logger.error("Error in image_callback: %s", str(e))
         console_logger.error("Error in image_callback: %s", str(e))
+        exit_program()
 
 def start_image_processing(subscriber_topic):
     try:
@@ -255,6 +268,7 @@ def start_image_processing(subscriber_topic):
     except rospy.ROSException as e:
         file_logger.error("ROSException in start_image_processing: %s", str(e))
         console_logger.error("ROSException in start_image_processing: %s", str(e))
+        exit_program()
         
 def exit_program():
     global SEND_MESSAGES
@@ -263,7 +277,10 @@ def exit_program():
     SEND_MESSAGES = False               # set to false so thread will not to process anymore messages
     MESSAGE_CAR_THREAD_RUNNING.set()    # wake thread so it can terminate when it checks send messages boolean
     connect.close_socket()              # close socket
-    MESSAGING_THREAD.join()             # join thread with main thread before exiting
+    # Joining all active threads
+    for thread in threading.enumerate():
+        if thread is not threading.currentThread():
+            thread.join()
     rospy.shutdown()                    # properly shutdown ros node to do resource cleanup
  
 
