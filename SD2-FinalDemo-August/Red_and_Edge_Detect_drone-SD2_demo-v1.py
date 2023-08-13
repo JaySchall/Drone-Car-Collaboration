@@ -72,7 +72,10 @@ def initialize_ros_node():
 def send_message_to_car_thread():
     try:
         while SEND_MESSAGES:
-            MESSAGE_CAR_THREAD_RUNNING.wait() # send thread to sleep (spin) --> wait for main thread to wake this thread
+            if not MESSAGE_CAR_THREAD_RUNNING.is_set():
+                file_logger.info("SendMessage thread waiting...Standing by to send a message...")
+                console_logger.info("SendMessage thread waiting...Standing by to send a message...")
+                MESSAGE_CAR_THREAD_RUNNING.wait() # send thread to sleep (spin) --> wait for main thread to wake this thread
         
             if not connect.CONNECTED_TO_SERVER: # make sure connection is active before attempting to send message.
                 file_logger.warning("No connection with car command server; need to reestablsh connection...")
@@ -258,8 +261,12 @@ def image_callback(data): # this function is ran on a rospy-generated thread upo
         exit_program()
 
 def start_image_processing(subscriber_topic):
+    global rospy_spin_thread
     try:
-        image_sub = rospy.Subscriber(subscriber_topic, Image, image_callback)
+        image_sub = rospy.Subscriber(subscriber_topic, Image, image_callback) # subscribe to topic
+        rospy_spin_thread = threading.Thread(target=rospy.spin) # create ros thread so main thread is not blocked
+        rospy_spin_thread.start()   # start rospy.spin() to receive and process messages from subscribed topic
+        
         rospy.spin()
     except KeyboardInterrupt:
         print("\nCTRL + C detected from user input. Exiting the program...")
@@ -302,6 +309,15 @@ def main():
     print("ROS publisher created for %s topic." % PUBLISHER_TOPIC)
 
     start_image_processing(SUBSCRIBER_TOPIC)
+
+    # make the main thread spin until it receives a keyboard interrupt to exit program
+    try:
+        while True:
+            continue
+    except KeyboardInterrupt:
+        print("\nCTRL + C detected from user input. Exiting the program...")
+        file_logger.error("\nCTRL + C detected from user input. Exiting the program...", str(e))
+        exit_program()
 
 
 if __name__ == "__main__":

@@ -15,7 +15,7 @@ NUM_CLIENTS_CONNECTED = 0 # for multithreading and recovery purposes - track num
 ALL_CLIENTS_CONNECTED = threading.Event() # use this to track if all client threads still have a server connection
 CLIENTS_LOCK = threading.Lock() # use this to lock sections of code that access the num_clients_connected global variable
 LAST_COMMAND_RECEIVED = None # track the last packet received
-EXIT_PROGRAM = False # use this to control exiting program, including terminating threads
+EXIT_PROGRAM = threading.Event() # use this to control exiting program, including terminating threads
 
 #Car commands
 STOP = 0  # Stop Car command
@@ -83,26 +83,31 @@ def handle_client_connection_thread(connection_socket, client_addr):
     global SPEED, DEFAULT_SPEED, NUM_CLIENTS_CONNECTED
    
     try:
-        # Wait until all clients are connected
-        while not ALL_CLIENTS_CONNECTED.is_set() and not EXIT_PROGRAM:
-            time.sleep(1)  # Wait until all clients are connected
-
-        while ALL_CLIENTS_CONNECTED.is_set() and not EXIT_PROGRAM: # continue to receive packets from this client socket connection while all client sockets are connected.
-        
-            # Now, receive a packet:
-            packet = connection_socket.recv(1).decode()  # Receives command from a client (buffer size set to 1 byte --> recv(1))
-            file_logger.info("Received and PROCESSING packet from CLIENT: (%s), [0=stop,1=cont_drive,2=red_speed,3=L, 4=R,5=clear]: %s",
-                            client_addr, int(packet))
-            console_logger.info("Received and PROCESSING packet from CLIENT: (%s), [0=stop,1=cont_drive,2=red_speed,3=L, 4=R,5=clear]: %s",
-                            client_addr, int(packet))
-            if int(packet) == STOP:
-                obstruction()  # Make a call to stop the car
-            elif int(packet) == ALL_CLEAR:
-                continue  # No actions necessary
-            elif int(packet) == CONT_DRIVE:
-                continueDriving()  # Continue to normal driving
-            else:
-                warning(int(packet), client_addr)  # Adjust speed or direction
+        while True: # run this loop until there is a connection error
+            
+            if EXIT_PROGRAM.is_set():
+                break # exit this thread if exit program event is set
+            
+            # Wait until all clients are connected
+            while not ALL_CLIENTS_CONNECTED.is_set() and not EXIT_PROGRAM.is_set():
+                time.sleep(1)  # Wait until all clients are connected
+                
+            # Now receive packets while number of clients connected is adequate.
+            while ALL_CLIENTS_CONNECTED.is_set() and not EXIT_PROGRAM.is_set():
+                # Now, receive a packet:
+                packet = connection_socket.recv(1).decode()  # Receives command from a client (buffer size set to 1 byte --> recv(1))
+                file_logger.info("Received and PROCESSING packet from CLIENT: (%s), [0=stop,1=cont_drive,2=red_speed,3=L, 4=R,5=clear]: %s",
+                                client_addr, int(packet))
+                console_logger.info("Received and PROCESSING packet from CLIENT: (%s), [0=stop,1=cont_drive,2=red_speed,3=L, 4=R,5=clear]: %s",
+                                client_addr, int(packet))
+                if int(packet) == STOP:
+                    obstruction()  # Make a call to stop the car
+                elif int(packet) == ALL_CLEAR:
+                    continue  # No actions necessary
+                elif int(packet) == CONT_DRIVE:
+                    continueDriving()  # Continue to normal driving
+                else:
+                    warning(int(packet), client_addr)  # Adjust speed or direction
 
     except socket.error as e:
         file_logger.error("Error occurred during client (%s) connection: %s", client_addr, str(e))
@@ -166,7 +171,7 @@ def main():
         except KeyboardInterrupt:
             print("\nCTRL + C detected from user input. Exiting the program...")
             file_logger.error("\nCTRL + C detected from user input. Exiting the program...")
-            EXIT_PROGRAM = True
+            EXIT_PROGRAM.set() # trigger exit program event so all threads will terminate
             break
         except Exception as e:
             file_logger.error("Error occurred during client connection: %s", str(e))
