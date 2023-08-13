@@ -180,6 +180,7 @@ def main():
 
     # close socket before exiting program
     SERVER_SOCKET.close() 
+    time.sleep(5) # give OS time to release socket
 
     # Join all client socket connection threads before exiting program so that all threads are terminated first
     for thread in connection_threads:
