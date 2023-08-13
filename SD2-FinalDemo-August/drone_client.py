@@ -60,6 +60,7 @@ def message_car(var):
 def close_socket():
     CLIENT_SOCKET.close()
     file_logger.info("Socket closed.")
+    console_logger.info("Socket closed.")
 
 def establish_socket_connection():
     global CONNECTED_TO_SERVER
