@@ -121,7 +121,7 @@ def exit_program():
  
 
 def main():
-    global OBJ_DETECTED, MESSAGING_THREAD
+    global OBJ_DETECTED, MESSAGING_THREAD, LAST_COMMAND_SENT
     # Connect to car command server
     if not connect_to_car_command_server():
         return
