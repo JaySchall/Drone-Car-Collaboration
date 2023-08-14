@@ -75,7 +75,20 @@ class SSHConnection(EventDispatcher):
             return
         if self.c.is_connected:        
             self.open_sessions.append(sname)
-            self.c.run(f"tmux new -d -s {sname}", warn=True)
+            self.c.run(f"tmux new -d -s {sname}", warn=True)    
+    
+    def send_keys(self, sname, cmd):
+        """
+        Sends a command to a session and hits enter.
+        
+        Args:
+            sname: The name of the session.
+            cmd: The key for key command to be run.
+        """
+
+        if sname not in self.open_sessions:
+            print("This session does not exist")
+        self.c.run(f"tmux send-keys -t {sname} \"{cmd}\" ENTER" )
 
     def kill_session(self, sname):
         """

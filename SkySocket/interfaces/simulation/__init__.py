@@ -109,7 +109,7 @@ class SkySimulationTab(SkyTabbedPanel):
         """Initialize widget and thread object."""
 
         super().__init__(**kwargs)
-        self.running_thread = Thread(target=self._start_run)
+        self.running_thread = None
 
     def on_start(self, values):
         """
@@ -122,10 +122,10 @@ class SkySimulationTab(SkyTabbedPanel):
             values: a dictionary of the user input values.
         """
 
-        if not self.running_thread.is_alive():
+        if not self.should_run:
             self._disable_button()
             self.should_run = True
-            self.running_thread.run()
+            Thread(target=self._start_run).start()
         else:
             self._disable_button()
             self.should_run = False
@@ -175,8 +175,13 @@ class SkySimulationTab(SkyTabbedPanel):
         # Create sessions called SESSION_NAME running target scripts
         # These are run in tmux sessions to avoid SSH sessions hanging the
         # entire program.
-        self.car_connection.create_task(SESSION_NAME, f"python3 {self.settings.car_file_directory}{self.settings.car_file_name}")
-        self.drone_connection.create_task(SESSION_NAME, f"python3 {self.settings.drone_file_directory}{self.settings.drone_file_name}")
+        self.car_connection.create_session(SESSION_NAME)
+        self.car_connection.send_keys(SESSION_NAME, f"python3 {self.settings.car_file_directory}{self.settings.car_file_name}")
+
+        sleep(3)
+
+        self.drone_connection.create_session(SESSION_NAME)
+        self.drone_connection.send_keys(SESSION_NAME, f"python3 {self.settings.drone_file_directory}{self.settings.drone_file_name}")
         
         # TODO: Create methods to automate data collection
         # self._data_collect()
@@ -187,8 +192,6 @@ class SkySimulationTab(SkyTabbedPanel):
         while self.should_run:
             car_sessions = self.car_connection.get_tmux_sessions()
             drone_sessions = self.drone_connection.get_tmux_sessions()
-            print("Car: ", car_sessions)
-            print("Drone:", drone_sessions)
             if (SESSION_NAME not in str(car_sessions) or
                 SESSION_NAME not in str(drone_sessions)):
 
@@ -209,6 +212,11 @@ class SkySimulationTab(SkyTabbedPanel):
             print("failed to kill process for drone")
 
         # Stop car wheels
-        self.car_connection.create_task("reset", "python3 reset.py")
+        self.car_connection.create_session("reset")
+        self.car_connection.send_keys("reset", f"python3 {self.settings.car_file_directory}stop_car_script.py")
+
+        sleep(2)
+
+        self.car_connection.kill_session("reset")
 
         self._do_start_button()

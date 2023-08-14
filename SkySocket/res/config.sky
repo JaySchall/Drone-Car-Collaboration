@@ -2,7 +2,7 @@
 log_directory = ./logs
 results_directory = ./results
 drone_file_directory = python_files/SD2-FinalDemo-August/
-drone_file_name = RedDetect_drone-SD2_demo-v4.py
+drone_file_name = Red_and_Edge_Detect_drone-SD2_demo-v1.py
 car_file_directory = python_files/SD2-FinalDemo-August/
 car_file_name = car_command_server.py
 
@@ -15,5 +15,5 @@ car_ip = 192.168.11.133
 car_password = raspberry
 
 [testing]
-video_source = http://192.168.11.1:8080/stream?topic=/main_camera/image_raw
+video_source = http://192.168.11.1:8080/stream?topic=/red_and_edge_object_detection/image_raw
 offloading_percent = 50
