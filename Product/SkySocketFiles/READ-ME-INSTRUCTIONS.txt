@@ -1,0 +1,63 @@
+CURRENT ISSUES: 
+*need to do some refactoring to make code neater
+*perhaps improve log output (like the timer, etc.), but so far it is very good and good enough!
+*CURRENT OUTPUT FOR LATEST BIG ISSUE - CANNOT INIT ROS NODE MORE THAN ONCE AND WITH DIFF NAMES IN THE SAME PARENT PROCESS OR ANY OF ITS CHILDREN?
+2023-07-19 18:04:33,783 - [Edge_Server_VideoTopic] - INFO - Edge_Server_VideoTopic module imported...Attempting to publish EdgeServer_VideoTopic
+2023-07-19 18:04:34,072 - [Edge_Server_VideoTopic] - INFO - ROS node 'EdgeServer_VideoTopic' initialized.
+2023-07-19 18:04:34,076 - [Edge_Server_VideoTopic] - INFO - ROS publisher created for EdgeServer_VideoTopic/image_raw topic.
+Traceback (most recent call last):
+  File "Red_and_Edge_Detect_drone-SD2_demo-v1.py", line 203, in <module>
+    main()
+  File "Red_and_Edge_Detect_drone-SD2_demo-v1.py", line 191, in main
+    if not initialize_ros_node(): # initialize ros node for posting topic
+  File "Red_and_Edge_Detect_drone-SD2_demo-v1.py", line 48, in initialize_ros_node
+    rospy.init_node('red_and_edge_object_detection')
+  File "/opt/ros/noetic/lib/python3/dist-packages/rospy/client.py", line 274, in init_node
+    raise rospy.exceptions.ROSException("rospy.init_node() has already been called with different arguments: "+str(_init_node_args))
+rospy.exceptions.ROSException: rospy.init_node() has already been called with different arguments: ('EdgeServer_VideoTopic', ['Red_and_Edge_Detect_drone-SD2_demo-v1.py'], False, None, False, False)
+
+****END OF CURRENT ISSUES ******
+
+
+#logging outputs to the console and appended to log files for both drone and car programs on the respective device where the program is ran.
+
+1.Run the car_command_server.py file on the car first
+
+2.Then, run RedDetect_drone-SD2_demo-v4.py on the drone, which will call the drone_client.py 
+program which should be in the correct path (which is set as the same directory where red detect program is called).
+
+3.SPECIAL NOTE: The drone and car have python2.7 interpreters.
+	a.MAKE SURE TO USE PYTHON 3 VERSION AND ABOVE
+		i.SO RUN: python3 name_of_program.py on car and drone, respectively.
+
+#Current status:
+demo is working! Loop functionality added! ready for SD2 Demo on June 12th, 2023
+
+#Special note:
+
+In the RedDetect_drone-SD1_demo-v4.py file, the line:
+	
+	from picarx import Picarx
+
+imports a package (from this path: /home/pi/picar-x/picarx), and inside of that directory is the 
+__init__.py file, which tells python that the directory is a package directory.
+The __init__.py file contains the following lines:
+	#!/usr/bin/env python3
+	from .picarx import Picarx
+	
+The first line tells python which interpreter to use and gives the path (called a shebang), the second line tells python to import the module
+(yes the module (aka .py file) has the same name as the package directory name (bad practice) that is in the package directory.
+The dot (.) before picarx indicates that the module is located in the same package directory as the __init__.py file.
+
+so here is the overall flow when you see "from picarx import Picarx":
+	1) go to /home/pi/picar-x/picarx
+	2) see __init__.py file; and now python knows the directory is a package; 
+	3) now execute __init__.py file
+		4) use python3 interpreter
+		5) import Picarx class from the picarx module, which is a module found in the same package directory 
+			(/home/pi/picar-x/picarx) as the __init__.py file.
+So essentially, you are importing a package (picarx package), then a module (picarx.py) from the package through the __init__.py package initialization file
+(which can be blank if no initialization is needed, but in this case it is used), then a class (Picarx) from that module.
+So you are not directly importing the picarx module.
+
+

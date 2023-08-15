@@ -1,0 +1,50 @@
+#:kivy 2.2.0
+#: import ColorConstants res.constants.ColorConstants
+#: import SizeConstants res.constants.SizeConstants
+#: import SkySettingsTab interfaces.settings.SkySettingsTab
+#: import SkySimulationTab interfaces.simulation.SkySimulationTab
+#: import SkyStatusBar interfaces.statusbar.SkyStatusBar
+#: import SkyTabbedPanel widgets.tab.SkyTabbedPanel
+#: import SkyTestingTab interfaces.testing.SkyTestingTab
+#: import StyleConstants res.constants.StyleConstants
+
+<MainWindow>:
+    orientation: "vertical"
+    SkyStatusBar:
+        car_connection: root.car
+        drone_connection: root.drone
+        start_status: simulation_tab
+    Label:
+        height: dp(10)
+        size_hint: 1, None
+        canvas.before:
+            Color:
+                rgba: ColorConstants.white
+            Rectangle:
+                pos: self.pos
+                size: self.size
+    TabbedPanel:
+        id: tab_panel
+        do_default_tab: False
+        pos_hint: StyleConstants.center_pos
+        strip_border: ColorConstants.transparent
+        tab_height: SizeConstants.tab_height
+        tab_width: SizeConstants.tab_width
+        canvas.before:
+            Color:
+                rgba: ColorConstants.white
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        
+        SkySimulationTab:
+            id: simulation_tab
+            car_connection: root.car
+            drone_connection: root.drone
+            settings: root.settings
+            video_source: root.settings.video_source
+        SkyTestingTab:
+            car_connection: root.car  
+            drone_connection: root.drone
+        SkySettingsTab:
+            settings: root.settings
