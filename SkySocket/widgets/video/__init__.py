@@ -24,7 +24,17 @@ Builder.load_string("""
     pos_hint: StyleConstants.center_pos
     size: SizeConstants.video_width, SizeConstants.video_height
     size_hint_min_y: SizeConstants.video_height
-    state: "play" if self.loaded else "stop"
+    state: "stop"
+    Button:
+        size: root.size
+        pos: root.pos
+        on_release: root._state()
+        color: [0, 0, 0, 0]
+        border: [0, 0, 0 ,0]
+        background_normal: ""
+        background_down: ""
+        background_disabled_normal: ""
+        background_disabled_down: ""
 """)
 
 
@@ -37,3 +47,6 @@ class SkyVideoPlayer(Video):
     settings page. 
     """
     
+    def _state(self):
+        self.reload()
+        self.state = "play" if self.state == "stop" else "stop"

@@ -21,6 +21,23 @@ class SkySettingsTextInput(SkyTextInput):
                          height=SizeConstants.settings_text_height,
                          size_hint=(1.5, None), **kwargs)
 
+class SettingsIDS():
+
+    DRONE_USERNAME = "drone_username"
+    DRONE_IP = "drone_ip"
+    DRONE_PASSWORD = "drone_password"
+    CAR_USERNAME = "car_username"
+    CAR_IP = "car_ip"
+    CAR_PASSWORD = "car_password"
+    VIDEO_SOURCE = "video_source"
+    OFFLOADING = "offloading_percent"
+    LOG = "log_directory"
+    RESULTS = "results_directory"
+    DRONE_DIRECTORY = "drone_file_directory"
+    DRONE_NAME = "drone_file_name"
+    CAR_DIRECTORY = "car_file_directory"
+    CAR_NAME = "car_file_name"
+
 
 class SettingsForm(SkyFormTable):
     """
@@ -43,17 +60,36 @@ class SettingsForm(SkyFormTable):
         _local_dir = SkyPathValidator(local_path=True)
 
         self.form = SkyForm()
-        self.add_field(SkySettingsTextInput(sid="drone_username", label="Drone User", width=self.text_width))
-        self.add_field(SkySettingsTextInput(sid="drone_ip", label = "Drone IP", width = self.text_width, validators=[_ip_val]))
-        self.add_field(SkySettingsTextInput(sid="drone_password", label="Drone Password", password=True, width=self.text_width))
-        self.add_field(SkySettingsTextInput(sid="car_username", label="Car User", width=self.text_width))
-        self.add_field(SkySettingsTextInput(sid="car_ip", label="Car IP", width=self.text_width, validators=[_ip_val]))
-        self.add_field(SkySettingsTextInput(sid="car_password", label="Car Password", password=True, width=self.text_width))
-        self.add_field(SkySettingsTextInput(sid="video_source", label="Video Source", width=self.text_width))
-        self.add_field(SkySettingsTextInput(sid="offloading_percent", label="Offloading Default", width=self.text_width))
-        self.add_field(SkySettingsTextInput(sid="log_directory", label="Log Directory", width=self.text_width))
-        self.add_field(SkySettingsTextInput(sid="results_directory", label="Results Directory", width=self.text_width, validators=[_local_dir]))
-        self.add_field(SkySettingsTextInput(sid="drone_file_directory", label="Drone File Directory", width=self.text_width))
-        self.add_field(SkySettingsTextInput(sid="drone_file_name", label="Drone File Name", width=self.text_width))
-        self.add_field(SkySettingsTextInput(sid="car_file_directory", label="Car File Directory", width=self.text_width))
-        self.add_field(SkySettingsTextInput(sid="car_file_name", label="Car File Name", width=self.text_width))
+        self.add_field(SkySettingsTextInput(sid=SettingsIDS.DRONE_USERNAME, label="Drone User", width=self.text_width))
+        self.add_field(SkySettingsTextInput(sid=SettingsIDS.DRONE_IP, label = "Drone IP", width = self.text_width, validators=[_ip_val]))
+        self.add_field(SkySettingsTextInput(sid=SettingsIDS.DRONE_PASSWORD, label="Drone Password", password=True, width=self.text_width))
+        self.add_field(SkySettingsTextInput(sid=SettingsIDS.CAR_USERNAME, label="Car User", width=self.text_width))
+        self.add_field(SkySettingsTextInput(sid=SettingsIDS.CAR_IP, label="Car IP", width=self.text_width, validators=[_ip_val]))
+        self.add_field(SkySettingsTextInput(sid=SettingsIDS.CAR_PASSWORD, label="Car Password", password=True, width=self.text_width))
+        self.add_field(SkySettingsTextInput(sid=SettingsIDS.VIDEO_SOURCE, label="Video Source", width=self.text_width))
+        self.add_field(SkySettingsTextInput(sid=SettingsIDS.OFFLOADING, label="Offloading Default", width=self.text_width))
+        self.add_field(SkySettingsTextInput(sid=SettingsIDS.LOG, label="Log Directory", width=self.text_width))
+        self.add_field(SkySettingsTextInput(sid=SettingsIDS.RESULTS, label="Results Directory", width=self.text_width, validators=[_local_dir]))
+        self.add_field(SkySettingsTextInput(sid=SettingsIDS.DRONE_DIRECTORY, label="Drone File Directory", width=self.text_width))
+        self.add_field(SkySettingsTextInput(sid=SettingsIDS.DRONE_NAME, label="Drone File Name", width=self.text_width))
+        self.add_field(SkySettingsTextInput(sid=SettingsIDS.CAR_DIRECTORY, label="Car File Directory", width=self.text_width))
+        self.add_field(SkySettingsTextInput(sid=SettingsIDS.CAR_NAME, label="Car File Name", width=self.text_width))
+
+    def on_kv_post(self, base_widget):
+
+        self.form.set_value(SettingsIDS.DRONE_USERNAME, self.settings[SettingsIDS.DRONE_USERNAME])
+        self.form.set_value(SettingsIDS.DRONE_IP, self.settings[SettingsIDS.DRONE_IP])
+        self.form.set_value(SettingsIDS.DRONE_PASSWORD, self.settings[SettingsIDS.DRONE_PASSWORD])
+        self.form.set_value(SettingsIDS.CAR_USERNAME, self.settings[SettingsIDS.CAR_USERNAME])
+        self.form.set_value(SettingsIDS.CAR_IP, self.settings[SettingsIDS.CAR_IP])
+        self.form.set_value(SettingsIDS.CAR_PASSWORD, self.settings[SettingsIDS.CAR_PASSWORD])
+        self.form.set_value(SettingsIDS.VIDEO_SOURCE, self.settings[SettingsIDS.VIDEO_SOURCE])
+        self.form.set_value(SettingsIDS.OFFLOADING, self.settings[SettingsIDS.OFFLOADING])
+        self.form.set_value(SettingsIDS.LOG, self.settings[SettingsIDS.LOG])
+        self.form.set_value(SettingsIDS.RESULTS, self.settings[SettingsIDS.RESULTS])
+        self.form.set_value(SettingsIDS.DRONE_DIRECTORY, self.settings[SettingsIDS.DRONE_DIRECTORY])
+        self.form.set_value(SettingsIDS.DRONE_NAME, self.settings[SettingsIDS.DRONE_NAME])
+        self.form.set_value(SettingsIDS.CAR_DIRECTORY, self.settings[SettingsIDS.CAR_DIRECTORY])
+        self.form.set_value(SettingsIDS.CAR_NAME, self.settings[SettingsIDS.CAR_NAME])
+
+        super().on_kv_post(base_widget)

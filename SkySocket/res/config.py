@@ -15,7 +15,7 @@ import os
 
 from kivy.event import EventDispatcher
 
-CONFIG_PATH = os.path.join("res", "config.sky")
+CONFIG_PATH = os.path.join("SkySocket", "res", "config.sky")
 
 
 class SkyDefaults:
@@ -100,6 +100,7 @@ class SkyVariables(_SkyConfig, EventDispatcher):
     variables = {}
     __getattr__ = variables.get
     __setattr__ = variables.__setitem__
+    __getitem__ = variables.get
     
     def __init__(self):
         """Initializes the _SkyConfig parser and retrieves values."""

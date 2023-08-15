@@ -31,9 +31,6 @@ Builder.load_string("""
         Rectangle:
             pos:self.pos
             size: self.size
-    IperfForm:
-        id: ipf
-        form_name: root.form_name
     AnchorLayout:
         anchor_x: "center"
         anchor_y: "center"
@@ -62,6 +59,15 @@ class IperfTestForm(SkyVerticalLayout):
 
     connection = ObjectProperty()
     form_name = StringProperty()
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.bind(form_name=self.init_form)
+
+    def init_form(self, *args):
+        """Creates form to be rendered."""
+
+        self.add_widget(IperfForm(self.form_name), 1)
 
     def iperf_test(self, flags):
         """
@@ -102,14 +108,9 @@ class IperfTestForm(SkyVerticalLayout):
 class IperfForm(SkyFormTable):
     """
     The FormTable for the user to set the test flags.
-    
-    Attributes:
-        form_name: The device this form is for (car or drone).
     """
-    
-    form_name = StringProperty()
 
-    def __init__(self, **kwargs):
+    def __init__(self, form_name, **kwargs):
         """Creates and configures table."""
 
         super().__init__(**kwargs)
@@ -117,7 +118,7 @@ class IperfForm(SkyFormTable):
         self.add_field(SkyCheckBox(sid="verbose", label="Verbose",
                                    size_hint=(None, 1)),
                                    size_hint=(1, 1))
-        self.add_field(SkyCheckBox(sid="server", label=f"{self.form_name} as server",
+        self.add_field(SkyCheckBox(sid="server", label=f"{form_name} as server",
                                    size_hint=(None, 1)),
                                    size_hint=(1, 1))
         self.add_field(SkyTextInput(sid="port", label="Port",
