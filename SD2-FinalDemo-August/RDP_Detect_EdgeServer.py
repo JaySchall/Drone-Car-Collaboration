@@ -35,7 +35,7 @@ SEND_MESSAGES = True
 file_logger = logging.getLogger(__name__ + '--file_logger')
 file_logger.setLevel(logging.INFO)
 file_formatter = logging.Formatter("%(asctime)s - [%(name)s] - %(levelname)s - %(message)s")
-file_handler = logging.FileHandler("yoloShapeDetect_log.txt", mode="a") #open in append mode so file is not reset
+file_handler = logging.FileHandler("RDP_Detect_EdgeServer_log.txt", mode="a") #open in append mode so file is not reset
 file_handler.setFormatter(file_formatter)
 file_logger.addHandler(file_handler)
 
@@ -109,20 +109,36 @@ def exit_program():
             thread.join()
  
 
-def detect_red(cv_image):
+def detect_red_yellow_blue(cv_image):
     hsv = cv2.cvtColor(cv_image, cv2.COLOR_BGR2HSV)
 
+    # Define HSV ranges for red color (red has two sets of ranges)
     lower_red1 = (0, 100, 20)
     upper_red1 = (10, 255, 255)
-    mask1 = cv2.inRange(hsv, lower_red1, upper_red1)
+    mask_red1 = cv2.inRange(hsv, lower_red1, upper_red1)
 
     lower_red2 = (160, 100, 20)
     upper_red2 = (179, 255, 255)
-    mask2 = cv2.inRange(hsv, lower_red2, upper_red2)
+    mask_red2 = cv2.inRange(hsv, lower_red2, upper_red2)
 
-    mask = cv2.bitwise_or(mask1, mask2)
+    mask_red = cv2.bitwise_or(mask_red1, mask_red2)
 
-    return mask
+    # Define HSV ranges for yellow color
+    lower_yellow = (20, 100, 100)
+    upper_yellow = (40, 255, 255)
+    mask_yellow = cv2.inRange(hsv, lower_yellow, upper_yellow)
+
+    # Define HSV ranges for blue color
+    lower_blue = (90, 100, 100)
+    upper_blue = (120, 255, 255)
+    mask_blue = cv2.inRange(hsv, lower_blue, upper_blue)
+
+    # Combine the masks for red, yellow, and blue using bitwise OR
+    combined_mask = cv2.bitwise_or(mask_red, cv2.bitwise_or(mask_yellow, mask_blue))
+
+    return combined_mask
+
+
 
 def determine_shape(num_sides):
     """
@@ -167,9 +183,9 @@ def determine_shape(num_sides):
     return label
 
 def draw_bounding_boxes(cv_image, mask, min_area=1000, max_area=10000):
-    global RED_OBJ_FOUND
+    global OBJ_FOUND
 
-    RED_OBJ_FOUND = False  # Initialize RED_OBJ_FOUND flag to False
+    OBJ_FOUND = False  # Initialize OBJ_FOUND flag to False
 
     contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     # Find contours in the mask image using RETR_EXTERNAL mode and CHAIN_APPROX_SIMPLE method
@@ -179,8 +195,8 @@ def draw_bounding_boxes(cv_image, mask, min_area=1000, max_area=10000):
 
         # Check if the contour area is within the specified range
         if min_area < area < max_area: 
-            # Set RED_OBJ_FOUND flag to True if at least one contour meets the criteria
-            RED_OBJ_FOUND = True  
+            # Set OBJ_FOUND flag to True if at least one contour meets the criteria
+            OBJ_FOUND = True  
 
             # Calculate the bounding rectangle coordinates
             x, y, w, h = cv2.boundingRect(contour) 
@@ -248,27 +264,19 @@ def main():
         # Set obj_detected to false here which is used to determine if a command should be sent to stop the car
         OBJ_DETECTED = False
         
-        #Do object detection here:
-        
-        mask = detect_red(cv_image)
-
+        # Do object detection here:
+        mask = detect_red_yellow_blue(cv_image)
         cv_image_with_bboxes = draw_bounding_boxes(cv_image, mask)
-        
-
-
-
-
-
 
         # Logic used to determine what message needs to be sent to the car (this can be easily moved closer to when red object was found, if desired):
             # For each case, we will make sure that the send_message thread is not already running in order to reduce spamming.
 
-            # send a stop if a red object found and stop was not last message sent (prevents sending consecutive stop commands)
+            # send a stop if a object found and stop was not last message sent (prevents sending consecutive stop commands)
         if OBJ_DETECTED and (LAST_COMMAND_SENT != SEND_STOP) and not MESSAGE_CAR_THREAD_RUNNING.is_set():
             LAST_COMMAND_SENT = SEND_STOP
             MESSAGE_CAR_THREAD_RUNNING.set() # trigger send_message to car event thread to send stop command to car
                 
-            # continue --> (prevents sneding consecutive stop commands)
+            # continue --> (prevents sending consecutive stop commands)
         elif OBJ_DETECTED and (LAST_COMMAND_SENT == SEND_STOP):
             pass
             
