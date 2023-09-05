@@ -109,6 +109,105 @@ def exit_program():
             thread.join()
  
 
+def detect_red(cv_image):
+    hsv = cv2.cvtColor(cv_image, cv2.COLOR_BGR2HSV)
+
+    lower_red1 = (0, 100, 20)
+    upper_red1 = (10, 255, 255)
+    mask1 = cv2.inRange(hsv, lower_red1, upper_red1)
+
+    lower_red2 = (160, 100, 20)
+    upper_red2 = (179, 255, 255)
+    mask2 = cv2.inRange(hsv, lower_red2, upper_red2)
+
+    mask = cv2.bitwise_or(mask1, mask2)
+
+    return mask
+
+def determine_shape(num_sides):
+    """
+    Determines the shape label based on the number of sides of the object.
+    Updates the respective shape count global variables.
+    The num_sides passed into this function must at least be equal to one of the shapes defined below,
+    and that shape should have occurred at least more than once in order to obtain a shape label.
+    Otherwise, reset counter for all shapes to 0 since num_sides was not equal to one of the defined shapes.
+    """
+
+    global NUM_TRIANGLES, NUM_SQUARES, NUM_HEXAGONS, NUM_CIRCLES, NUM_STARS, SHAPE_APPEARANCE_THRESHOLD
+
+    label = "???"
+
+    if num_sides == 3:
+        if NUM_TRIANGLES > SHAPE_APPEARANCE_THRESHOLD:
+            label = "TRIANGLE"
+        NUM_TRIANGLES += 1
+    elif num_sides == 4:
+        if NUM_SQUARES > SHAPE_APPEARANCE_THRESHOLD:
+            label = "SQUARE"
+        NUM_SQUARES += 1
+    elif num_sides == 6:
+        if NUM_HEXAGONS > SHAPE_APPEARANCE_THRESHOLD:
+            label = "HEXAGON"
+        NUM_HEXAGONS += 1
+    elif num_sides == 8:
+        if NUM_CIRCLES > SHAPE_APPEARANCE_THRESHOLD:
+            label = "CIRCLE"
+        NUM_CIRCLES += 1
+    elif num_sides == 10:
+        if NUM_STARS > SHAPE_APPEARANCE_THRESHOLD:
+            label = "STAR"
+        NUM_STARS += 1
+    else:
+        NUM_TRIANGLES = 0
+        NUM_SQUARES = 0
+        NUM_HEXAGONS = 0
+        NUM_CIRCLES = 0
+        NUM_STARS = 0
+
+    return label
+
+def draw_bounding_boxes(cv_image, mask, min_area=1000, max_area=10000):
+    global RED_OBJ_FOUND
+
+    RED_OBJ_FOUND = False  # Initialize RED_OBJ_FOUND flag to False
+
+    contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    # Find contours in the mask image using RETR_EXTERNAL mode and CHAIN_APPROX_SIMPLE method
+
+    for contour in contours:
+        area = cv2.contourArea(contour)  # Calculate the area of the contour
+
+        # Check if the contour area is within the specified range
+        if min_area < area < max_area: 
+            # Set RED_OBJ_FOUND flag to True if at least one contour meets the criteria
+            RED_OBJ_FOUND = True  
+
+            # Calculate the bounding rectangle coordinates
+            x, y, w, h = cv2.boundingRect(contour) 
+
+            # Draw a green rectangle on the original image using the bounding rectangle coordinates
+            cv2.rectangle(cv_image, (x, y), (x + w, y + h), (0, 255, 0), 2)
+
+            # Approximate the contour to determine the number of sides using the Ramer-Douglas-Peucker algorithm;
+            # the LARGER the Epsilon value,
+            # the LESS accurate the number of points connecting the arc will be,
+            # since the number of points that make up the arc will be more reduced - less line granularity (resolution)):
+            #For more info, see this video: https://www.youtube.com/watch?v=M0J_yq49Go8
+            epsilon = 0.02 * cv2.arcLength(contour, True)
+            approx = cv2.approxPolyDP(contour, epsilon, True)
+            num_sides = len(approx)
+            
+            # Determine the shape label for the red object
+            shape_label = determine_shape(num_sides)
+            
+            # Add the shape label to the image
+            cv2.putText(cv_image, shape_label, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
+
+    return cv_image  # Return the modified image with bounding boxes
+
+
+
+
 
 
 def main():
@@ -138,28 +237,28 @@ def main():
     # Read and display video frames until the user presses 'q'
     while True:
         # Read the next frame from the video stream
-        ret, frame = cap.read()
+        cv_image_returned, cv_image = cap.read()
 
         # If the frame was not successfully read, then we have reached the end of the stream
-        if not ret:
+        if not cv_image_returned:
             file_logger.error("Failed to read video stream; end of stream reached or stream/video error.")
             console_logger.error("Failed to read video stream; end of stream reached or stream/video error.")
             continue
 
         # Set obj_detected to false here which is used to determine if a command should be sent to stop the car
         OBJ_DETECTED = False
+        
+        #Do object detection here:
+        
+        mask = detect_red(cv_image)
 
-        # Darknet detection and display
-        detections, width_ratio, height_ratio = darknet_helper(frame, width, height, network, class_names)
-        for label, confidence, bbox in detections:
-            left, top, right, bottom = bbox2points(bbox)
-            left, top, right, bottom = int(left * width_ratio), int(top * height_ratio), int(right * width_ratio), int(bottom * height_ratio)
-            cv2.rectangle(frame, (left, top), (right, bottom), class_colors[label], 2)
-            cv2.putText(frame, "{} [{:.2f}]".format(label, float(confidence)),
-                        (left, top - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.5,
-                        class_colors[label], 2)
-            # Set obj_detected to true - for loop entered; at least one object was detected in the frame (detections list != empty)
-            OBJ_DETECTED = True
+        cv_image_with_bboxes = draw_bounding_boxes(cv_image, mask)
+        
+
+
+
+
+
 
         # Logic used to determine what message needs to be sent to the car (this can be easily moved closer to when red object was found, if desired):
             # For each case, we will make sure that the send_message thread is not already running in order to reduce spamming.
@@ -188,11 +287,11 @@ def main():
            
 
         # Increase size of frame displayed
-        new_width = 3 * frame.shape[1]  # Triple the original width
-        new_height = 3 * frame.shape[0]  # Triple the original height
+        new_width = 3 * cv_image.shape[1]  # Triple the original width
+        new_height = 3 * cv_image.shape[0]  # Triple the original height
 
         # Resize the image
-        expanded_image = cv2.resize(frame, (new_width, new_height))
+        expanded_image = cv2.resize(cv_image, (new_width, new_height))
 
         # Display the frame
         cv2.imshow("Edge Server", expanded_image)
