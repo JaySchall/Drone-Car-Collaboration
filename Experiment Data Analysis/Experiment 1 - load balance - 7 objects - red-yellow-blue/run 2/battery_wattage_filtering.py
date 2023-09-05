@@ -5,7 +5,8 @@ from matplotlib.ticker import FormatStrFormatter
 #part 1: filter
 
 # Define the path to the input CSV file
-csv_file_path = r"C:\Users\demet\Documents\GitHub\Drone-Car-Collaboration\Experiment Data Analysis\filtering\battery_data.csv"
+csv_file_path = r"C:\Users\demet\Documents\GitHub\Drone-Car-Collaboration\Experiment Data Analysis\Experiment 1 - load balance - 7 objects - red-yellow-blue\run 2\battery_data_2023-07-23_13-30-37.csv"
+
 
 # Read the CSV file into a pandas DataFrame
 df = pd.read_csv(csv_file_path)
@@ -22,7 +23,7 @@ initial_timestamp = filtered_df.loc[0, 'Stamp_secs'] + filtered_df.loc[0, 'Stamp
 filtered_df['Timestamp'] = filtered_df.apply(lambda row: (row['Stamp_secs'] + row['Stamp_nsecs'] * 1e-9) - initial_timestamp, axis=1)
 
 # Define the path to the output CSV file
-output_csv_file_path = r"C:\Users\demet\Documents\GitHub\Drone-Car-Collaboration\Experiment Data Analysis\filtering\filtered_data_with_wattage.csv"
+output_csv_file_path =r"C:\Users\demet\Documents\GitHub\Drone-Car-Collaboration\Experiment Data Analysis\Experiment 1 - load balance - 7 objects - red-yellow-blue\run 2\battery_data_2023-07-23_13-30-37-FILTERED.csv"
 
 # Save the filtered data with adjusted timestamps and wattage to the output CSV file
 adjusted_filtered_df = filtered_df[['Seq', 'Timestamp', 'Wattage']]  # Select relevant columns
@@ -42,7 +43,7 @@ plt.figure(figsize=(10, 6))
 plt.plot(adjusted_filtered_df['Timestamp'], adjusted_filtered_df['Wattage'], marker='o', linestyle='-', color='b')
 plt.xlabel('Time (seconds)')
 plt.ylabel('Wattage')
-plt.title('Wattage vs Time')
+plt.title('Wattage vs Time - Experiment 1, Run 2 - Load Balance Drone-Car')
 plt.grid()
 
 # Format x and y tick labels with 4 decimal places
@@ -68,7 +69,7 @@ plt.figure(figsize=(10, 6))
 plt.plot(resampled_df.index, resampled_df['Wattage'], marker='o', linestyle='-', color='b')
 plt.xlabel('Time')
 plt.ylabel('Average Wattage')
-plt.title('Average Wattage vs Time (5-second intervals)')
+plt.title('Average Wattage vs Time (5-second intervals) - Experiment 1, Run 2 - Load Balance Drone-Car')
 plt.grid()
 
 # Format x tick labels with date and time format

@@ -43,7 +43,7 @@ def plot_iperf3_data(df):
     # Add labels and title
     plt.xlabel('Interval (sec)')
     plt.ylabel('Value')
-    plt.title('Iperf3 Data: Interval vs Transfer and Bitrate')
+    plt.title('Iperf3 Data: Interval vs Transfer and Bitrate - Experiment 1, Run 2 - Load Balance Drone-Car')
 
     # Add a legend
     plt.legend()
@@ -52,6 +52,6 @@ def plot_iperf3_data(df):
     plt.show()
 
 if __name__ == "__main__":
-    file_path = r'C:\Users\demet\Documents\GitHub\Drone-Car-Collaboration\Experiment Data Analysis\filtering\iperf3_data.txt'  # Replace with your file path
+    file_path = r"C:\Users\demet\Documents\GitHub\Drone-Car-Collaboration\Experiment Data Analysis\Experiment 1 - load balance - 7 objects - red-yellow-blue\run 2\iperf3_TCP_Test_server.txt"
     df = read_iperf3_data(file_path)
     plot_iperf3_data(df)

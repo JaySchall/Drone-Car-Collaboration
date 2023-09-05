@@ -34,7 +34,7 @@ def read_rtt_data(file_path):
     return rtt_min_values, rtt_avg_values, rtt_max_values
 
 # File path (Please change this to the actual location of your data file)
-file_path = "C:\\Users\\demet\\Documents\\GitHub\\Drone-Car-Collaboration\\Experiment Data Analysis\\filtering\\ping_rtt_data.txt"
+file_path = r"C:\Users\demet\Documents\GitHub\Drone-Car-Collaboration\Experiment Data Analysis\Experiment 1 - load balance - 7 objects - red-yellow-blue\run 2\ping_results_2023-07-23_12-42-02.txt"
 
 # Read RTT data
 rtt_min, rtt_avg, rtt_max = read_rtt_data(file_path)
@@ -53,7 +53,7 @@ plt.plot(agg_rtt_avg, label='Avg RTT (Aggregated)')
 
 plt.xlabel('Ping Index (Aggregated)')
 plt.ylabel('RTT (ms)')
-plt.title('Aggregated RTT Data Analysis')
+plt.title('Aggregated RTT Data Analysis - Experiment 1, Run 2 - Load Balance Drone-Car')
 plt.legend()
 plt.grid(True)
 plt.show()

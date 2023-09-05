@@ -43,7 +43,7 @@ plt.figure(figsize=(10, 6))
 plt.plot(adjusted_filtered_df['Timestamp'], adjusted_filtered_df['Wattage'], marker='o', linestyle='-', color='b')
 plt.xlabel('Time (seconds)')
 plt.ylabel('Wattage')
-plt.title('Wattage vs Time')
+plt.title('Wattage vs Time - Experiment 1, Run 1 - Load Balance Drone-Car')
 plt.grid()
 
 # Format x and y tick labels with 4 decimal places
@@ -69,7 +69,7 @@ plt.figure(figsize=(10, 6))
 plt.plot(resampled_df.index, resampled_df['Wattage'], marker='o', linestyle='-', color='b')
 plt.xlabel('Time')
 plt.ylabel('Average Wattage')
-plt.title('Average Wattage vs Time (5-second intervals)')
+plt.title('Average Wattage vs Time (5-second intervals) - Experiment 1, Run 1 - Load Balance Drone-Car')
 plt.grid()
 
 # Format x tick labels with date and time format
