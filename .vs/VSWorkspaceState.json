@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\SD2-FinalDemo-August"
+    "\\Experiment Data Analysis",
+    "\\Experiment Data Analysis\\filtering"
   ],
-  "SelectedNode": "\\SD2-FinalDemo-August\\GetDroneBatteryInfo.py",
+  "SelectedNode": "\\Experiment Data Analysis\\filtering\\battery_wattage_filtering.py",
   "PreviewInSolutionExplorer": false
 }
