@@ -22,7 +22,7 @@ NUM_HEXAGONS = 0
 NUM_CIRCLES = 0
 NUM_STARS = 0
 
-OBJ_DETECTED = False # track if object was detected
+OBJ_FOUND = False # track if object was detected
 LAST_COMMAND_SENT = None # track last command sent
 SUBSCRIBER_TOPIC = "EdgeServer_VideoTopic/image_raw"
  # use these to prevent spamming messages to car, and also to stop the messaging thread:
@@ -227,7 +227,7 @@ def draw_bounding_boxes(cv_image, mask, min_area=1000, max_area=10000):
 
 
 def main():
-    global OBJ_DETECTED, MESSAGING_THREAD, LAST_COMMAND_SENT
+    global OBJ_FOUND, MESSAGING_THREAD, LAST_COMMAND_SENT
     # Connect to car command server
     if not connect_to_car_command_server():
         return
@@ -247,8 +247,8 @@ def main():
         console_logger.error("Failed to open the video stream.")
         return
 
-    # Initialize object detected variable to false
-    OBJ_DETECTED = False
+    # Initialize object found variable to false
+    OBJ_FOUND = False
 
     # Read and display video frames until the user presses 'q'
     while True:
@@ -261,8 +261,8 @@ def main():
             console_logger.error("Failed to read video stream; end of stream reached or stream/video error.")
             continue
 
-        # Set obj_detected to false here which is used to determine if a command should be sent to stop the car
-        OBJ_DETECTED = False
+        # Set obj_found to false here which is used to determine if a command should be sent to stop the car
+        OBJ_FOUND = False
         
         # Do object detection here:
         mask = detect_red_yellow_blue(cv_image)
@@ -272,16 +272,16 @@ def main():
             # For each case, we will make sure that the send_message thread is not already running in order to reduce spamming.
 
             # send a stop if a object found and stop was not last message sent (prevents sending consecutive stop commands)
-        if OBJ_DETECTED and (LAST_COMMAND_SENT != SEND_STOP) and not MESSAGE_CAR_THREAD_RUNNING.is_set():
+        if OBJ_FOUND and (LAST_COMMAND_SENT != SEND_STOP) and not MESSAGE_CAR_THREAD_RUNNING.is_set():
             LAST_COMMAND_SENT = SEND_STOP
             MESSAGE_CAR_THREAD_RUNNING.set() # trigger send_message to car event thread to send stop command to car
                 
             # continue --> (prevents sending consecutive stop commands)
-        elif OBJ_DETECTED and (LAST_COMMAND_SENT == SEND_STOP):
+        elif OBJ_FOUND and (LAST_COMMAND_SENT == SEND_STOP):
             pass
             
             # command car to recover and continue driving if no object found and last command it received was a STOP command
-        elif not OBJ_DETECTED and (LAST_COMMAND_SENT == SEND_STOP) and not MESSAGE_CAR_THREAD_RUNNING.is_set():
+        elif not OBJ_FOUND and (LAST_COMMAND_SENT == SEND_STOP) and not MESSAGE_CAR_THREAD_RUNNING.is_set():
             LAST_COMMAND_SENT = SEND_CONT_DRIVE
             MESSAGE_CAR_THREAD_RUNNING.set() # trigger send_message to car event thread to send cont drive command to car
                 
